@@ -7,25 +7,26 @@ body {
 }
 
 .logo{
-    width: 400px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 400px;
+    height: auto; 
     position: relative;
-    top: 20px; /* Move the image down by adjusting the value */
+    margin-top: -60px;
 }
 
-/* Custom styles for text below the logo */
+
 .text-below-logo {
-    font-family: 'Arial', sans-serif; /* Change the font family */
-    font-size: 25px; /* Change the font size */
+    font-family: 'Arial', sans-serif; 
+    font-size: 25px; 
     line-height: 1;
     padding-left: 40px;
-
+    position: relative;
+    margin-top: -20px;
 }
 
 .custom-input {
-    height: 50px; /* Set your desired height */
-    font-size: 16px; /* Set your desired font size */
-    border-radius: 10px; /* Add border-radius for a rounded appearance */
+    height: 50px; 
+    font-size: 16px; 
+    border-radius: 10px; 
 }
 
 .newaccount-btn{
