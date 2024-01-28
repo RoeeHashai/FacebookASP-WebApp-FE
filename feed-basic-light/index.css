@@ -1,0 +1,23 @@
+body {
+    background-color: #f0f2f5;
+}
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white !important;
+
+}
+
+.navbar-brand{
+    margin-right: 12;
+}
+.logo {
+    max-height: 40px; /* Set the maximum height for the logo */
+}
+.searchbar{
+    width: 250px;
+}
+
+.searchbar input {
+    background-color: #f0f2f5; /* Replace with the color you desire */
+}
