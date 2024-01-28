@@ -1,0 +1,37 @@
+body {
+    background-color: #f0f2f5;
+}
+
+.custom-container{
+    max-width: 900px;
+}
+
+.logo{
+    width: 400px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    position: relative;
+    top: 20px; /* Move the image down by adjusting the value */
+}
+
+/* Custom styles for text below the logo */
+.text-below-logo {
+    font-family: 'Arial', sans-serif; /* Change the font family */
+    font-size: 25px; /* Change the font size */
+    line-height: 1;
+    padding-left: 40px;
+
+}
+
+.custom-input {
+    height: 50px; /* Set your desired height */
+    font-size: 16px; /* Set your desired font size */
+    border-radius: 10px; /* Add border-radius for a rounded appearance */
+}
+
+.newaccount-btn{
+    background-color: rgb(91, 192, 19);
+}
+
+
+
+
