@@ -9,14 +9,12 @@ function App() {
   const addUser = (user) => {
     console.log(users);
     setUsers((prevUsers) => [...prevUsers, user])
-    // Log the updated users array
-    console.log(users);
   };
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login users = {users}/>} />
         <Route path='/signup' element={<Signup onAddUser={addUser} />} />
         <Route path='/feed' element={<Feed />} />
       </Routes>

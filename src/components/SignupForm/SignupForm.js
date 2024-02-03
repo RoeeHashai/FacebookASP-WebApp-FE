@@ -15,18 +15,18 @@ export default function SignupForm({ onAddUser }) {
   const [picture, setPicture] = useState(null)
 
   // validation status for each field
-  const [usernameValid, setUsernameValid] = useState(true);
-  const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
-  const [pictureValid, setPictureValid] = useState(true);
+  const [usernameValid, setUsernameValid] = useState(true)
+  const [emailValid, setEmailValid] = useState(true)
+  const [passwordValid, setPasswordValid] = useState(true)
+  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true)
+  const [pictureValid, setPictureValid] = useState(true)
 
   // Error messages
-  const [usernameMessage, setUsernameMessage] = useState('');
-  const [emailMessage, setEmailMessage] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
-  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-  const [pictureMessage, setPictureMessage] = useState('');
+  const [usernameMessage, setUsernameMessage] = useState('')
+  const [emailMessage, setEmailMessage] = useState('')
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('')
+  const [pictureMessage, setPictureMessage] = useState('')
 
   const handleOnInputChange = (e) => {
     const { name, value } = e.target

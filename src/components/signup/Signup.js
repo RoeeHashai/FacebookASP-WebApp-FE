@@ -1,9 +1,9 @@
 import React from 'react'
 import './Signup.css'
 import Logo from '../logo/Logo'
-import SignupForm from '../SignupForm/SignupForm'
+import SignupForm from '../signupForm/SignupForm'
 
-export default function Signup({onAddUser}) {
+export default function Signup({ onAddUser }) {
     return (
         <div className=" container col-center d-flex justify-content-center align-items-center vh-100">
             <div className="container justify-content-center">
@@ -12,7 +12,7 @@ export default function Signup({onAddUser}) {
                         <Logo />
                     </div>
                     <div className="col-lg-6">
-                        <SignupForm onAddUser={onAddUser}/>       
+                        <SignupForm onAddUser={onAddUser} />
                     </div>
                 </div>
             </div>
