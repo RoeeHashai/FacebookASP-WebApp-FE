@@ -1,6 +1,4 @@
 import React from 'react'
-import facebooklogo from '../res/4lCu2zih0ca.svg'
-import { useNavigate } from 'react-router'
 import './Signup.css'
 import Logo from '../logo/Logo'
 import SignupForm from '../SignupForm/SignupForm'

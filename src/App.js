@@ -7,6 +7,7 @@ import { useState } from 'react'
 function App() {
   const [users, setUsers] = useState([])
   const addUser = (user) => {
+    console.log(users);
     setUsers((prevUsers) => [...prevUsers, user])
     // Log the updated users array
     console.log(users);

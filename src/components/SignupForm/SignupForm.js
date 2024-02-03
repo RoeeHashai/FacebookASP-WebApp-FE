@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
+
 import './SignupForm.css'
 
 export default function SignupForm({ onAddUser }) {
@@ -17,16 +19,14 @@ export default function SignupForm({ onAddUser }) {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true);
-  const [pictureValid, setPicturevalid] = useState(true);
+  const [pictureValid, setPictureValid] = useState(true);
 
   // Error messages
   const [usernameMessage, setUsernameMessage] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-
-  // validation status
-  const [isFormValid, setIsFormValid] = useState(true)
+  const [pictureMessage, setPictureMessage] = useState('');
 
   const handleOnInputChange = (e) => {
     const { name, value } = e.target
@@ -54,6 +54,11 @@ export default function SignupForm({ onAddUser }) {
       setConfirmPasswordValid(isConfirmPasswordValidValue)
       setConfirmPasswordMessage(isConfirmPasswordValidValue ? '' : 'Passwords must match')
     }
+    else if (name === 'picture') {
+      const isPictureValidValue = isPictureValid(e.target.files[0])
+      setPicture(e.target.files[0])
+      setPictureValid(isPictureValidValue)
+    }
   }
 
   const handleOnBlur = (e) => {
@@ -70,6 +75,10 @@ export default function SignupForm({ onAddUser }) {
     else if (name === 'confirmPassword') {
       setConfirmPasswordMessage('')
     }
+    else if (name === 'picture') {
+      setPasswordMessage('')
+    }
+
   }
 
   const handleSignupClick = (e) => {
@@ -77,12 +86,15 @@ export default function SignupForm({ onAddUser }) {
 
     // Check if Signin was done valid of not dont precced to the login page
     if (!validateForm()) {
-      setIsFormValid(false)
       return
     }
 
+    // Generate a unique ID for the user
+    const userId = uuidv4();
+
     // Create a new user to add to the users list
     const newUser = {
+      id: userId,
       username,
       email,
       password,
@@ -90,13 +102,19 @@ export default function SignupForm({ onAddUser }) {
     }
 
     // Add the new user to list of users
-    onAddUser(newUser)
+    onAddUser(prevUsers => [...prevUsers, newUser])
+
+    // Save the profile picture to local storage with the user's ID
+    sessionStorage.setItem(`profilePicture_${userId}`, picture);
 
     // navigate to login page after succssefuly adding a new user
     navigate('/login')
   }
 
   const validateForm = () => {
+    if (username === '') {
+      setUsernameValid(false)
+    }
     // To display error messges when clicking the 'sign up' button, reset the error message
     // Check of the username is valid if not display error
     const isUserNameValidValue = isUsernameValid(username)
@@ -117,7 +135,9 @@ export default function SignupForm({ onAddUser }) {
     setConfirmPasswordValid(isConfirmPasswordValidValue)
     setConfirmPasswordMessage(isConfirmPasswordValidValue ? '' : 'Passwords must match')
 
-    return usernameValid && emailValid && passwordValid && isConfirmPasswordValidValue
+    const isPictureValidValue = isPictureValid(picture)
+    setPictureValid(isPictureValidValue)
+    return usernameValid && emailValid && passwordValid && isConfirmPasswordValidValue && isPictureValidValue
   }
 
   const isUsernameValid = (username) => {
@@ -139,8 +159,26 @@ export default function SignupForm({ onAddUser }) {
     return password === confirmPassword
   }
 
+  const isPictureValid = (picture) => {
+    if (picture === null) {
+      setPictureMessage('Must upload a profile picture');
+      return false;
+    } else if (!picture.type || !picture.type.startsWith('image/jpeg')) {
+      setPictureMessage('Please upload a valid JPEG image');
+      return false;
+    }
+
+    // If all checks pass, the picture is valid
+    return true;
+  }
+
   return (
     <div className="card shadow rounded p-3">
+      <Link to='/login'>
+        <button className='btn'>
+          <i className="bi bi-arrow-left mb-2"></i>
+        </button>
+      </Link>
       <form className="row g-3">
         {/* Username */}
         <div className="col-md-12">
@@ -206,11 +244,15 @@ export default function SignupForm({ onAddUser }) {
             </label>
             <input
               type="file"
-              className="form-control"
+              className={`form-control ${!pictureValid && 'is-invalid'}`}
+              onBlur={handleOnBlur}
+              onChange={handleOnInputChange}
               id="inputPicture"
               required=""
               name='picture'
             />
+            {!pictureValid && <div className='invalid-feedback'>{pictureMessage}</div>}
+
           </div>
         </div>
         <div className="col-12">

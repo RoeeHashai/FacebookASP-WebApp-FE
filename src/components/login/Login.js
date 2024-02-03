@@ -1,7 +1,6 @@
 import React from 'react'
-import facebooklogo from '../res/4lCu2zih0ca.svg'
 import './Login.css'
-import { useHistory, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Logo from '../logo/Logo'
 
 
@@ -28,7 +27,7 @@ export default function Login() {
                       <input
                         type="email"
                         className="form-control custom-input"
-                        id="exampleInputEmail1"
+                        id="emailInput"
                         placeholder="Email address"
                       />
                     </div>
@@ -38,7 +37,7 @@ export default function Login() {
                       <input
                         type="password"
                         className="form-control custom-input"
-                        id="exampleInputEmail1"
+                        id="passwordInput"
                         placeholder="Password"
                       />
                     </div>

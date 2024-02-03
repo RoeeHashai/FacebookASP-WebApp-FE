@@ -36,7 +36,7 @@ export default function Feed() {
 
                     </div>
                     <Link to='/login'>
-                        <button className='btn' data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="bi bi-box-arrow-left"></i></button>
+                        <button className='btn' data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
                     </Link>
 
                 </div>
