@@ -7,3 +7,8 @@
 .newaccount-btn{
     background-color: rgb(91, 192, 19);
 }
+
+.previewProfile {
+    max-width: 100%;
+    height: 200px;
+  }

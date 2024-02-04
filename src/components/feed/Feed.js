@@ -5,9 +5,13 @@ import mypostpic from '../res/1677057215865.png'
 import { Link } from 'react-router-dom'
 import './Feed.css'
 
-export default function Feed() {
+export default function Feed({ connectedUser }) {
     return (
+
         <>
+            {console.log(connectedUser)}
+            <p>{connectedUser.username}</p>
+
             <nav className="navbar sticky-top shadow">
                 <div className="container justify-content-center">
                     <div className="form-check form-switch dark-mode-switch">
@@ -19,13 +23,15 @@ export default function Feed() {
                         <label className="form-check-label" htmlFor="toggleSwitch" />
                     </div>
 
-                    <Link to='/feed'>
-                        <img
-                            src={facebooklogo}
-                            alt="Facebook logo"
-                            className="d-inline-block small-profile-img"
-                        />
-                    </Link>
+                    <div className='contanier'>
+                        <Link to='/feed'>
+                            <img
+                                src={facebooklogo}
+                                alt="Facebook logo"
+                                className="d-inline-block small-profile-img"
+                            />
+                        </Link>
+                    </div>
                     <div className="searchbar ms-2">
                         <input
                             className="form-control rounded-pill"
@@ -47,11 +53,14 @@ export default function Feed() {
                         <ul className="list-group">
                             <li className="list-group-item d-flex align-items-center">
                                 {/* Profile Picture */}
-                                <img
-                                    src={myprofilepic}
-                                    alt="User Profile"
-                                    className="rounded-circle shadow small-profile-img"
-                                /><span className="w-100 m-1 ms-3">Roee Hashai</span>
+                                <div className='contanier'>
+                                    <img
+                                        src={connectedUser.picture}
+                                        alt="User Profile"
+                                        className="rounded-circle shadow small-profile-img"
+                                    />
+                                </div>
+                                <span className="w-100 m-1 ms-3">{connectedUser.username}</span>
                             </li>
                             <li className="list-group-item d-flex list-to-hover align-items-center">
                                 <i className="bi bi-people-fill ms-1" />
@@ -110,7 +119,7 @@ export default function Feed() {
                                     id="imagePreview"
                                     className="img-fluid"
                                     style={{ display: "none" }}
-                                    alt="Image Preview"
+                                    alt=""
                                 />
                             </div>
                             <div className="card-footer post-footer add-new-comment-box">
@@ -136,28 +145,26 @@ export default function Feed() {
                                         <p className="mb-0 small">Posted on January 1, 2024</p>
                                     </div>
                                     <div className="post-options position-absolute top-0 end-0">
-                                        <a
-                                            className="text-dark"
-                                            href="#"
+                                        <button
+                                            className="text-dark btn"
+                                            type="button"
                                             id="postOptionsLink"
                                             data-bs-toggle="dropdown"
                                             aria-expanded="false"
+                                            style={{ border: 'none' }} // Add this line if you want to remove the border
                                         >
-                                            <i className="bi bi-three-dots m-3 fs-5" />
-                                        </a>
-                                        <ul
-                                            className="dropdown-menu shadow"
-                                            aria-labelledby="postOptionsLink"
-                                        >
+                                            <i className="bi bi-three-dots" />
+                                        </button>
+                                        <ul className="dropdown-menu shadow" aria-labelledby="postOptionsLink">
                                             <li>
-                                                <a className="dropdown-item" href="#">
+                                                <button className="dropdown-item">
                                                     Edit
-                                                </a>
+                                                </button>
                                             </li>
                                             <li>
-                                                <a className="dropdown-item" href="#">
+                                                <button className="dropdown-item">
                                                     Delete
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -169,8 +176,8 @@ export default function Feed() {
                                 </p>
                                 <img
                                     src={mypostpic}
-                                    alt="Post Image"
                                     className="post-img img-fluid"
+                                    alt=''
                                 />
                                 <div className="mt-2">
                                     <span className="me-2">
@@ -216,29 +223,27 @@ export default function Feed() {
                                                         style={{ overflowWrap: "break-word" }}
                                                     />
                                                     <span id="commentText1">Looking good! :)</span>
-                                                    <div className="comment-options position-absolute top-0 end-0">
-                                                        <a
-                                                            className="text-dark"
-                                                            href="#"
-                                                            id="dropdownMenuLink"
+                                                    <div className="post-options position-absolute top-0 end-0">
+                                                        <button
+                                                            className="text-dark btn"
+                                                            type="button"
+                                                            id="postOptionsLink"
                                                             data-bs-toggle="dropdown"
                                                             aria-expanded="false"
+                                                            style={{ border: 'none' }} // Add this line if you want to remove the border
                                                         >
-                                                            <i className="bi bi-three-dots-vertical p-1 pt-1 fs-5" />
-                                                        </a>
-                                                        <ul
-                                                            className="dropdown-menu shadow"
-                                                            aria-labelledby="dropdownMenuLink"
-                                                        >
+                                                            <i className="bi bi-three-dots" />
+                                                        </button>
+                                                        <ul className="dropdown-menu shadow" aria-labelledby="postOptionsLink">
                                                             <li>
-                                                                <a className="dropdown-item" href="#">
+                                                                <button className="dropdown-item">
                                                                     Edit
-                                                                </a>
+                                                                </button>
                                                             </li>
                                                             <li>
-                                                                <a className="dropdown-item" href="#">
+                                                                <button className="dropdown-item">
                                                                     Delete
-                                                                </a>
+                                                                </button>
                                                             </li>
                                                         </ul>
                                                     </div>

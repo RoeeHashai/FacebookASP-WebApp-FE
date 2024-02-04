@@ -43,10 +43,10 @@ nav{
 }
 
 .small-profile-img {
-    width: 40px;
-    height: 40px; 
-    border-radius: 50%; 
-  }
+    width: 40px; /* Adjust the desired width */
+    height: 40px; /* Adjust the desired height */
+    border-radius: 50%;
+}
 
 .post-card {
     margin-bottom: 20px;

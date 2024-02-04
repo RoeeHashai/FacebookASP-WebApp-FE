@@ -18,27 +18,27 @@ export default function LoginForm({ users, addConnectedUser }) {
     };
 
     const handleLoginClick = (e) => {
-        e.preventDefault();
-        setFormSubmitted(true);
+        e.preventDefault()
+        setFormSubmitted(true)
     
         const user = validateEmail(email);
     
         if (user) {
-            setEmailValid(true);
+            setEmailValid(true)
     
             if (validatePassword(user, password)) {
-                setPasswordValid(true);
+                setPasswordValid(true)
                 addConnectedUser(user)
-                navigate('/feed');
+                navigate('/feed')
             } else {
-                setPasswordValid(false);
-                setPasswordMessage('Wrong password');
+                setPasswordValid(false)
+                setPasswordMessage('Wrong password')
             }
         } else {
-            setEmailValid(false);
-            setEmailMessage('Invalid email');
-            setPasswordValid(false);
-            setPasswordMessage('');
+            setEmailValid(false)
+            setEmailMessage('Invalid email')
+            setPasswordValid(false)
+            setPasswordMessage('')
         }
     };
 
