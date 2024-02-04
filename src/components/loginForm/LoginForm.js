@@ -51,11 +51,11 @@ export default function LoginForm({ users, addConnectedUser }) {
     };
 
     const validateEmail = (email) => {
-        return users.find((user) => user.email === email);
+        return users.find((user) => user.email === email)
     };
 
     const validatePassword = (user, password) => {
-        return user.password === password;
+        return user.password === password
     };
 
     return (

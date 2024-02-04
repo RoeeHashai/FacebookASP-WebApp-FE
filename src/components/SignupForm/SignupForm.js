@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './SignupForm.css'
 
-export default function SignupForm({ onAddUser }) {
+export default function SignupForm({ users, onAddUser }) {
   const navigate = useNavigate()
 
   // state variables of the sign up form
@@ -34,25 +34,21 @@ export default function SignupForm({ onAddUser }) {
       const isUserNameValidValue = isUsernameValid(value)
       setUsername(value)
       setUsernameValid(isUserNameValidValue)
-      setUsernameMessage(isUserNameValidValue ? '' : 'Username must be at least 3 characters long');
     }
     else if (name === 'email') {
       const isEmailValidValue = isEmailValid(value)
       setEmail(value)
       setEmailValid(isEmailValidValue)
-      setEmailMessage(isEmailValidValue ? '' : 'Email must be in a correct email format (e.g., XXX@XXX.XXX)');
     }
     else if (name === 'password') {
       const isPasswordValidValue = isPasswordValid(value)
       setPassword(value)
       setPasswordValid(isPasswordValidValue)
-      setPasswordMessage(isPasswordValidValue ? '' : 'Password must be at least 8 characters long and contain both numbers and letters')
     }
     else if (name === 'confirmPassword') {
       const isConfirmPasswordValidValue = isConfirmPasswordValid(value)
       setConfirmPassword(value)
       setConfirmPasswordValid(isConfirmPasswordValidValue)
-      setConfirmPasswordMessage(isConfirmPasswordValidValue ? '' : 'Passwords must match')
     }
     else if (name === 'picture') {
       const isPictureValidValue = isPictureValid(e.target.files[0])
@@ -115,25 +111,20 @@ export default function SignupForm({ onAddUser }) {
     if (username === '') {
       setUsernameValid(false)
     }
-    // To display error messges when clicking the 'sign up' button, reset the error message
     // Check of the username is valid if not display error
     const isUserNameValidValue = isUsernameValid(username)
     setUsernameValid(isUserNameValidValue)
-    setUsernameMessage(isUserNameValidValue ? '' : 'Username must be at least 3 characters long')
 
     // Check if the email is valid if not display error
     const isEmailValidValue = isEmailValid(email)
     setEmailValid(isEmailValidValue)
-    setEmailMessage(isEmailValidValue ? '' : 'Email must be in a correct email format (e.g., XXX@XXX.XXX)')
 
     // Check if new password is valid if not display error
     const isPasswordValidValue = isPasswordValid(password)
     setPasswordValid(isPasswordValidValue)
-    setPasswordMessage(isPasswordValidValue ? '' : 'Password must be at least 8 characters long and contain both numbers and letters')
 
     const isConfirmPasswordValidValue = isConfirmPasswordValid(confirmPassword)
     setConfirmPasswordValid(isConfirmPasswordValidValue)
-    setConfirmPasswordMessage(isConfirmPasswordValidValue ? '' : 'Passwords must match')
 
     const isPictureValidValue = isPictureValid(picture)
     setPictureValid(isPictureValidValue)
@@ -141,23 +132,48 @@ export default function SignupForm({ onAddUser }) {
   }
 
   const isUsernameValid = (username) => {
-    return username.length >= 3
+    const isValid = username.length >= 3
+
+    // Set the error message if validation fails
+    setUsernameMessage(isValid ? '' : 'Username must be at least 3 characters long')
+
+    return isValid
   }
 
   const isEmailValid = (email) => {
     // email pattern validation - using regex
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const isLegalEmail = pattern.test(email)
+    if (!isLegalEmail) {
+      setEmailMessage('Email must be in a correct email format (e.g., XXX@XXX.XXX)')
+      return false
+    }
+    const emailExist = users.find((user) => user.email === email)
+    if (emailExist) {
+      setEmailMessage('This email address is already in use. Please use a different one or log in.');
+      return false
+    }
+    return true
   }
 
   const isPasswordValid = (password) => {
-    const pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return pattern.test(password)
+    const pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const isValid = pattern.test(password)
+
+    // Set error message based on conditions
+    setPasswordMessage(isValid ? '' : 'Password must be at least 8 characters long and contain both numbers and letters')
+
+    return isValid
   }
 
   const isConfirmPasswordValid = (confirmPassword) => {
-    return password === confirmPassword
-  }
+    const isValid = password === confirmPassword
+  
+    // Set error message based on conditions
+    setConfirmPasswordMessage(isValid ? '' : 'Passwords must match')
+  
+    return isValid
+  };
 
   const isPictureValid = (picture) => {
     if (picture === null) {
