@@ -4,7 +4,7 @@ import './Login.css'
 import Logo from '../logo/Logo'
 import LoginForm from '../loginForm/LoginForm'
 
-export default function Login({ users }) {
+export default function Login({ users, addConnectedUser }) {
 
   return (
     <div className=" container col-center d-flex justify-content-center align-items-center vh-100">
@@ -14,7 +14,7 @@ export default function Login({ users }) {
             <Logo />
           </div>
           <div className="col-lg-6">
-            <LoginForm users = {users}/>
+            <LoginForm users={users} addConnectedUser={addConnectedUser}/>
           </div>{" "}
         </div>
       </div>

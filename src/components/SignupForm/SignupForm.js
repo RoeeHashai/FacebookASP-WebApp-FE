@@ -102,7 +102,7 @@ export default function SignupForm({ onAddUser }) {
     }
 
     // Add the new user to list of users
-    onAddUser(prevUsers => [...prevUsers, newUser])
+    onAddUser(newUser)
 
     // Save the profile picture to local storage with the user's ID
     sessionStorage.setItem(`profilePicture_${userId}`, picture);

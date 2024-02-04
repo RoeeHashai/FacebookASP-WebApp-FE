@@ -10,13 +10,18 @@ function App() {
     console.log(users);
     setUsers((prevUsers) => [...prevUsers, user])
   };
+  const [connectedUser, setConnectedUser] = useState(null)
+  const addConnectedUser = (user) => {
+    console.log('user is connected: ' + user)
+    setConnectedUser(user)
+  }
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path='/login' element={<Login users = {users}/>} />
+        <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
         <Route path='/signup' element={<Signup onAddUser={addUser} />} />
-        <Route path='/feed' element={<Feed />} />
+        <Route path='/feed' element={<Feed user = {connectedUser}/>} />
       </Routes>
     </Router>
   );
