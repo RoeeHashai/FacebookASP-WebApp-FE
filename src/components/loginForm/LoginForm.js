@@ -22,7 +22,7 @@ export default function LoginForm({ users, addConnectedUser }) {
         setFormSubmitted(true)
     
         const user = validateEmail(email);
-    
+        console.log(user)
         if (user) {
             setEmailValid(true)
     
@@ -35,6 +35,7 @@ export default function LoginForm({ users, addConnectedUser }) {
                 setPasswordMessage('Wrong password')
             }
         } else {
+            console.log('from here')
             setEmailValid(false)
             setEmailMessage('Invalid email')
             setPasswordValid(false)
@@ -51,8 +52,8 @@ export default function LoginForm({ users, addConnectedUser }) {
     };
 
     const validateEmail = (email) => {
-        return users.find((user) => user.email === email)
-    };
+        return users && users.find((user) => user.email === email)
+    }
 
     const validatePassword = (user, password) => {
         return user.password === password

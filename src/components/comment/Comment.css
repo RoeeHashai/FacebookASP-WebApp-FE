@@ -1,0 +1,28 @@
+.remove-border {
+    border: none;
+  }
+.comment {
+    padding: 5px;
+}
+.comment-details {
+    flex-grow: 1;
+    border-radius: 15px;
+    padding: 10px;
+}
+.small-profile-img {
+    width: 40px; /* Adjust the desired width */
+    height: 40px; /* Adjust the desired height */
+    border-radius: 50%;
+}
+/* .comment-options{
+    display: none;
+}
+.comment:hover .comment-options {
+    display: block;
+} */
+.comment-options-btn {
+    display: none;
+}
+.comment:hover .comment-options-btn {
+    display: block;
+}

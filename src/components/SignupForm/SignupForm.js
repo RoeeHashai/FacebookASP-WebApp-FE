@@ -91,10 +91,10 @@ export default function SignupForm({ users, onAddUser }) {
     // Create a new user to add to the users list
     const newUser = {
       id: userId,
-      username,
+      "name": username,
       email,
       password,
-      picture: picture && URL.createObjectURL(picture), // Use createObjectURL to get a URL for the image
+      "image": picture && URL.createObjectURL(picture), // Use createObjectURL to get a URL for the image
     };
 
     // Add the new user to the list of users
@@ -135,12 +135,12 @@ export default function SignupForm({ users, onAddUser }) {
   }
 
   const isUsernameValid = (username) => {
-    const isValid = username.length >= 3
-
-    // Set the error message if validation fails
-    setUsernameMessage(isValid ? '' : 'Username must be at least 3 characters long')
-
-    return isValid
+    const usernameExist = users.find((user) => user.username === username)
+    if (usernameExist) {
+      setUsernameMessage('This username is already in use. Please use a different one or log in.');
+      return false
+    }
+    return true
   }
 
   const isEmailValid = (email) => {

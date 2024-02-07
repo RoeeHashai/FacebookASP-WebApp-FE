@@ -1,0 +1,10 @@
+.list-group-item{
+    border: 0;
+    background-color: transparent;
+    padding: 15px;
+}
+.list-group .list-to-hover:hover{
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

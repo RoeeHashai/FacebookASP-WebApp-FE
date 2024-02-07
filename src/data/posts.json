@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "author": "roee.hashai@gmail.com",
+      "date": "January 1, 2024",
+      "content": "Hello There and welcome to the amazing Facebook App!",
+      "image": "/preloaded-post-images/post1.png",
+      "likes": 1,
+      "commentCount": 1,
+      "comments":[
+        {
+          "id": 1,
+          "author": "roee.hashai@gmail.com",
+          "content": "Looking good! :)"
+        }
+      ]
+    }
+]
