@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './PostBody.css'
-import PostEditor from '../components/postEditor/PostEditor';
-
+import PostEditor from'../postEditor/PostEditor'
 export default function PostBody({ user, post, postCreator, date, content, image, onEdit, onDelete }) {
     const isCurrentUserPostCreator = user.email === postCreator.email;
     // State for managing editing mode

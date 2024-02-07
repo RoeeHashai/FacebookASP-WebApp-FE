@@ -11,20 +11,6 @@ export default function PostEditor({ post, onCancel, onSave }) {
     const [imageMessage, setImageMessage] = useState('')
     console.log(editedImage)
 
-    // const isImageValid = (image) => {
-    //     console.log(image)
-    //     if (image) {
-    //         console.log('in')
-    //         const acceptedFormats = ['image/jpeg', 'image/png'];
-
-    //         if (!image.type || !acceptedFormats.includes(image.type)) {
-    //             setImageMessage('Please upload a valid JPEG or PNG image');
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // };
-
     const handleContentChange = (event) => {
         setEditedContent(event.target.value);
     };
@@ -35,21 +21,6 @@ export default function PostEditor({ post, onCancel, onSave }) {
     };
 
     const handleSave = () => {
-        // const isImageValidValue = isImageValid(editedImage);
-        // setImageValid(isImageValidValue);
-
-        // if (!isImageValidValue) {
-        //     // Return early if the image is not valid
-        //     return;
-        // }
-
-        // if (!editedContent && !editedImage) {
-        //     // If both content and image are empty, show an error message
-        //     setImageValid(false);
-        //     setImageMessage('Please enter content or upload a valid image');
-        //     return;
-        // }
-
         if (editedImage) {
             console.log('tjrer')
             // If there is an edited image, proceed with the Blob and Object URL logic

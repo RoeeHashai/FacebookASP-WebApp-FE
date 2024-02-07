@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import './Post.css'
 import Comment from '../comment/Comment'
 import CommentGen from '../commentGen/CommentGen';
-import PostBody from '../../postBody/PostBody';
+import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 
 export default function Post({ users, user, post, setPosts }) {
@@ -27,6 +27,7 @@ export default function Post({ users, user, post, setPosts }) {
         setCommentMode(!commentMode)
     }
 
+
     // const handleCancelEdit = () => {
     //     setIsEditing(false);
     // };
@@ -45,24 +46,32 @@ export default function Post({ users, user, post, setPosts }) {
         // setIsEditing(false);
     };
 
-
-
     const handleDeletePost = ({ post, postId }) => {
         // Implement logic to handle post deletion
         setPosts((prevPost) => prevPost.filter((p) => p.id !== postId))
     };
+
+    const handleEditComment = (editedComment) => {
+        setCommentsLst((prevComments) =>
+            prevComments.map((comment) => (comment.id === editedComment.id ? editedComment : comment))
+        );
+    };
+
+    const handleDeleteComment = (commentId) => {
+        setCommentsLst((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+    };
     useEffect(() => {
         // Check if connectedUser is falsy (null or undefined)
         if (!user) {
-          // Navigate to the login page if not logged in
-          navigate('/login');
+            // Navigate to the login page if not logged in
+            navigate('/login');
         }
-      }, [user, navigate]);
-    
-      // If connectedUser is not defined, return null to avoid rendering the component
-      if (!user) {
+    }, [user, navigate]);
+
+    // If connectedUser is not defined, return null to avoid rendering the component
+    if (!user) {
         return null;
-      }
+    }
 
     return (
         <div className="card post-card m-2">
@@ -85,7 +94,8 @@ export default function Post({ users, user, post, setPosts }) {
                 setPosts={setPosts}
             />
             {commentsLst.map((comment) =>
-                <Comment key={comment.id} user = {user} commentCreator={findUser(comment.author, users)} comment={comment} />
+                <Comment key={comment.id} user={user} commentCreator={findUser(comment.author, users)} comment={comment}                     onDelete={handleDeleteComment}
+                onEdit={handleEditComment}/>
             )}
             {commentMode && <CommentGen user={user} post={post} setPosts={setPosts} addComment={addComment} />}
 
