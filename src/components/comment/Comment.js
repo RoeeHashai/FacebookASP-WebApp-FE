@@ -1,25 +1,28 @@
 import React from 'react'
 import './Comment.css'
 
-export default function Comment({ user, comment }) {
+export default function Comment({ user, commentCreator, comment }) {
+    const isCurrentUserCommentCreator = user.email === commentCreator.email;
+
     return (
-            <div className="comment" id={comment.id}>
-                <div className="d-flex">
-                    {/* Profile Picture */}
-                    <img
-                        src={user.image}
-                        alt="User Profile"
-                        className="rounded-circle me-2 small-profile-img"
-                    />
-                    {/* Comment Details */}
-                    <div className="comment-details bg-light ps-2 position-relative">
-                        {/* User Name and Comment Text */}
-                        <div>
-                            <h6 className="mb-0">{user.name}</h6>
-                            <p
-                                className="mb-0 breakWord"
-                            />
-                            <span id="commentText1">{comment.content}</span>
+        <div className="comment" id={comment.id}>
+            <div className="d-flex">
+                {/* Profile Picture */}
+                <img
+                    src={commentCreator.image}
+                    alt="User Profile"
+                    className="rounded-circle me-2 small-profile-img"
+                />
+                {/* Comment Details */}
+                <div className="comment-details bg-light ps-2 position-relative">
+                    {/* User Name and Comment Text */}
+                    <div>
+                        <h6 className="mb-0">{commentCreator.name}</h6>
+                        <p
+                            className="mb-0 breakWord"
+                        />
+                        <span id="commentText1">{comment.content}</span>
+                        {isCurrentUserCommentCreator && (
                             <div className="comment-options-btn position-absolute top-0 end-0">
                                 <button
                                     className="text-dark btn remove-border"
@@ -43,8 +46,10 @@ export default function Comment({ user, comment }) {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+
+                        )}
                     </div>
                 </div>
+            </div>
         </div>)
 }
