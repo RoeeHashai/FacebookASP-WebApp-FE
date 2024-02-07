@@ -42,11 +42,13 @@ export default function PostBody({ postCreator, date, content, image, likes, com
             </div>
             <div className="card-body pb-0">
                 <p className="card-text">{content} </p>
-                <img
-                    src={image}
-                    className="post-img img-fluid"
-                    alt=''
-                />
+                {image && (
+                    <img
+                        src={image}
+                        className="post-img img-fluid"
+                        alt=''
+                    />
+                )}
                 <div className="mt-2">
                     <span className="me-2">
                         <i className="bi bi-hand-thumbs-up" /> {likes} Likes

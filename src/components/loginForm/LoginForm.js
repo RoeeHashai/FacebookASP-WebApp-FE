@@ -7,9 +7,11 @@ export default function LoginForm({ users, addConnectedUser }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [emailValid, setEmailValid] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
+
     const [emailMessage, setEmailMessage] = useState('');
     const [passwordMessage, setPasswordMessage] = useState('');
 
