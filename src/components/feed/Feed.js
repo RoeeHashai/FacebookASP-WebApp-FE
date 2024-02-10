@@ -9,7 +9,7 @@ import './Feed.css';
 import postsData from '../../data/posts.json';
 
 export default function Feed({ users, user }) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [posts, setPosts] = useState([...postsData]);
     const [darkMode, setDarkMode] = useState(false); // Step 1
