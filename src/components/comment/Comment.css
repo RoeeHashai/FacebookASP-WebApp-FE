@@ -26,3 +26,9 @@
 .comment:hover .comment-options-btn {
     display: block;
 }
+
+/* Add this to your CSS file */
+.dark-mode .dark-mode-comment {
+    background-color: #545353; /* Change the background color for dark mode */
+    /* Add any other styles for the background in dark mode */
+  }

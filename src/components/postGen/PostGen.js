@@ -3,7 +3,7 @@ import './PostGen.css'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function PostGen({ user, addPost }) {
+export default function PostGen({ user, addPost , darkMode}) {
     const [idCounter, setIdCounter] = useState(10)
 
     // state variables of post form
@@ -81,7 +81,7 @@ export default function PostGen({ user, addPost }) {
     return (
         <>
             {/* add new comment */}
-            <div className="card m-2">
+            <div className={`card m-2 ${darkMode ? 'dark-post-gen': ''}`}>
                 <div className="card-body m-1">
                     <div className="d-flex add-new-comment-box">
                         {/* Profile Picture */}
@@ -104,7 +104,7 @@ export default function PostGen({ user, addPost }) {
 
                     <input
                         type="file"
-                        className={`form-control ${!imageValid && 'is-invalid'}`}
+                        className={`form-control ${!imageValid && 'is-invalid'} ${darkMode ? 'dark-input' : ''}`}
                         onChange={setPostImage}
                         id="postImage"
                         required=""
@@ -116,7 +116,7 @@ export default function PostGen({ user, addPost }) {
                 </div>
                 <div className="card-footer post-footer add-new-comment-box">
                     <div className="btn-group w-100 ms-1">
-                        <button type="button" className="btn btn-light" onClick={handlePostClick}>
+                    <button type="button" className={`btn btn-light ${darkMode ? 'dark-button' : ''}`} onClick={handlePostClick}>
                             <i className="bi bi-file-post pe-1" />
                             Post
                         </button>

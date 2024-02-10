@@ -7,7 +7,7 @@ import CommentGen from '../commentGen/CommentGen';
 import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 
-export default function Post({ users, user, post, setPosts }) {
+export default function Post({ users, user, post, setPosts, darkMode }) {
     const { id, author, date, content, image, likes, commentCount, comments } = post;
     const navigate = useNavigate();
     const [commentsLst, setCommentsLst] = useState(comments)
@@ -74,7 +74,7 @@ export default function Post({ users, user, post, setPosts }) {
     }
 
     return (
-        <div className="card post-card m-2">
+        <div className={`card post-card m-2 ${darkMode ? 'dark-mode' : ''}`}>
             <PostBody
                 user={user}
                 post={post}
@@ -84,6 +84,7 @@ export default function Post({ users, user, post, setPosts }) {
                 image={image}
                 onEdit={handleEditPost} // Set editing mode to true when Edit is clicked
                 onDelete={handleDeletePost}
+                darkMode={darkMode}
             />
             <LikeCommentShareBtn
                 toggleCommentMode={toggleCommentMode}
@@ -92,12 +93,13 @@ export default function Post({ users, user, post, setPosts }) {
                 liked={liked}
                 setLiked={setLiked}
                 setPosts={setPosts}
+                darkMode={darkMode}
             />
             {commentsLst.map((comment) =>
-                <Comment key={comment.id} user={user} commentCreator={findUser(comment.author, users)} comment={comment}                     onDelete={handleDeleteComment}
-                onEdit={handleEditComment}/>
+                <Comment key={comment.id} user={user} commentCreator={findUser(comment.author, users)} comment={comment} onDelete={handleDeleteComment}
+                    onEdit={handleEditComment} darkMode={darkMode}/>
             )}
-            {commentMode && <CommentGen user={user} post={post} setPosts={setPosts} addComment={addComment} />}
+            {commentMode && <CommentGen user={user} post={post} setPosts={setPosts} addComment={addComment} darkMode={darkMode}/>}
 
         </div>)
 }

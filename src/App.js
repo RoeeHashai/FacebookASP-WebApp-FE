@@ -21,12 +21,12 @@ function App() {
   }
   return (
     <Router>
-      <Routes>
-        <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser}/>} />
-        <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
-        <Route path='/signup' element={<Signup users={users} onAddUser={addUser} />} />
-        <Route path='/feed' element={<Feed users={users} user = {connectedUser}/>} />
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
+          <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
+          <Route path='/signup' element={<Signup users={users} onAddUser={addUser} />} />
+          <Route path='/feed' element={<Feed users={users} user={connectedUser} />} />
+        </Routes>
     </Router>
   );
 }

@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react'
 import './Menu.css'
-import {useNavigate} from 'react-router-dom'
-export default function Menu({user}) {
+import { useNavigate } from 'react-router-dom'
+export default function Menu({ user, darkMode }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-      // Check if connectedUser is falsy (null or undefined)
-      if (!user) {
-        // Navigate to the login page if not logged in
-        navigate('/login');
-      }
+        // Check if connectedUser is falsy (null or undefined)
+        if (!user) {
+            // Navigate to the login page if not logged in
+            navigate('/login');
+        }
     }, [user, navigate]);
-  
+
     // If connectedUser is not defined, return null to avoid rendering the component
     if (!user) {
-      return null;
+        return null;
     }
-  
-  
+
+
 
     return (
-        <ul className="list-group">
+        <ul className={`list-group ${darkMode ? 'dark-mode' : ''}`}>
             <li className="list-group-item d-flex align-items-center">
                 {/* Profile Picture */}
                 <div className='contanier'>

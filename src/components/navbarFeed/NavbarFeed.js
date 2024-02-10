@@ -4,9 +4,9 @@ import facebooklogo from '../res/Facebook_Logo_2023-1.png'
 import { Link } from 'react-router-dom'
 
 
-export default function NavbarFeed() {
+export default function NavbarFeed({ toggleDarkMode, darkMode }) {
     return (
-        <nav className="navbar sticky-top shadow">
+        <nav className={`navbar sticky-top shadow ${darkMode ? 'navbar-dark' : ''}`}>
             <div className="container text-center">
                 <div className="row justify-content-center">
                     <div className="col-auto d-none d-md-block position-fixed start-0">
@@ -15,6 +15,8 @@ export default function NavbarFeed() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="toggleSwitch"
+                                onChange={toggleDarkMode}
+                            // checked={darkMode}
                             />
                             <label className="form-check-label" htmlFor="toggleSwitch" />
                         </div>
@@ -31,7 +33,7 @@ export default function NavbarFeed() {
                     <div className="col-auto">
                         <div className="searchbar ms-2">
                             <input
-                                className="form-control rounded-pill"
+                                className="form-control navbarSearchBar rounded-pill"
                                 type="search"
                                 placeholder="Search Facebook"
                                 aria-label="Search"
@@ -41,7 +43,7 @@ export default function NavbarFeed() {
                     </div>
                     <div className="col-auto d-none d-md-block position-fixed end-0">
                         <Link to='/login'>
-                            <button className='btn' data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
+                            <button className={`btn ${darkMode ? 'logout-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
                         </Link>
                     </div>
                 </div>

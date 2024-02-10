@@ -1,5 +1,13 @@
-body {
-    background-color: #f0f2f5;
-    margin: 0px;
-    overscroll-behavior: none;
-}
+
+/* Add these styles to your CSS file */
+.dark-mode {
+    background-color: #151414;
+    color: #fff;
+    /* Add other dark mode styles here */
+  }
+  
+  .light-mode {
+    background-color: #ffffff;
+    color: #000000;
+  }
+  

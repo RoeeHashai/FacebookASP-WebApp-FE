@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './CommentGen.css'
 
-export default function CommentGen({ user, addComment, setPosts, post }) {
+export default function CommentGen({ user, addComment, setPosts, post , darkMode}) {
     const [idCounter, setIdCounter] = useState(10)
     const [commentContent, setCommentContent] = useState('')
 
@@ -39,12 +39,18 @@ export default function CommentGen({ user, addComment, setPosts, post }) {
                     <div className="col add-new-comment-box">
                         <div className="d-flex">
                             <textarea
-                                className="form-control add-comment-custom"
+                                className={`form-control add-comment-custom ${darkMode ? 'text-light' : ''}`}
                                 placeholder="Add a comment..."
                                 defaultValue={""}
                                 onChange={handleOnChangeContentComment}
+                                
                             />
-                            <button className='btn' onClick={handleAddCommentClick}><i className="bi bi-send"></i></button>
+                            <button
+                                className={`btn ${darkMode ? 'dark-mode-btn' : ''}`}
+                                onClick={handleAddCommentClick}
+                            >
+                                <i className="bi bi-send"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
