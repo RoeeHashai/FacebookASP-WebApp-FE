@@ -48,7 +48,7 @@ export default function Menu({ user, darkMode }) {
             </li>
             <li className="list-group-item d-flex list-to-hover align-items-center">
                 <i className="bi bi-people-fill ms-1" />
-                <span className="w-100 m-1 ms-3">Gruops</span>
+                <span className="w-100 m-1 ms-3">Groups</span>
             </li>
             <li className="list-group-item d-flex list-to-hover align-items-center">
                 <i className="bi bi-play-btn ms-1" />
