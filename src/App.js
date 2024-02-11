@@ -3,9 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/login/Login'
 import Signup from './components/signup/Signup'
 import Feed from './components/feed/Feed'
-import { useState } from 'react'
+import usersData from './data/users.json'
+import { useEffect, useState } from 'react'
 function App() {
-  const [users, setUsers] = useState([])
+
+  const [users, setUsers] = useState([...usersData])
+  console.log(usersData)
+
   const addUser = (user) => {
     console.log(users);
     setUsers((prevUsers) => [...prevUsers, user])
@@ -18,10 +22,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser}/>} />
         <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
         <Route path='/signup' element={<Signup users={users} onAddUser={addUser} />} />
-        <Route path='/feed' element={<Feed user = {connectedUser}/>} />
+        <Route path='/feed' element={<Feed users={users} user = {connectedUser}/>} />
       </Routes>
     </Router>
   );

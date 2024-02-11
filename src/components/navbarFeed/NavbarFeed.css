@@ -1,0 +1,21 @@
+.navbar > .container {
+    display: block !important; /* Change display value as needed */
+}
+
+nav{
+    background-color: white;
+    height: 55px;
+}
+
+.searchbar{
+    width: 250px;
+}
+
+.searchbar input {
+    background-color: #f0f2f5;
+}
+
+.dark-mode-switch{
+    font-size: 20px;
+
+}

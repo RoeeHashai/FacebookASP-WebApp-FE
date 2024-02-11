@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1, 
+        "name": "Roee Hashai", 
+        "email": "roee.hashai@gmail.com",
+        "password": "1234",
+        "image": "/profile-pictures/roee_hashai.jpeg"
+    }
+]

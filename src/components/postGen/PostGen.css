@@ -1,0 +1,5 @@
+.small-profile-img {
+    width: 40px; /* Adjust the desired width */
+    height: 40px; /* Adjust the desired height */
+    border-radius: 50%;
+}

@@ -5,6 +5,7 @@ import Logo from '../logo/Logo'
 import LoginForm from '../loginForm/LoginForm'
 
 export default function Login({ users, addConnectedUser }) {
+  console.log('Received Users:', users);
 
   return (
     <div className=" container col-center d-flex justify-content-center align-items-center vh-100">

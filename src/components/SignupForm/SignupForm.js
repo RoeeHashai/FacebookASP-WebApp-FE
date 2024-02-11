@@ -78,11 +78,11 @@ export default function SignupForm({ users, onAddUser }) {
   }
 
   const handleSignupClick = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    // Check if Signin was done valid of not dont precced to the login page
+    // Check if Signin was done valid or not, don't proceed to the login page if not valid
     if (!validateForm()) {
-      return
+      return;
     }
 
     // Generate a unique ID for the user
@@ -91,21 +91,24 @@ export default function SignupForm({ users, onAddUser }) {
     // Create a new user to add to the users list
     const newUser = {
       id: userId,
-      username,
+      "name": username,
       email,
       password,
-      picture,
-    }
+      "image": picture && URL.createObjectURL(picture), // Use createObjectURL to get a URL for the image
+    };
 
-    // Add the new user to list of users
-    onAddUser(newUser)
+    // Add the new user to the list of users
+    onAddUser(newUser);
 
-    // Save the profile picture to local storage with the user's ID
-    sessionStorage.setItem(`profilePicture_${userId}`, picture);
+    // You can clear the state after adding the user if needed
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setPicture(null);
 
-    // navigate to login page after succssefuly adding a new user
-    navigate('/login')
-  }
+    // Navigate to the login page after successfully adding a new user
+    navigate('/login');
+  };
 
   const validateForm = () => {
     if (username === '') {
@@ -132,12 +135,12 @@ export default function SignupForm({ users, onAddUser }) {
   }
 
   const isUsernameValid = (username) => {
-    const isValid = username.length >= 3
-
-    // Set the error message if validation fails
-    setUsernameMessage(isValid ? '' : 'Username must be at least 3 characters long')
-
-    return isValid
+    const usernameExist = users.find((user) => user.username === username)
+    if (usernameExist) {
+      setUsernameMessage('This username is already in use. Please use a different one or log in.');
+      return false
+    }
+    return true
   }
 
   const isEmailValid = (email) => {
@@ -168,10 +171,10 @@ export default function SignupForm({ users, onAddUser }) {
 
   const isConfirmPasswordValid = (confirmPassword) => {
     const isValid = password === confirmPassword
-  
+
     // Set error message based on conditions
     setConfirmPasswordMessage(isValid ? '' : 'Passwords must match')
-  
+
     return isValid
   };
 
@@ -179,14 +182,18 @@ export default function SignupForm({ users, onAddUser }) {
     if (picture === null) {
       setPictureMessage('Must upload a profile picture');
       return false;
-    } else if (!picture.type || !picture.type.startsWith('image/jpeg')) {
-      setPictureMessage('Please upload a valid JPEG image');
+    }
+  
+    const acceptedFormats = ['image/jpeg', 'image/png'];
+  
+    if (!picture.type || !acceptedFormats.includes(picture.type)) {
+      setPictureMessage('Please upload a valid JPEG or PNG image');
       return false;
     }
-
+  
     // If all checks pass, the picture is valid
     return true;
-  }
+  };
 
   return (
     <div className="card shadow rounded p-3">
@@ -270,6 +277,17 @@ export default function SignupForm({ users, onAddUser }) {
             {!pictureValid && <div className='invalid-feedback'>{pictureMessage}</div>}
 
           </div>
+          {/* Display the profile picture preview */}
+          {picture && pictureValid && (
+            <div className="mt-3">
+              <h6>Profile Picture Preview:</h6>
+              <img
+              className='sm previewProfile img-fluid'
+                src={URL.createObjectURL(picture)}
+                alt="Profile Preview"
+              />
+            </div>
+          )}
         </div>
         <div className="col-12">
           <button

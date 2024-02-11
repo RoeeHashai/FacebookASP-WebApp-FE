@@ -18,27 +18,28 @@ export default function LoginForm({ users, addConnectedUser }) {
     };
 
     const handleLoginClick = (e) => {
-        e.preventDefault();
-        setFormSubmitted(true);
+        e.preventDefault()
+        setFormSubmitted(true)
     
         const user = validateEmail(email);
-    
+        console.log(user)
         if (user) {
-            setEmailValid(true);
+            setEmailValid(true)
     
             if (validatePassword(user, password)) {
-                setPasswordValid(true);
+                setPasswordValid(true)
                 addConnectedUser(user)
-                navigate('/feed');
+                navigate('/feed')
             } else {
-                setPasswordValid(false);
-                setPasswordMessage('Wrong password');
+                setPasswordValid(false)
+                setPasswordMessage('Wrong password')
             }
         } else {
-            setEmailValid(false);
-            setEmailMessage('Invalid email');
-            setPasswordValid(false);
-            setPasswordMessage('');
+            console.log('from here')
+            setEmailValid(false)
+            setEmailMessage('Invalid email')
+            setPasswordValid(false)
+            setPasswordMessage('')
         }
     };
 
@@ -51,8 +52,8 @@ export default function LoginForm({ users, addConnectedUser }) {
     };
 
     const validateEmail = (email) => {
-        return users.find((user) => user.email === email)
-    };
+        return users && users.find((user) => user.email === email)
+    }
 
     const validatePassword = (user, password) => {
         return user.password === password

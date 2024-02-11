@@ -1,0 +1,18 @@
+.comment {
+    padding: 5px;
+}
+.small-profile-img {
+    width: 40px; /* Adjust the desired width */
+    height: 40px; /* Adjust the desired height */
+    border-radius: 50%;
+}
+.add-new-comment-box textarea{
+    background-color: #f0f2f5;
+    height: 60px;
+}
+
+.add-new-comment-box button{
+border-radius: 10px;
+margin-top: 3px;
+margin-bottom: 3px;
+}

@@ -1,0 +1,25 @@
+.post-options-btn {
+    display: none;
+}
+.to-hover:hover .post-options-btn {
+    display: block;
+}
+
+/* .dropdown-menu{
+    display: none;
+}
+.to-hover-post:hover .post-options-btn {
+    display: block;
+} */
+
+
+.line-under-buttons {
+    border-bottom: 1px solid #ccc; /* Adjust the color as needed */
+    margin-top: 2px; /* Adjust the margin as needed */
+    margin-bottom: 4px;
+}
+.small-profile-img {
+    width: 40px; /* Adjust the desired width */
+    height: 40px; /* Adjust the desired height */
+    border-radius: 50%;
+}

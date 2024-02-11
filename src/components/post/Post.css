@@ -1,0 +1,26 @@
+.remove-border {
+    border: none;
+  }
+
+.breakWord {
+    overflow-wrap: break-word;
+  }.post-options-btn {
+    display: none;
+}
+
+.post-card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.card-footer{
+    background-color: transparent;
+    padding: 2px;
+ }
+
+.post-footer button {
+    margin-right: 10px;
+    border-radius: 0px;
+  }
