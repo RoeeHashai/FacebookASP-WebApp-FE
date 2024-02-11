@@ -1,0 +1,178 @@
+body {
+    background-color: #f0f2f5;
+}
+
+
+.logo {
+    width: 40px;
+    height: auto;
+}
+
+.searchbar{
+    width: 250px;
+}
+
+.searchbar input {
+    background-color: #f0f2f5; /* Replace with the color you desire */
+}
+
+
+.document-content{
+    margin-top: 67px;
+}
+
+.list-group-item{
+    border: 0;
+    background-color: transparent;
+    padding: 15px;
+}
+.list-group-item:hover{
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-custom{
+    position: sticky;
+    top: 600px;
+}
+  
+ .fixed {
+    height: 100vh;
+}
+.fixed-col {
+    height: 100vh;
+    background-color: #ff9900;
+  }
+  
+  .scrollable-col {
+    height: 100vh;
+    overflow-y: scroll;
+  } */
+  /* .fixed {
+    position: fixed !important;
+    top: 65px;
+    left: 0px;
+    bottom: 0px;
+  } */
+  
+  .scrollable {
+    background: yellow;
+  }
+  
+
+/* .scrollable-col { /* Hide the scroll bar for the main feed col*/
+    /* height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* For Firefox */
+    /* scrollbar-color: transparent transparent; /* For Firefox */
+    /* For Webkit (Chrome, Safari) and Blink (Edge) based browsers */
+    /* ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: transparent; */
+
+    
+
+  .post-card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+  /* .post-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  } */
+
+ .card-footer{
+    background-color: transparent;
+    padding: 2px;
+ }
+
+  .post-footer button {
+    margin-right: 10px;
+    border-radius: 0px;
+  }
+
+  /* .comment {
+    margin-bottom: 10px;
+  } */
+
+  .small-profile-img {
+    width: 40px; /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed */
+    border-radius: 50%; /* To maintain a circular shape for a rounded profile image */
+  }
+
+  .post-img {
+        max-width: 400px; /* Adjust the maximum width as needed */
+        height: auto;
+  }
+
+  .comment {
+    margin: 10px;
+    padding: 5px;
+}
+/* .commenttext {
+    background-color: #f0f2f5;
+} */
+
+.comment img.small-profile-img {
+    width: 40px; 
+    height: 40px; 
+}
+
+.comment-details {
+    flex-grow: 1;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+/* .comment-details h6 {
+    margin-bottom: 5px;
+} */
+
+/* .comment-details p {
+    margin: 0;
+} */
+
+.add-comment-custom{
+    border-radius: 15px;
+    width: 500px;
+}
+
+.comment-options{
+    display: none;
+}
+.comment:hover .comment-options {
+    display: block;
+}
+.post-options {
+    display: none;
+}
+
+.post-card:hover .post-options {
+    display: block;
+}
+
+.upload-post{
+    width: 40px; 
+    height: 40px;
+}
+
+.comment-input > .form-control{
+    width: 600px;
+    height: 30px;
+}
+.cimageuploding{
+    width: 640px;
+}
+
+.coustom-input-comment {
+    width: 100%; /* or width: 90vw; */
+}
+

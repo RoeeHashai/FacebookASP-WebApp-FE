@@ -1,0 +1,290 @@
+<div class="card post-card m-2">
+    <div class="card-header bg-white">
+      <div class="d-flex">
+        <img src="../feed-basic-light/res/roeehashai_profile.jpeg" alt="User Profile"
+          class="rounded-circle me-2 small-profile-img">
+        <div>
+          <h6 class="mb-0">Roee Hashai</h6>
+          <p class="mb-0 small">Posted on January 1, 2024</p>
+        </div>
+        <div class="post-options position-absolute top-0 end-0">
+          <a class="text-dark" href="#" id="postOptionsLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots m-3 fs-5"></i>
+          </a>
+          <ul class="dropdown-menu shadow" aria-labelledby="postOptionsLink">
+            <li><a class="dropdown-item" href="#">Edit</a></li>
+            <li><a class="dropdown-item" href="#">Delete</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Hello There and welcome to the amazing Facebook!</p>
+      <img src="../feed-basic-light/res/1677057215865.png" alt="Post Image" class="post-img">
+    </div>
+    <div class="like-comment-count mb-1">
+      <span class="me-2"><i class="bi bi-hand-thumbs-up"></i> 42 Likes</span>
+      <span><i class="bi bi-chat"></i> 10 Comments</span>
+    </div>
+    <div class="card-footer post-footer">
+      <!-- <button type="button" class="btn btn-outline-primary">Like</button>
+        <button type="button" class="btn btn-outline-secondary">Share</button> -->
+      <div class="btn-group w-100 mt-1 mb-1">
+        <button type="button" class="btn btn-light">
+          <i class="bi bi-hand-thumbs-up pe-1"></i>Like</button>
+        <button type="button" class="btn btn-light">
+          <i class="bi bi-chat pe-1"></i>Comment</button>
+        <button type="button" class="btn btn-light">
+          <i class="bi bi-share pe-1"></i>Share</button>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="comment" id="comment1">
+        <div class="d-flex">
+          <!-- Profile Picture -->
+          <img src="../feed-basic-light/res/roeehashai_profile.jpeg" alt="User Profile"
+            class="rounded-circle me-2 small-profile-img">
+
+          <!-- Comment Details -->
+          <div class="comment-details bg-light ps-2 position-relative">
+            <!-- User Name and Comment Text -->
+            <div>
+              <h6 class="mb-0">Roee Hasahi</h6>
+              <p class="mb-0" style="overflow-wrap: break-word;"></p>
+              <span id="commentText1">Looking good! :)</span>
+              <div class="comment-options position-absolute top-0 end-0">
+                <a class="text-dark" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical p-1 pt-1 fs-5"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <li><a class="dropdown-item" href="#">Edit</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add more comments as needed -->
+      <div class="card-footer">
+        <div class="comment">
+          <div class="d-flex">
+            <!-- Profile Picture -->
+            <img src="../feed-basic-light/res/roeehashai_profile.jpeg" alt="User Profile"
+              class="rounded-circle me-2 small-profile-img">
+
+            <!-- Input field for the comment -->
+            <div class="comment-input">
+              <textarea class="form-control add-comment-custom" placeholder="Add a comment..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  .post-card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+  .post-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+ .card-footer{
+    background-color: transparent;
+    padding: 2px;
+ }
+
+  .post-footer button {
+    margin-right: 10px;
+    border-radius: 0px;
+
+  }
+
+  /* .comment {
+    margin-bottom: 10px;
+  } */
+
+  .small-profile-img {
+    width: 40px; /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed */
+    border-radius: 50%; /* To maintain a circular shape for a rounded profile image */
+  }
+
+  .post-img {
+        max-width: 400px; /* Adjust the maximum width as needed */
+        height: auto;
+  }
+
+  .comment {
+    margin: 10px;
+    padding: 5px;
+}
+/* .commenttext {
+    background-color: #f0f2f5;
+} */
+
+.comment img.small-profile-img {
+    width: 40px; 
+    height: 40px; 
+}
+
+.comment-details {
+    flex-grow: 1;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+/* .comment-details h6 {
+    margin-bottom: 5px;
+} */
+
+/* .comment-details p {
+    margin: 0;
+} */
+
+.add-comment-custom{
+    border-radius: 15px;
+    width: 500px;
+}
+
+.comment-options{
+    display: none;
+}
+.comment:hover .comment-options {
+    display: block;
+}
+.post-options {
+    display: none;
+}
+
+.post-card:hover .post-options {
+    display: block;
+}
+
+.upload-post{
+    width: 40px; 
+    height: 40px;
+}
+
+.comment-input > .form-control{
+    width: 600px;
+    height: 30px;
+}
+.cimageuploding{
+    width: 640px;
+}
+
+.coustom-input-comment {
+    width: 100%; /* or width: 90vw; */
+}
+
+
+.post-card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+  .post-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+ .card-footer{
+    background-color: transparent;
+    padding: 2px;
+ }
+
+  .post-footer button {
+    margin-right: 10px;
+    border-radius: 0px;
+
+  }
+
+  /* .comment {
+    margin-bottom: 10px;
+  } */
+
+  .small-profile-img {
+    width: 40px; /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed */
+    border-radius: 50%; /* To maintain a circular shape for a rounded profile image */
+  }
+
+  .post-img {
+        max-width: 400px; /* Adjust the maximum width as needed */
+        height: auto;
+  }
+
+  .comment {
+    margin: 10px;
+    padding: 5px;
+}
+/* .commenttext {
+    background-color: #f0f2f5;
+} */
+
+.comment img.small-profile-img {
+    width: 40px; 
+    height: 40px; 
+}
+
+.comment-details {
+    flex-grow: 1;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+/* .comment-details h6 {
+    margin-bottom: 5px;
+} */
+
+/* .comment-details p {
+    margin: 0;
+} */
+
+.add-comment-custom{
+    border-radius: 15px;
+    width: 500px;
+}
+
+.comment-options{
+    display: none;
+}
+.comment:hover .comment-options {
+    display: block;
+}
+.post-options {
+    display: none;
+}
+
+.post-card:hover .post-options {
+    display: block;
+}
+
+.upload-post{
+    width: 40px; 
+    height: 40px;
+}
+
+.comment-input > .form-control{
+    width: 600px;
+    height: 30px;
+}
+.cimageuploding{
+    width: 640px;
+}
+
+.coustom-input-comment {
+    width: 100%; /* or width: 90vw; */
+}
