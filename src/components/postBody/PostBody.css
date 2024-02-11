@@ -23,31 +23,38 @@
     height: 40px; /* Adjust the desired height */
     border-radius: 50%;
 }
-/* Customize header style for dark mode */
+/* Customize header style for dark mode
 .dark-mode .to-hover .card-header {
     background-color:transparent;
         color: #fff; /* Example light text color for dark mode header */
     /* Add any other styles for dark mode header */
-  }
+  /* } */
 
-
+/* 
 .dark-mode-icon {
     color: #fff; /* Set the desired text color for dark mode icon */
     /* Add any other styles for dark mode icon */
-}
+/* } */
 /* styles.css */
-.dark-mode-dropdown {
+/* .dark-mode-dropdown {
     background-color: #333; /* Set the desired background color for dark mode dropdown */
     /* Add any other styles for dark mode dropdown */
-}
+/* } */ 
 
-/* Example of increased specificity */
+/* Example of increased specificity
 .dark-mode-dropdown li .dropdown-item {
     color: #fff !important;
-}
+} */
 
 /* Example for changing hovering color in dark mode */
-.dark-mode .dropdown-menu .dropdown-item:hover {
+/* .dark-mode .dropdown-menu .dropdown-item:hover {
     background-color: #222; /* Set your desired hovering color for dark mode */
     /* Add any other styles for the hovering effect in dark mode */
+/* } */
+.darkmode .dropdown-menu{
+    background-color: #2e2c2c;
+}
+
+.darkmode .three-dots{
+    background-color: transparent!important;
 }

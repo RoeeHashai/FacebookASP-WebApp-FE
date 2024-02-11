@@ -27,14 +27,18 @@
     display: block;
 }
 
-/* Add this to your CSS file */
+/* Add this to your CSS file
 .dark-mode .dark-mode-comment {
     background-color: #545353; /* Change the background color for dark mode */
     /* Add any other styles for the background in dark mode */
-  }
+  /* } */ 
 
   /* Add this to your CSS file */
 .light-mode-comment {
     background-color: #f0f2f5;
     /* Add any other styles for the background in dark mode */
+  }
+
+  .darkmode .comment-details{
+    background-color: rgb(77, 77, 77);
   }

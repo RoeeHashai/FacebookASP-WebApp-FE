@@ -47,7 +47,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
                     {isCurrentUserPostCreator && (
                         <div className="post-options-btn position-absolute top-0 end-0">
                             <button
-                                className={` btn remove-border ${darkMode ? 'dark-mode-icon' : ''}`}
+                                className={` btn remove-border three-dots`}
                                 type="button"
                                 id="postOptionsLink"
                                 data-bs-toggle="dropdown"

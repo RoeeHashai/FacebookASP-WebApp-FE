@@ -16,13 +16,13 @@ border-radius: 10px;
 margin-top: 3px;
 margin-bottom: 3px;
 }
-/* Add a dark mode variant */
+/* Add a dark mode variant
 .dark-mode .add-new-comment-box textarea {
     background-color: #545353; /* Change the background color for dark mode */
-    color: white;
+    /* color: white;
 }
 /* Add this to your CSS file */
-.dark-mode-btn {
+/* .dark-mode-btn {
 color: white;}
 
 .dark-mode .form-control.add-comment-custom.text-light {
@@ -30,4 +30,8 @@ color: white;}
   }
   .dark-mode .add-new-comment-box textarea::placeholder {
     color: white;
+} */
+
+.btn-upload-post-dark{
+    background-color: transparent !important;
 }

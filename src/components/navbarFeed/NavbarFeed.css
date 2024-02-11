@@ -12,7 +12,7 @@ nav {
     width: 250px;
 }
 
-.searchbar input {
+.searchbar-light {
     background-color: #f0f2f5;
 }
 
@@ -21,21 +21,32 @@ nav {
 
 }
 
-.dark-mode-nav {
+/* .dark-mode-nav {
     background-color: #222;
     color: #fff;
     /* Add specific dark mode styles for navbar */
-}
+/* } */
 
 
-.navbar-dark {
+/* .navbar-dark {
     background-color: #333;
     /* Example dark background color */
-    color: #fff;
+    /* color: #fff; */
     /* Example light text color for dark mode */
     /* Add any other styles for dark mode */
+/* } */
+/* 
+.logout-dark {
+    color: #fff; */
+/* } */
+
+.dark-navbar{
+    background-color: #2e2c2c;
 }
 
-.logout-dark {
+.logout-logo-dark{
     color: #fff;
+}
+.searchbar-dark{
+    background-color: rgb(173, 175, 175);
 }

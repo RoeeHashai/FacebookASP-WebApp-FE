@@ -33,7 +33,7 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
   };
 
   return (
-    <>
+    <div className={`${darkMode ? 'darkmode' : ''}`}>
       <div className="mt-2">
         <span className="me-2">
           <i className="bi bi-hand-thumbs-up" /> {post.likes} Likes
@@ -70,8 +70,8 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
           <div class="btn-group flex-grow-1">
             <button type="button" className={`btn dropdown-toggle dropdown-toggle-no-arrow ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} data-bs-toggle="dropdown" aria-expanded="false">
               <i className="bi bi-share pe-1" />
-              Share            
-              </button>
+              Share
+            </button>
             <ul class="dropdown-menu shadow">
               <li><a class="dropdown-item"><i className="bi bi-messenger me-2"></i>Send in Messenger</a></li>
               <li><a class="dropdown-item"><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</a></li>
@@ -85,7 +85,7 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
 
 
         <div className="line-under-buttons"></div>
-
       </div>
-    </>)
+    </div>
+    )
 }

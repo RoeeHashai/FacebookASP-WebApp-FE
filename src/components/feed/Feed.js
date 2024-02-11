@@ -8,13 +8,9 @@ import { Link } from 'react-router-dom';
 import './Feed.css'; // Import the CSS file
 import postsData from '../../data/posts.json';
 
-export default function Feed({ users, user, addConnectedUser }) {
+export default function Feed({ users, user}) {
     const [posts, setPosts] = useState([...postsData]);
     const [darkMode, setDarkMode] = useState(false);
-
-    useEffect(() => {
-        document.body.classList.toggle('dark-mode', darkMode);
-    }, [darkMode]);
 
     const toggleDarkMode = () => {
         setDarkMode((prevMode) => !prevMode);
@@ -29,8 +25,8 @@ export default function Feed({ users, user, addConnectedUser }) {
     };
 
     return (
-        <>
-            <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} addConnectedUser={addConnectedUser} />
+        <div className={`${darkMode ? 'dark-bg' : ''}`}>
+            <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3 d-none d-md-block">
@@ -43,9 +39,8 @@ export default function Feed({ users, user, addConnectedUser }) {
                         ))}
                     </div>
                     <div className="col-md-3 d-none d-md-block" />
-                    <div/>
                 </div>
             </div>
-        </>
+            </div>
     );
 }

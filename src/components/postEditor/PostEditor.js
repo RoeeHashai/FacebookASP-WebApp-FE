@@ -41,7 +41,7 @@ export default function PostEditor({ post, onCancel, onSave }) {
             <textarea className="form-control bg-custom" value={editedContent} onChange={handleContentChange} />
             <input
                 type="file"
-                className="form-control mt-2"
+                className="form-control mt-2 uploade-image-form"
                 onChange={handleImageChange}
                 id="postImage"
                 required=""
