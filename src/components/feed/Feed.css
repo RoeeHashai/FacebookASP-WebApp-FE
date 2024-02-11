@@ -11,3 +11,13 @@
     color: #000000;
   }
   
+/* Feed.css */
+
+.container-fluid {
+  height: 100%;
+}
+
+.middle-column {
+  overflow-y: auto;
+  max-height: calc(100vh - 56px);
+}

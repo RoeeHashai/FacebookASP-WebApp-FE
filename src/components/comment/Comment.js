@@ -28,7 +28,7 @@ export default function Comment({ user, commentCreator, comment, onEdit, onDelet
                     className="rounded-circle me-2 small-profile-img"
                 />
                 {/* Comment Details */}
-                <div className={`comment-details ${darkMode ? 'dark-mode-comment' : ''} ps-2 position-relative`}>
+                <div className={`comment-details ${darkMode ? 'dark-mode-comment' : 'light-mode-comment'} ps-2 position-relative`}>
                     {/* User Name and Comment Text */}
                     <div>
                         <h6 className="mb-0">{commentCreator.name}</h6>
@@ -59,12 +59,12 @@ export default function Comment({ user, commentCreator, comment, onEdit, onDelet
                                         <ul className={`dropdown-menu shadow ${darkMode ? 'dark-mode-dropdown' : ''}`} aria-labelledby="postOptionsLink">
                                             <li>
                                                 <button className="dropdown-item" onClick={handleEditClick}>
-                                                    Edit
+                                                <i className="bi bi-pen me-1"></i>Edit
                                                 </button>
                                             </li>
                                             <li>
                                                 <button className="dropdown-item" onClick={handleDeleteClick}>
-                                                    Delete
+                                                <i className="bi bi-trash me-1"></i>Delete
                                                 </button>
                                             </li>
                                         </ul>

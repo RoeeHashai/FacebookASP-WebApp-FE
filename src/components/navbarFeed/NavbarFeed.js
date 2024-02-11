@@ -4,7 +4,10 @@ import facebooklogo from '../res/Facebook_Logo_2023-1.png'
 import { Link } from 'react-router-dom'
 
 
-export default function NavbarFeed({ toggleDarkMode, darkMode }) {
+export default function NavbarFeed({ toggleDarkMode, darkMode, addConnectedUser }) {
+    const handleLogoutClick = () => {
+        addConnectedUser(null)
+    }
     return (
         <nav className={`navbar sticky-top shadow ${darkMode ? 'navbar-dark' : ''}`}>
             <div className="container text-center">
@@ -43,7 +46,7 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                     </div>
                     <div className="col-auto d-none d-md-block position-fixed end-0">
                         <Link to='/login'>
-                            <button className={`btn ${darkMode ? 'logout-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
+                            <button className={`btn ${darkMode ? 'logout-dark' : ''}`} onClick={handleLogoutClick} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
                         </Link>
                     </div>
                 </div>

@@ -58,12 +58,12 @@ export default function PostBody({ user, post, postCreator, date, content, image
                             <ul className={`dropdown-menu shadow ${darkMode ? 'dark-mode-dropdown' : ''}`} aria-labelledby="postOptionsLink">
                                 <li>
                                     <button className="dropdown-item primary" onClick={handleEditClick}>
-                                        Edit
+                                    <i className="bi bi-pen pe-1"></i>Edit
                                     </button>
                                 </li>
                                 <li>
                                     <button className="dropdown-item" onClick={handleDeleteClick}>
-                                        Delete
+                                    <i className="bi bi-trash pe-1"></i>Delete
                                     </button>
                                 </li>
                             </ul>

@@ -81,7 +81,7 @@ export default function PostGen({ user, addPost , darkMode}) {
     return (
         <>
             {/* add new comment */}
-            <div className={`card m-2 ${darkMode ? 'dark-post-gen': ''}`}>
+            <div className={`card shadow m-2 ${darkMode ? 'dark-post-gen': ''}`}>
                 <div className="card-body m-1">
                     <div className="d-flex add-new-comment-box">
                         {/* Profile Picture */}

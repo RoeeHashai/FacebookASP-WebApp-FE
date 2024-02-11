@@ -48,6 +48,8 @@ export default function CommentGen({ user, addComment, setPosts, post , darkMode
                             <button
                                 className={`btn ${darkMode ? 'dark-mode-btn' : ''}`}
                                 onClick={handleAddCommentClick}
+                                title="sendButton" // Add a name to the button
+
                             >
                                 <i className="bi bi-send"></i>
                             </button>

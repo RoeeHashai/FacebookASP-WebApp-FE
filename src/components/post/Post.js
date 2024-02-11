@@ -7,6 +7,10 @@ import CommentGen from '../commentGen/CommentGen';
 import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 
+export const findUser = (email, users) => {
+    return users.find((user) => user.email === email) || null;
+  };
+
 export default function Post({ users, user, post, setPosts, darkMode }) {
     const { id, author, date, content, image, likes, commentCount, comments } = post;
     const navigate = useNavigate();
@@ -15,9 +19,7 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
         setCommentsLst((prevComments) => [comment, ...prevComments])
     }
 
-    const findUser = (email, users) => {
-        return users.find((user) => user.email === email) || null
-    }
+
     const postCreator = findUser(author, users)
 
     const [liked, setLiked] = useState(false);
@@ -26,7 +28,10 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
     const toggleCommentMode = () => {
         setCommentMode(!commentMode)
     }
-
+    const [unlikeMode, setUnlikeMode] = useState(false)
+    const toggleUnlikeMode = () => {
+        setUnlikeMode(!unlikeMode)
+    }
 
     // const handleCancelEdit = () => {
     //     setIsEditing(false);
@@ -74,7 +79,7 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
     }
 
     return (
-        <div className={`card post-card m-2 ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`card shadow post-card m-2 ${darkMode ? 'dark-mode' : ''}`}>
             <PostBody
                 user={user}
                 post={post}
@@ -88,6 +93,8 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
             />
             <LikeCommentShareBtn
                 toggleCommentMode={toggleCommentMode}
+                unlikeMode={unlikeMode}
+                toggleUnlikeMode={toggleUnlikeMode}
                 commentMode={commentMode}
                 post={post}
                 liked={liked}

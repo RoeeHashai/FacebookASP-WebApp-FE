@@ -1,5 +1,8 @@
 /* Add these styles to customize dark and light mode buttons */
 .btn-dark-custom {
-    background-color: #444;
-    color: white;
-  }
+  background-color: transparent;
+  color: white;
+}
+.dropdown-toggle-no-arrow::after {
+  content: none !important;
+}
