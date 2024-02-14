@@ -180,7 +180,6 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
         </button>
       </Link>
       <form className="row g-3">
-        {/* Username */}
         <div className="col-md-12">
           <input
             type="text"
