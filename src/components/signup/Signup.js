@@ -2,7 +2,6 @@ import React from 'react'
 import './Signup.css'
 import Logo from '../logo/Logo'
 import SignupForm from '../signupForm/SignupForm'
-
 export default function Signup({ users, onAddUser, idNewUser }) {
     return (
         <div className=" container col-center d-flex justify-content-center align-items-center vh-100">

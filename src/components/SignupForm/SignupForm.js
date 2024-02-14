@@ -77,9 +77,6 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
       return;
     }
 
-    // Generate a unique ID for the user
-    // incrementIdCounter()
-
     // Create a new user to add to the users list
     const newUser = {
       id: idNewUser,
