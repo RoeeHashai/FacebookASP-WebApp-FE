@@ -1,72 +1,58 @@
 # FacebookASP-WebApp-FE
 
-## Getting Started with Create React App
+Welcome to the Facebook React WebApp!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project serves as a React-based frontend for a Facebook-like application, providing a user-friendly interface for seamless interaction with the social media platform.
 
-## Available Scripts
+Our journey started with implementing basic webpage designs using static HTML and CSS. Subsequently, we transitioned into the React environment, utilizing the framework's capabilities to craft a dynamic user experience. By breaking down the interface into components and skillfully managing states, we achieved a smooth rendering of objects on the screen.
 
-In the project directory, you can run:
+After testing, we dedicated efforts to refactor and enhance the design and user experience, ensuring a more polished and enjoyable interaction. 
 
-### `npm start`
+We hope you enjoy the Facebook WebApp!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
+1. Sign Up & Login
+    * Create an account and log in to get started.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Newsfeed
+    * Explore posts from friends.
+    * View, edit, delete, and share your own updates.
 
-### `npm test`
+## Prerequisites
+Before you start, make sure you have Node.js and npm installed on your machine.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+run this commands to get nodeJS and npm
+ ```sh
+sudo apt-get update
+sudo apt-get install nodejs
+sudo apt-get install npm
+  ```
 
-### `npm run build`
+## Installation
+1. Clone this repository:
+ ```sh
+git clone https://github.com/RoeeHashai/FacebookASP-WebApp-FE.git
+cd FacebookASP-WebApp-FE
+  ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install dependencies:
+```sh
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Running the Application
+To start the Facebook React WebApp, run:
+```sh
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Running the Tests
+To start the Facebook WebApp Test, run:
+```sh
+npm test
+```
+Enter `a` to run all tests
 
-### `npm run eject`
+Enjoy!
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
