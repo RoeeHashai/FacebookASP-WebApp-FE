@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import myprofilepic from '../res/roeehashai_profile.jpeg'
 import mypostpic from '../res/1677057215865.png'
 import NavbarFeed from '../navbarFeed/NavbarFeed'
 import Menu from '../menu/Menu'
@@ -15,7 +14,7 @@ export default function Feed({ users, user }) {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([...postsData])
     const addPost = (post) => {
-        setPosts((prevPost) => [...prevPost, post])
+        setPosts((prevPost) => [post, ...prevPost])
     };
 
     const findUser = (email, users) => {
