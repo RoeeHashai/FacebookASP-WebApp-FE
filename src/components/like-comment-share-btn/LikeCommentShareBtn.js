@@ -58,7 +58,7 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
             Share
           </button>
         </div> */}
-        <div class="btn-group dropup d-flex w-100" role="group" aria-label="Basic example">
+        <div className="btn-group dropup d-flex w-100" role="group" aria-label="Basic example">
           <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleLikeClick}>
             <i className="bi bi-hand-thumbs-up pe-1" />
             {unlikeMode ? 'unlike' : 'like'}
@@ -67,17 +67,17 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
             <i className="bi bi-chat pe-1" />
             {commentMode ? 'go-back' : 'comment'}
           </button>
-          <div class="btn-group flex-grow-1">
+          <div className="btn-group flex-grow-1">
             <button type="button" className={`btn dropdown-toggle dropdown-toggle-no-arrow ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} data-bs-toggle="dropdown" aria-expanded="false">
               <i className="bi bi-share pe-1" />
               Share
             </button>
-            <ul class="dropdown-menu shadow">
-              <li><a class="dropdown-item"><i className="bi bi-messenger me-2"></i>Send in Messenger</a></li>
-              <li><a class="dropdown-item"><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</a></li>
-              <li><a class="dropdown-item"><i className="bi bi-instagram me-2"></i>Share on Instegram</a></li>
+            <ul className="dropdown-menu shadow">
+              <li><button className="dropdown-item"><i className="bi bi-messenger me-2"></i>Send in Messenger</button></li>
+              <li><button className="dropdown-item"><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</button></li>
+              <li><button className="dropdown-item"><i className="bi bi-instagram me-2"></i>Share on Instegram</button></li>
 
-              <li><a class="dropdown-item"></a></li>
+              <li><button className="dropdown-item"></button></li>
             </ul>
           </div>
         </div>
