@@ -1,6 +1,5 @@
 .navbar>.container {
     display: block !important;
-    /* Change display value as needed */
 }
 
 nav {
@@ -21,32 +20,14 @@ nav {
 
 }
 
-/* .dark-mode-nav {
-    background-color: #222;
-    color: #fff;
-    /* Add specific dark mode styles for navbar */
-/* } */
-
-
-/* .navbar-dark {
-    background-color: #333;
-    /* Example dark background color */
-    /* color: #fff; */
-    /* Example light text color for dark mode */
-    /* Add any other styles for dark mode */
-/* } */
-/* 
-.logout-dark {
-    color: #fff; */
-/* } */
-
-.dark-navbar{
+.dark-navbar {
     background-color: #2e2c2c;
 }
 
-.logout-logo-dark{
+.logout-logo-dark {
     color: #fff;
 }
-.searchbar-dark{
+
+.searchbar-dark {
     background-color: rgb(173, 175, 175);
 }

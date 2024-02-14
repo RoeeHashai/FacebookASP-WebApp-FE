@@ -1,44 +1,35 @@
 .remove-border {
     border: none;
-  }
+}
+
 .comment {
     padding: 5px;
 }
+
 .comment-details {
     flex-grow: 1;
     border-radius: 15px;
     padding: 10px;
 }
+
 .small-profile-img {
-    width: 40px; /* Adjust the desired width */
-    height: 40px; /* Adjust the desired height */
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
-/* .comment-options{
-    display: none;
-}
-.comment:hover .comment-options {
-    display: block;
-} */
+
 .comment-options-btn {
     display: none;
 }
+
 .comment:hover .comment-options-btn {
     display: block;
 }
 
-/* Add this to your CSS file
-.dark-mode .dark-mode-comment {
-    background-color: #545353; /* Change the background color for dark mode */
-    /* Add any other styles for the background in dark mode */
-  /* } */ 
-
-  /* Add this to your CSS file */
 .light-mode-comment {
     background-color: #f0f2f5;
-    /* Add any other styles for the background in dark mode */
-  }
+}
 
-  .darkmode .comment-details{
+.darkmode .comment-details {
     background-color: rgb(77, 77, 77);
-  }
+}

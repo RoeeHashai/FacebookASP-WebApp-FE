@@ -1,38 +1,79 @@
 import React from 'react';
-import { render, fireEvent, act, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, act, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter, useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/loginForm/LoginForm';
+import userList from '../../data/users.json';
+
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+    return {
+        ...originalModule,
+        useNavigate: jest.fn(),
+    };
+});
 
 describe('LoginForm Component', () => {
-  test('displays error for wrong login credentials', async () => {
-    // Arrange
-    const { getByPlaceholderText, getByText, container } = render(
-      <MemoryRouter>
-        <LoginForm />
-      </MemoryRouter>
-    );
+    const users = [{
+        "id": 1,
+        "name": "Roee Hashai",
+        "email": "roee.hashai@gmail.com",
+        "password": "1111",
+        "image": "/profile-pictures/roee_hashai.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Talya Rubinstein",
+        "email": "talya.rubinstein@gmail.com",
+        "password": "2222",
+        "image": "/profile-pictures/talya_rubinstein.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Yatir Gross",
+        "email": "yatir.gross@gmail.com",
+        "password": "3333",
+        "image": "/profile-pictures/yatir_gross.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Natalya Gross",
+        "email": "natalya.gross@gmail.com",
+        "password": "4444",
+        "image": "/profile-pictures/natalya_gross.jpg"
+    },];
+    
+    test('logs in and navigates to feed', async () => { // Test 4/5: changes the screen
+        // Test that logs in with a signup user and check if the user is navigated to the feed page
 
-    // Act
-    const emailInput = getByPlaceholderText('Email address');
-    const passwordInput = getByPlaceholderText('Password');
-    const loginButton = getByText('Log In');
+        // Arrange
+        const addConnectedUser = jest.fn();
+        const navigateMock = jest.fn();
+        useNavigate.mockReturnValue(navigateMock);
 
-    // Enter incorrect login credentials
-    fireEvent.change(emailInput, { target: { value: 'invalid.email@gmail.com' } });
-    fireEvent.change(passwordInput, { target: { value: '1222' } });
+        const { getByText, getByPlaceholderText } = render(
+            <MemoryRouter>
+                <LoginForm users={users} addConnectedUser={addConnectedUser} />
+            </MemoryRouter>
+        );
 
-    // Perform login
-    await act(async () => {
-      fireEvent.click(loginButton);
+        const emailField = getByPlaceholderText('Email address');
+        const passwordField = getByPlaceholderText('Password');
+        const loginButton = getByText('Log In');
+
+        // Act
+        await act(async () => {
+            userEvent.type(emailField, 'roee.hashai@gmail.com');
+            userEvent.type(passwordField, '1111');
+            userEvent.click(loginButton);
+        });
+
+        // Assert
+        // Check if the navigation moved to the feed page
+        await waitFor(() => {
+            expect(addConnectedUser).toHaveBeenCalledWith(users[0]);
+            expect(navigateMock).toHaveBeenCalledWith('/feed');
+            expect(navigateMock).toHaveBeenCalledTimes(1);
+        });
     });
-
-    // Assert
-    await waitFor(() => {
-      // Check if the error message is displayed
-      const errorMessage = container.querySelector('.invalid-feedback');
-      expect(errorMessage.textContent).toBe('Invalid email');
-    });
-  });
-
-  // You can add more tests for other scenarios as needed
 });

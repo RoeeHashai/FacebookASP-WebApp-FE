@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid';
-
 import './SignupForm.css'
 
-export default function SignupForm({ users, onAddUser }) {
+export default function SignupForm({ users, onAddUser, idNewUser }) {
   const navigate = useNavigate()
 
   // state variables of the sign up form
@@ -15,25 +13,22 @@ export default function SignupForm({ users, onAddUser }) {
   const [picture, setPicture] = useState(null)
 
   // validation status for each field
-  const [usernameValid, setUsernameValid] = useState(true)
   const [emailValid, setEmailValid] = useState(true)
   const [passwordValid, setPasswordValid] = useState(true)
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(true)
   const [pictureValid, setPictureValid] = useState(true)
 
   // Error messages
-  const [usernameMessage, setUsernameMessage] = useState('')
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('')
   const [pictureMessage, setPictureMessage] = useState('')
 
+  // Function to increment idCounter, to give a unique id for each post
   const handleOnInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'username') {
-      const isUserNameValidValue = isUsernameValid(value)
       setUsername(value)
-      setUsernameValid(isUserNameValidValue)
     }
     else if (name === 'email') {
       const isEmailValidValue = isEmailValid(value)
@@ -59,10 +54,7 @@ export default function SignupForm({ users, onAddUser }) {
 
   const handleOnBlur = (e) => {
     const { name } = e.target
-    if (name === 'username') {
-      setUsernameMessage('')
-    }
-    else if (name === 'email') {
+    if (name === 'email') {
       setEmailMessage('')
     }
     else if (name === 'password') {
@@ -80,27 +72,27 @@ export default function SignupForm({ users, onAddUser }) {
   const handleSignupClick = (e) => {
     e.preventDefault();
 
-    // Check if Signin was done valid or not, don't proceed to the login page if not valid
+    // Check if Signup was done valid or not, don't proceed to the login page if not valid
     if (!validateForm()) {
       return;
     }
 
     // Generate a unique ID for the user
-    const userId = uuidv4(); // change this
+    // incrementIdCounter()
 
     // Create a new user to add to the users list
     const newUser = {
-      id: userId,
-      "name": username,
+      id: idNewUser,
+      name: username,
       email,
       password,
-      "image": picture && URL.createObjectURL(picture), // Use createObjectURL to get a URL for the image
+      image: picture && URL.createObjectURL(picture),
     };
 
     // Add the new user to the list of users
     onAddUser(newUser);
 
-    // You can clear the state after adding the user if needed
+    // Clear the state after adding the user if needed
     setUsername('');
     setEmail('');
     setPassword('');
@@ -110,14 +102,11 @@ export default function SignupForm({ users, onAddUser }) {
     navigate('/login');
   };
 
+
   const validateForm = () => {
     if (username === '') {
-      setUsernameValid(false)
+      setEmailValid(false)
     }
-    // Check of the username is valid if not display error
-    const isUserNameValidValue = isUsernameValid(username)
-    setUsernameValid(isUserNameValidValue)
-
     // Check if the email is valid if not display error
     const isEmailValidValue = isEmailValid(email)
     setEmailValid(isEmailValidValue)
@@ -131,16 +120,7 @@ export default function SignupForm({ users, onAddUser }) {
 
     const isPictureValidValue = isPictureValid(picture)
     setPictureValid(isPictureValidValue)
-    return usernameValid && emailValid && passwordValid && isConfirmPasswordValidValue && isPictureValidValue
-  }
-
-  const isUsernameValid = (username) => {
-    const usernameExist = users.find((user) => user.username === username)
-    if (usernameExist) {
-      setUsernameMessage('This username is already in use. Please use a different one or log in.');
-      return false
-    }
-    return true
+    return  emailValid && passwordValid && isConfirmPasswordValidValue && isPictureValidValue
   }
 
   const isEmailValid = (email) => {
@@ -183,14 +163,14 @@ export default function SignupForm({ users, onAddUser }) {
       setPictureMessage('Must upload a profile picture');
       return false;
     }
-  
+
     const acceptedFormats = ['image/jpeg', 'image/png'];
-  
+
     if (!picture.type || !acceptedFormats.includes(picture.type)) {
       setPictureMessage('Please upload a valid JPEG or PNG image');
       return false;
     }
-  
+
     // If all checks pass, the picture is valid
     return true;
   };
@@ -207,7 +187,7 @@ export default function SignupForm({ users, onAddUser }) {
         <div className="col-md-12">
           <input
             type="text"
-            className={`form-control ${!usernameValid && 'is-invalid'}`}
+            className={`form-control`}
             onBlur={handleOnBlur}
             onChange={handleOnInputChange}
             id="inputUsername"
@@ -215,7 +195,6 @@ export default function SignupForm({ users, onAddUser }) {
             placeholder="Username"
             required=""
           />
-          {!usernameValid && <div className='invalid-feedback'>{usernameMessage}</div>}
         </div>
         <div className="col-md-12">
           <input
@@ -282,7 +261,7 @@ export default function SignupForm({ users, onAddUser }) {
             <div className="mt-3">
               <h6>Profile Picture Preview:</h6>
               <img
-              className='sm previewProfile img-fluid'
+                className='sm previewProfile img-fluid'
                 src={URL.createObjectURL(picture)}
                 alt="Profile Preview"
               />

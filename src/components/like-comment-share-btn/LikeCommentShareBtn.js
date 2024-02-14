@@ -1,33 +1,24 @@
-import React from 'react'
-import './LikeCommentShareBtn.css'
+import React from 'react';
+import './LikeCommentShareBtn.css';
 
-export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, toggleUnlikeMode, unlikeMode, post, liked, setLiked, setPosts, darkMode }) {
+export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, toggleUnlikeMode, unlikeMode, post, setLiked, setPosts, darkMode }) {
+  // Handle click for toggling comment mode
   const handleCommentClick = () => {
-    toggleCommentMode()
+    toggleCommentMode();
   }
 
-
+  // Handle click for toggling like/unlike and updating post likes
   const handleLikeClick = () => {
     if (unlikeMode) {
       // Unlike mode: Remove the like from the post
       const updatedPost = { ...post, likes: post.likes - 1 };
-
       setPosts((prevPosts) => prevPosts.map((p) => (p.id === post.id ? updatedPost : p)));
       setLiked(false); // Set liked to false
-    } else {
-      // Like mode: Add a like to the post
-      // If the user has already liked the post, do nothing
-      // if (liked) {
-      //   return;
-      // }
-
-      // Otherwise, update the likes and set liked to true
+    } else { // in like mode
       const updatedPost = { ...post, likes: post.likes + 1 };
-
       setPosts((prevPosts) => prevPosts.map((p) => (p.id === post.id ? updatedPost : p)));
       setLiked(true);
     }
-    console.log(unlikeMode)
     // Toggle the unlike mode for the next click
     toggleUnlikeMode();
   };
@@ -35,6 +26,7 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
   return (
     <div className={`${darkMode ? 'darkmode' : ''}`}>
       <div className="mt-2">
+        {/* Display the number of likes and comments */}
         <span className="me-2">
           <i className="bi bi-hand-thumbs-up" /> {post.likes} Likes
         </span>
@@ -43,49 +35,36 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
         </span>
       </div>
       <div className="card-footer ">
-
-        {/* <div className={`btn-group w-100 ${darkMode ? 'dark-mode-btn-group' : ''}`}>
-          <button type="button" className={`btn ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleLikeClick}>
-            <i className="bi bi-hand-thumbs-up pe-1" />
-            {unlikeMode ? 'unlike' : 'like'}
-          </button>
-          <button type="button" className={`btn ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleCommentClick}>
-            <i className="bi bi-chat pe-1" />
-            {commentMode ? 'go-back' : 'comment'}
-          </button>
-          <button type="button" className={`btn ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`}>
-            <i className="bi bi-share pe-1" />
-            Share
-          </button>
-        </div> */}
+        {/* Button group for like, comment, and share */}
         <div className="btn-group dropup d-flex w-100" role="group" aria-label="Basic example">
+          {/* Like button */}
           <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleLikeClick}>
             <i className="bi bi-hand-thumbs-up pe-1" />
             {unlikeMode ? 'unlike' : 'like'}
           </button>
+          {/* Comment button */}
           <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleCommentClick}>
             <i className="bi bi-chat pe-1" />
             {commentMode ? 'go-back' : 'comment'}
           </button>
+          {/* Share dropdown */}
           <div className="btn-group flex-grow-1">
             <button type="button" className={`btn dropdown-toggle dropdown-toggle-no-arrow ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} data-bs-toggle="dropdown" aria-expanded="false">
               <i className="bi bi-share pe-1" />
               Share
             </button>
+            {/* Share options dropdown menu */}
             <ul className="dropdown-menu shadow">
               <li><button className="dropdown-item"><i className="bi bi-messenger me-2"></i>Send in Messenger</button></li>
               <li><button className="dropdown-item"><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</button></li>
-              <li><button className="dropdown-item"><i className="bi bi-instagram me-2"></i>Share on Instegram</button></li>
-
-              <li><button className="dropdown-item"></button></li>
+              <li><button className="dropdown-item"><i className="bi bi-instagram me-2"></i>Share on Instagram</button></li>
+              {/* Add more share options if needed */}
             </ul>
           </div>
         </div>
-
-
-
-        <div className="line-under-buttons"></div>
+        {/* Divider line */}
+        <div className="mt-1 line-under-buttons"></div>
       </div>
     </div>
-    )
+  )
 }
