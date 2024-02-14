@@ -1,37 +1,24 @@
 .comment {
     padding: 5px;
 }
+
 .small-profile-img {
-    width: 40px !important; /* Adjust the desired width */
-    height: 40px !important; /* Adjust the desired height */
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 50%;
 }
-.add-new-comment-box textarea{
+
+.add-new-comment-box textarea {
     background-color: #f0f2f5;
     height: 60px;
 }
 
-.add-new-comment-box button{
-border-radius: 10px;
-margin-top: 3px;
-margin-bottom: 3px;
+.add-new-comment-box button {
+    border-radius: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
-/* Add a dark mode variant
-.dark-mode .add-new-comment-box textarea {
-    background-color: #545353; /* Change the background color for dark mode */
-    /* color: white;
-}
-/* Add this to your CSS file */
-/* .dark-mode-btn {
-color: white;}
 
-.dark-mode .form-control.add-comment-custom.text-light {
-    color: white;
-  }
-  .dark-mode .add-new-comment-box textarea::placeholder {
-    color: white;
-} */
-
-.btn-upload-post-dark{
+.btn-upload-post-dark {
     background-color: transparent !important;
 }

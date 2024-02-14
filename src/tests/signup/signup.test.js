@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('SignupForm Component', () => {
-  test('input fields update correctly', () => {
+  test('input fields update correctly', () => { // Test 2/5: JS function test that doesnt change the screen => Test onChangeInput()
     // Arrange
     const users = [];
     const onAddUser = jest.fn();
@@ -26,8 +26,8 @@ describe('SignupForm Component', () => {
     act(() => {
       userEvent.type(usernameField, 'testuser');
       userEvent.type(emailField, 'test@example.com');
-      userEvent.type(passwordField, 'password123');
-      userEvent.type(confirmPasswordField, 'password123');
+      userEvent.type(passwordField, 'test123');
+      userEvent.type(confirmPasswordField, 'test123');
 
       // Trigger the file input change with a dummy file
       const file = new File([''], 'image.jpg', { type: 'image/jpeg' });
@@ -37,21 +37,57 @@ describe('SignupForm Component', () => {
     // Assert
     expect(usernameField.value).toBe('testuser');
     expect(emailField.value).toBe('test@example.com');
-    expect(passwordField.value).toBe('password123');
-    expect(confirmPasswordField.value).toBe('password123');
+    expect(passwordField.value).toBe('test123');
+    expect(confirmPasswordField.value).toBe('test123');
   });
 
-  test('displays error messages for empty input fields', async () => {
-    // Arrange
-    const users = [];
+  test('displays error messages for invalid input fields', async () => { // Test 3/5: Test that changes the screen
+    // Test the isEmailValid() and isPasswordValid() and render the invalid messages to the screen 
+    const users = [{
+      "id": 1,
+      "name": "Roee Hashai",
+      "email": "roee.hashai@gmail.com",
+      "password": "1111",
+      "image": "/profile-pictures/roee_hashai.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Talya Rubinstein",
+      "email": "talya.rubinstein@gmail.com",
+      "password": "2222",
+      "image": "/profile-pictures/talya_rubinstein.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Yatir Gross",
+      "email": "yatir.gross@gmail.com",
+      "password": "3333",
+      "image": "/profile-pictures/yatir_gross.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Natalya Gross",
+      "email": "natalya.gross@gmail.com",
+      "password": "4444",
+      "image": "/profile-pictures/natalya_gross.jpg"
+    },];
     const onAddUser = jest.fn();
-    const { getByText, queryByText } = render(
+    const { getByText, queryByText, getByPlaceholderText } = render(
       <MemoryRouter>
         <SignupForm users={users} onAddUser={onAddUser} />
       </MemoryRouter>
     );
 
-    // Act
+    const emailField = getByPlaceholderText('Email');
+    const passwordField = getByPlaceholderText('New Password');
+    const confirmPasswordField = getByPlaceholderText('Confirm Password');
+
+    act(() => {
+      userEvent.type(emailField, 'roee.hashai@gmail.com');
+      userEvent.type(passwordField, '0000');
+      userEvent.type(confirmPasswordField, '1111');
+    });
+
     const signupButton = getByText('Sign Up');
 
     // Wrap the state updates in act
@@ -62,7 +98,7 @@ describe('SignupForm Component', () => {
     // Assert
     await waitFor(() => {
       // Check if the error messages are displayed for each input field
-      expect(queryByText('Email must be in a correct email format (e.g., XXX@XXX.XXX)')).toBeInTheDocument();
+      expect(queryByText('This email address is already in use. Please use a different one or log in.')).toBeInTheDocument();
       expect(queryByText('Password must be at least 8 characters long and contain both numbers and letters')).toBeInTheDocument();
       expect(queryByText('Must upload a profile picture')).toBeInTheDocument();
     });

@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import './PostGen.css'
-import { useNavigate } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react';
+import './PostGen.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function PostGen({ user, addPost, darkMode }) {
-    const [idCounter, setIdCounter] = useState(10)
+    // State for managing post data
+    const [postState, setPostState] = useState({
+        idCounter: 11,
+        postContent: '',
+        image: null,
+        imageValid: true,
+        imageMessage: '',
+    });
 
-    // state variables of post form
-    const [postContent, setPostContent] = useState('')
-    const [image, setImage] = useState(null)
+    // Function to increment idCounter, to give a unique id for each post
+    const incrementIdCounter = () => {
+        setPostState((prevState) => ({
+            ...prevState,
+            idCounter: prevState.idCounter + 1,
+        }));
+    };
 
-    // validation status for image
-    const [imageValid, setImageValid] = useState(true)
-
-    // validation message for image
-    const [imageMessage, setImageMessage] = useState('')
-
-    const increamentIdCount = () => {
-        setIdCounter(idCounter + 1)
-    }
+    // React Router hook for navigation
     const navigate = useNavigate();
 
+    // In case of refreshing the page need to logout because (Connected) user isn't connected any more
     useEffect(() => {
         // Check if user is falsy (null or undefined)
         if (!user) {
@@ -28,72 +31,89 @@ export default function PostGen({ user, addPost, darkMode }) {
             navigate('/login');
         }
     }, [user, navigate]);
-
     // If user is not defined, return null to avoid rendering the component
     if (!user) {
         return null;
-    }
+    } // =================================== End Handle Refresh =======================================
 
     const handlePostClick = (e) => {
-        e.preventDefault()
-        const isImageValidValue = isImageValid(image)
-        setImageValid(isImageValidValue)
+        e.preventDefault();
+        const isImageValidValue = isImageValid(postState.image);
+        setPostState((prevState) => ({
+            ...prevState,
+            imageValid: isImageValidValue,
+        }));
+
+        // If image is valid, create and add new post
         if (isImageValidValue) {
-            if (!postContent && !image) return
+            if (!postState.postContent && !postState.image) return;
             const currentDate = new Date();
             const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(currentDate);
-            const idPost = idCounter
-            increamentIdCount()
+            const idPost = postState.idCounter;
+            incrementIdCounter();
+
             const newPost = {
-                "id": idPost,
-                "author": user.email,
-                "date": formattedDate,
-                "content": postContent,
-                "image": image && URL.createObjectURL(image), // Use createObjectURL to get a URL for the image
-                "likes": 0,
-                "commentCount": 0,
-                "comments": []
-            }
-            addPost(newPost)
+                id: idPost,
+                author: user.email,
+                date: formattedDate,
+                content: postState.postContent,
+                image: postState.image && URL.createObjectURL(postState.image), // Use createObjectURL to get a URL for the image
+                likes: 0,
+                commentCount: 0,
+                comments: [],
+            };
+
+            addPost(newPost);
         }
+    };
 
-
-    }
     const setPostText = (e) => {
-        setPostContent(e.target.value)
-    }
+        setPostState((prevState) => ({
+            ...prevState,
+            postContent: e.target.value,
+        }));
+    };
+
     const setPostImage = (e) => {
-        setImage(e.target.files[0])
-        setImageValid(true)
-        setImageMessage('')
-    }
+        setPostState((prevState) => ({
+            ...prevState,
+            image: e.target.files[0],
+            imageValid: true,
+            imageMessage: '',
+        }));
+    };
+
+    // Function to validate image format - only png or jpeg are valid, else will display a error message to the user
     const isImageValid = (image) => {
         if (image) {
             const acceptedFormats = ['image/jpeg', 'image/png'];
 
             if (!image.type || !acceptedFormats.includes(image.type)) {
-                setImageMessage('Please upload a valid JPEG or PNG image');
+                setPostState((prevState) => ({
+                    ...prevState,
+                    imageMessage: 'Please upload a valid JPEG or PNG image',
+                }));
                 return false;
             }
         }
         return true;
     };
+
     return (
         <div className={`${darkMode ? 'darkmode' : ''}`}>
-            {/* add new comment */}
+            {/* Add new post */}
             <div className={`card shadow m-2 `}>
                 <div className="card-body m-1">
                     <div className="d-flex add-new-comment-box">
-                        {/* Profile Picture */}
+                        {/* User profile picture */}
                         <img
                             src={user.image}
                             alt="User Profile"
                             className="rounded-circle small-profile-img me-2 upload-post"
                             onChange={setPostImage}
                             style={{ width: '60px !important', height: '60px !important' }}
-
                         />
-                        {/* Input field for the comment */}
+                        {/* Input field for the post content */}
                         <textarea
                             className={`form-control mb-2`}
                             placeholder={`What's on your mind, ${user.name}?`}
@@ -102,20 +122,23 @@ export default function PostGen({ user, addPost, darkMode }) {
                         />
                     </div>
 
+                    {/* Input field for uploading an image */}
                     <input
                         type="file"
-                        className={`form-control uploade-image-form ${!imageValid && 'is-invalid'}`}
+                        data-testid="postImageInput"
+                        className={`form-control uploade-image-form ${!postState.imageValid && 'is-invalid'}`}
                         onChange={setPostImage}
                         id="postImage"
                         required=""
                         name='picture'
                     />
-                    {!imageValid && <div className='invalid-feedback'>{imageMessage}</div>}
+                    {!postState.imageValid && <div className='invalid-feedback'>{postState.imageMessage}</div>}
 
-                    {/* Display the profile picture preview */}
                 </div>
+                {/* Post footer */}
                 <div className="card-footer post-footer add-new-comment-box">
                     <div className="btn-group w-100 ms-1">
+                        {/* Button to post the content */}
                         <button type="button" className={`btn btn-light ${darkMode ? '' : ''}`} onClick={handlePostClick}>
                             <i className="bi bi-file-post pe-1" />
                             Post
@@ -124,5 +147,5 @@ export default function PostGen({ user, addPost, darkMode }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

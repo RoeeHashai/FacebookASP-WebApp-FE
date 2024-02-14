@@ -1,15 +1,11 @@
-/* Add these styles to customize dark and light mode buttons
-.btn-dark-custom {
-  background-color: transparent;
-  color: white;
-} */
 .dropdown-toggle-no-arrow::after {
   content: none !important;
 }
 
-.darkmode .dropdown-item{
+.darkmode .dropdown-item {
   color: white;
 }
-.darkmode .dropdown-item:hover{
+
+.darkmode .dropdown-item:hover {
   background-color: rgb(68, 62, 62);
 }

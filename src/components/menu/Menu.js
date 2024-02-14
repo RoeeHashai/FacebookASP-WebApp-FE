@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react'
-import './Menu.css'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import './Menu.css';
+import { useNavigate } from 'react-router-dom';
+
 export default function Menu({ user, darkMode }) {
     const navigate = useNavigate();
 
+    // In case of refreshing the page need to logout because (Connected) user isn't connected any more
     useEffect(() => {
-        // Check if connectedUser is falsy (null or undefined)
+        // Check if user is falsy (null or undefined)
         if (!user) {
             // Navigate to the login page if not logged in
             navigate('/login');
         }
     }, [user, navigate]);
-
-    // If connectedUser is not defined, return null to avoid rendering the component
+    // If user is not defined, return null to avoid rendering the component
     if (!user) {
         return null;
-    }
+    } // =================================== End Handle Refresh =======================================
 
     return (
         <ul className={`list-group  ${darkMode ? 'darkmode-menu' : ''}`}>
-            <li className=" margintopmenu list-group-item d-flex align-items-center">
+            {/* User profile information */}
+            <li className="margintopmenu list-group-item d-flex align-items-center">
                 {/* Profile Picture */}
                 <div className='contanier'>
                     <img
@@ -30,6 +32,8 @@ export default function Menu({ user, darkMode }) {
                 </div>
                 <span className="w-100 m-1 ms-3">{user.name}</span>
             </li>
+
+            {/* Menu items with icons */}
             <li className="list-group-item d-flex list-to-hover align-items-center">
                 <i className="bi bi-people-fill ms-1" />
                 <span className="w-100 m-1 ms-3">Friends</span>
@@ -66,8 +70,6 @@ export default function Menu({ user, darkMode }) {
                 <i className="bi bi-messenger ms-1" />
                 <span className="w-100 m-1 ms-3">Messenger</span>
             </li>
-
-
-
-        </ul>)
+        </ul>
+    );
 }

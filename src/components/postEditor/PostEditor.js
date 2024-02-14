@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
-import './PostEditor.css'
+import './PostEditor.css';
 
 export default function PostEditor({ post, onCancel, onSave }) {
-    const [editedContent, setEditedContent] = useState(post.content);
-    const [editedImage, setEditedImage] = useState(null)
-    // validation status for image
-    const [imageValid, setImageValid] = useState(true)
+    // State for edited content, edited image, and image validation
+    const [editorState, setEditorState] = useState({
+        editedContent: post.content,
+        editedImage: null,
+        imageValid: true,
+        imageMessage: '',
+    });
 
-    // validation message for image
-    const [imageMessage, setImageMessage] = useState('')
-    console.log(editedImage)
+    const { editedContent, editedImage, imageValid, imageMessage } = editorState;
 
     const handleContentChange = (event) => {
-        setEditedContent(event.target.value);
+        setEditorState((prevState) => ({ ...prevState, editedContent: event.target.value }));
     };
     const handleImageChange = (e) => {
-        setEditedImage(e.target.files[0]);
-        setImageValid(true);
-        setImageMessage('');
+        setEditorState((prevState) => ({
+            ...prevState,
+            editedImage: e.target.files[0],
+            imageValid: true,
+            imageMessage: '',
+        }));
     };
 
     const handleSave = () => {
         if (editedImage) {
-            console.log('tjrer')
-            // If there is an edited image, proceed with the Blob and Object URL logic
+            // If there is an edited image, proceed with Blob and Object URL logic
             const imageBlob = new Blob([editedImage], { type: editedImage.type });
             const imageUrl = URL.createObjectURL(imageBlob);
             const editedPost = { ...post, content: editedContent, image: imageUrl };
@@ -35,10 +38,12 @@ export default function PostEditor({ post, onCancel, onSave }) {
         }
     };
 
-
     return (
         <div className="post-editor-container">
+            {/* Textarea for editing content */}
             <textarea className="form-control bg-custom" value={editedContent} onChange={handleContentChange} />
+
+            {/* File input for uploading images */}
             <input
                 type="file"
                 className="form-control mt-2 uploade-image-form"
@@ -48,8 +53,10 @@ export default function PostEditor({ post, onCancel, onSave }) {
                 name="picture"
             />
 
+            {/* Display error message if image validation fails */}
             {!imageValid && <div className="invalid-feedback">{imageMessage}</div>}
 
+            {/* Buttons for Save and Cancel actions */}
             <div className="button-container mt-2 d-flex justify-content-center">
                 <button className="btn btn-primary ps-3 pe-3 me-2" onClick={handleSave}>
                     <i className="bi bi-floppy"></i> Save

@@ -1,14 +1,13 @@
-import React from 'react'
-import './NavbarFeed.css'
-import facebooklogo from '../res/Facebook_Logo_2023-1.png'
-import { Link } from 'react-router-dom'
-
+import React from 'react';
+import './NavbarFeed.css';
+import { Link } from 'react-router-dom';
 
 export default function NavbarFeed({ toggleDarkMode, darkMode }) {
     return (
         <nav className={`navbar sticky-top shadow ${darkMode ? 'dark-navbar' : ''}`}>
             <div className="container text-center">
                 <div className="row justify-content-center">
+                    {/* Dark mode toggle switch */}
                     <div className="col-auto d-none d-md-block position-fixed start-0">
                         <div className="form-check form-switch dark-mode-switch">
                             <input
@@ -16,20 +15,21 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                                 type="checkbox"
                                 id="toggleSwitch"
                                 onChange={toggleDarkMode}
-                            // checked={darkMode}
                             />
                             <label className="form-check-label" htmlFor="toggleSwitch" />
                         </div>
                     </div>
+                    {/* Facebook logo */}
                     <div className="col-auto">
                         <Link to='/feed'>
                             <img
-                                src={facebooklogo}
+                                src={process.env.PUBLIC_URL + '/facebook-logo.png'}
                                 alt="Facebook logo"
                                 className="d-inline-block small-profile-img"
                             />
                         </Link>
                     </div>
+                    {/* Search bar */}
                     <div className="col-auto">
                         <div className="searchbar ms-2">
                             <input
@@ -38,17 +38,18 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                                 placeholder="Search Facebook"
                                 aria-label="Search"
                             />
-
                         </div>
                     </div>
+                    {/* Logout button */}
                     <div className="col-auto d-none d-md-block position-fixed end-0">
                         <Link to='/login'>
-                            <button className={`btn ${darkMode ? 'logout-logo-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
+                            <button className={`btn ${darkMode ? 'logout-logo-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout">
+                                <i className="bi bi-box-arrow-left"></i>
+                            </button>
                         </Link>
                     </div>
                 </div>
             </div>
-        </nav >
-
-    )
+        </nav>
+    );
 }

@@ -1,60 +1,35 @@
 .post-options-btn {
     display: none;
 }
+
 .to-hover:hover .post-options-btn {
     display: block;
 }
 
-/* .dropdown-menu{
-    display: none;
-}
-.to-hover-post:hover .post-options-btn {
-    display: block;
-} */
-
-
 .line-under-buttons {
-    border-bottom: 1px solid #ccc; /* Adjust the color as needed */
-    margin-top: 2px; /* Adjust the margin as needed */
+    border-bottom: 1px solid #ccc;
+    margin-top: 2px;
     margin-bottom: 4px;
 }
+
 .small-profile-img {
-    width: 40px; /* Adjust the desired width */
-    height: 40px; /* Adjust the desired height */
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
-/* Customize header style for dark mode
-.dark-mode .to-hover .card-header {
-    background-color:transparent;
-        color: #fff; /* Example light text color for dark mode header */
-    /* Add any other styles for dark mode header */
-  /* } */
 
-/* 
-.dark-mode-icon {
-    color: #fff; /* Set the desired text color for dark mode icon */
-    /* Add any other styles for dark mode icon */
-/* } */
-/* styles.css */
-/* .dark-mode-dropdown {
-    background-color: #333; /* Set the desired background color for dark mode dropdown */
-    /* Add any other styles for dark mode dropdown */
-/* } */ 
-
-/* Example of increased specificity
-.dark-mode-dropdown li .dropdown-item {
-    color: #fff !important;
-} */
-
-/* Example for changing hovering color in dark mode */
-/* .dark-mode .dropdown-menu .dropdown-item:hover {
-    background-color: #222; /* Set your desired hovering color for dark mode */
-    /* Add any other styles for the hovering effect in dark mode */
-/* } */
-.darkmode .dropdown-menu{
+.darkmode .dropdown-menu {
     background-color: #2e2c2c;
 }
 
-.darkmode .three-dots{
-    background-color: transparent!important;
+.darkmode .three-dots {
+    background-color: transparent !important;
+}
+
+.darkmode .card-header {
+    border-bottom: 0.5px solid white;
+}
+
+.card-header {
+    background-color: transparent;
 }
