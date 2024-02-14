@@ -11,12 +11,12 @@ After testing, we dedicated efforts to refactor and enhance the design and user 
 We hope you enjoy the Facebook WebApp!
 
 ## Features
-1. Sign Up & Login
-    * Create an account and log in to get started.
+### 1. Sign Up & Login
+   - Create an account and log in to get started.
 
-2. Newsfeed
-    * Explore posts from friends.
-    * View, edit, delete, and share your own updates.
+### 2. Newsfeed
+   - Explore posts from friends.
+   -  View, edit, delete, and share your own updates.
 
 ## Prerequisites
 Before you start, make sure you have Node.js and npm installed on your machine.
