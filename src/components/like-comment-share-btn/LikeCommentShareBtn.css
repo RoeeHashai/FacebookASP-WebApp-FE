@@ -1,0 +1,5 @@
+/* Add these styles to customize dark and light mode buttons */
+.btn-dark-custom {
+    background-color: #444;
+    color: white;
+  }

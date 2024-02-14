@@ -1,13 +1,14 @@
-.navbar > .container {
-    display: block !important; /* Change display value as needed */
+.navbar>.container {
+    display: block !important;
+    /* Change display value as needed */
 }
 
-nav{
+nav {
     background-color: white;
     height: 55px;
 }
 
-.searchbar{
+.searchbar {
     width: 250px;
 }
 
@@ -15,7 +16,26 @@ nav{
     background-color: #f0f2f5;
 }
 
-.dark-mode-switch{
+.dark-mode-switch {
     font-size: 20px;
 
+}
+
+.dark-mode-nav {
+    background-color: #222;
+    color: #fff;
+    /* Add specific dark mode styles for navbar */
+}
+
+
+.navbar-dark {
+    background-color: #333;
+    /* Example dark background color */
+    color: #fff;
+    /* Example light text color for dark mode */
+    /* Add any other styles for dark mode */
+}
+
+.logout-dark {
+    color: #fff;
 }

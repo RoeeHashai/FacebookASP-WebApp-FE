@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './PostBody.css'
-import PostEditor from'../postEditor/PostEditor'
-export default function PostBody({ user, post, postCreator, date, content, image, onEdit, onDelete }) {
+import PostEditor from '../postEditor/PostEditor'
+export default function PostBody({ user, post, postCreator, date, content, image, onEdit, onDelete, darkMode }) {
     const isCurrentUserPostCreator = user.email === postCreator.email;
     // State for managing editing mode
     const [isEditing, setIsEditing] = useState(false);
@@ -33,7 +33,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
     };
     return (
         <div className='to-hover'>
-            <div className="card-header bg-white">
+            <div className={`card-header ${darkMode ? 'dark-mode-header' : 'bg-white'}`}>
                 <div className="d-flex">
                     <img
                         src={postCreator.image}
@@ -47,17 +47,17 @@ export default function PostBody({ user, post, postCreator, date, content, image
                     {isCurrentUserPostCreator && (
                         <div className="post-options-btn position-absolute top-0 end-0">
                             <button
-                                className="text-dark btn remove-border"
+                                className={` btn remove-border ${darkMode ? 'dark-mode-icon' : ''}`}
                                 type="button"
                                 id="postOptionsLink"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                <i className="bi bi-three-dots" />
+                                <i className="bi bi-three-dots " />
                             </button>
-                            <ul className="dropdown-menu shadow" aria-labelledby="postOptionsLink">
+                            <ul className={`dropdown-menu shadow ${darkMode ? 'dark-mode-dropdown' : ''}`} aria-labelledby="postOptionsLink">
                                 <li>
-                                    <button className="dropdown-item" onClick={handleEditClick}>
+                                    <button className="dropdown-item primary" onClick={handleEditClick}>
                                         Edit
                                     </button>
                                 </li>

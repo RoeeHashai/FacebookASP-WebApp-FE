@@ -8,3 +8,15 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* Add dark mode styles */
+.dark-mode .list-group-item {
+    color: #fff; /* Example light text color for dark mode */
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+    /* Add any other styles for dark mode */
+  }
+
+  .dark-mode .list-group-item:hover {
+    background-color: #444; /* Example darker background color on hover in dark mode */
+    color: #ddd; /* Example lighter text color on hover in dark mode */
+  }

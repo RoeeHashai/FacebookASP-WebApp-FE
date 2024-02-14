@@ -12,10 +12,26 @@ export default function Feed({ users, user }) {
     const navigate = useNavigate();
 
     const [posts, setPosts] = useState([...postsData]);
-    // Check if user is null and navigate to '/login'
+    const [darkMode, setDarkMode] = useState(false); // Step 1
+
+    // useEffect(() => {
+    //     // Step 2: Apply dark mode class
+    //     document.body.classList.toggle('dark-mode', darkMode);
+    //     document.querySelector('.navbar').classList.toggle('dark-mode-nav', darkMode);
+    //     document.querySelector('.navbarSearchBar').classList.toggle('dark-mode-searchbar', darkMode);
+
+    // }, [darkMode]);
+    useEffect(() => {
+        // Apply dark mode class to the body element
+        document.body.classList.toggle('dark-mode', darkMode);
+    }, [darkMode]);
+
     
-    
-    
+    const toggleDarkMode = () => {
+        console.log('toggle')
+        // Step 3: Toggle dark mode
+        setDarkMode((prevMode) => !prevMode);
+    };
 
     const addPost = (post) => {
         setPosts((prevPost) => [post, ...prevPost]);
@@ -27,17 +43,17 @@ export default function Feed({ users, user }) {
 
     return (
         <>
-            <NavbarFeed />
+            <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3 d-none d-md-block">
-                        <Menu user={user} />
+                        <Menu user={user} darkMode={darkMode} />
                     </div>
                     <div className="col">
-                        <PostGen user={user} addPost={addPost} />
+                        <PostGen user={user} addPost={addPost} darkMode={darkMode} />
                         {/* card-post */}
                         {posts.map((post) => (
-                            <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} />
+                            <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} darkMode={darkMode} />
                         ))}
                     </div>
                     <div className="col-md-3 d-none d-md-block" />

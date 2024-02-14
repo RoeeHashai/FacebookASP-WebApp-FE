@@ -1,26 +1,36 @@
 .remove-border {
-    border: none;
-  }
+  border: none;
+}
 
 .breakWord {
-    overflow-wrap: break-word;
-  }.post-options-btn {
-    display: none;
+  overflow-wrap: break-word;
+}
+
+.post-options-btn {
+  display: none;
 }
 
 .post-card {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
 }
 
-.card-footer{
-    background-color: transparent;
-    padding: 2px;
- }
+.card-footer {
+  background-color: transparent;
+  padding: 2px;
+}
 
 .post-footer button {
-    margin-right: 10px;
-    border-radius: 0px;
-  }
+  margin-right: 10px;
+  border-radius: 0px;
+}
+
+.dark-mode .post-card {
+  background-color: #333;
+  /* Example dark background color */
+  color: #fff;
+  /* Example light text color for dark mode */
+  /* Add any other styles for dark mode */
+}
