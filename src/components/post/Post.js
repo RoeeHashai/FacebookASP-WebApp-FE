@@ -7,6 +7,10 @@ import CommentGen from '../commentGen/CommentGen';
 import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 
+export const findUser = (email, users) => {
+    return users.find((user) => user.email === email) || null;
+};
+
 export default function Post({ users, user, post, setPosts, darkMode }) {
     const { id, author, date, content, image, likes, commentCount, comments } = post;
     const navigate = useNavigate();
@@ -15,9 +19,7 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
         setCommentsLst((prevComments) => [comment, ...prevComments])
     }
 
-    const findUser = (email, users) => {
-        return users.find((user) => user.email === email) || null
-    }
+
     const postCreator = findUser(author, users)
 
     const [liked, setLiked] = useState(false);
@@ -26,7 +28,10 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
     const toggleCommentMode = () => {
         setCommentMode(!commentMode)
     }
-
+    const [unlikeMode, setUnlikeMode] = useState(false)
+    const toggleUnlikeMode = () => {
+        setUnlikeMode(!unlikeMode)
+    }
 
     // const handleCancelEdit = () => {
     //     setIsEditing(false);
@@ -74,32 +79,35 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
     }
 
     return (
-        <div className={`card post-card m-2 ${darkMode ? 'dark-mode' : ''}`}>
-            <PostBody
-                user={user}
-                post={post}
-                postCreator={postCreator}
-                date={date}
-                content={content}
-                image={image}
-                onEdit={handleEditPost} // Set editing mode to true when Edit is clicked
-                onDelete={handleDeletePost}
-                darkMode={darkMode}
-            />
-            <LikeCommentShareBtn
-                toggleCommentMode={toggleCommentMode}
-                commentMode={commentMode}
-                post={post}
-                liked={liked}
-                setLiked={setLiked}
-                setPosts={setPosts}
-                darkMode={darkMode}
-            />
-            {commentsLst.map((comment) =>
-                <Comment key={comment.id} user={user} commentCreator={findUser(comment.author, users)} comment={comment} onDelete={handleDeleteComment}
-                    onEdit={handleEditComment} darkMode={darkMode}/>
-            )}
-            {commentMode && <CommentGen user={user} post={post} setPosts={setPosts} addComment={addComment} darkMode={darkMode}/>}
-
+        <div className={`${darkMode ? 'darkmode' : ''}`}>
+            <div className={`card shadow post-card m-2 `}>
+                <PostBody
+                    user={user}
+                    post={post}
+                    postCreator={postCreator}
+                    date={date}
+                    content={content}
+                    image={image}
+                    onEdit={handleEditPost} // Set editing mode to true when Edit is clicked
+                    onDelete={handleDeletePost}
+                    darkMode={darkMode}
+                />
+                <LikeCommentShareBtn
+                    toggleCommentMode={toggleCommentMode}
+                    unlikeMode={unlikeMode}
+                    toggleUnlikeMode={toggleUnlikeMode}
+                    commentMode={commentMode}
+                    post={post}
+                    liked={liked}
+                    setLiked={setLiked}
+                    setPosts={setPosts}
+                    darkMode={darkMode}
+                />
+                {commentsLst.map((comment) =>
+                    <Comment key={comment.id} user={user} commentCreator={findUser(comment.author, users)} comment={comment} onDelete={handleDeleteComment}
+                        onEdit={handleEditComment} darkMode={darkMode} />
+                )}
+                {commentMode && <CommentGen user={user} post={post} setPosts={setPosts} addComment={addComment} darkMode={darkMode} />}
+            </div>
         </div>)
 }

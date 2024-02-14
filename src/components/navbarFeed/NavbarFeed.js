@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export default function NavbarFeed({ toggleDarkMode, darkMode }) {
     return (
-        <nav className={`navbar sticky-top shadow ${darkMode ? 'navbar-dark' : ''}`}>
+        <nav className={`navbar sticky-top shadow ${darkMode ? 'dark-navbar' : ''}`}>
             <div className="container text-center">
                 <div className="row justify-content-center">
                     <div className="col-auto d-none d-md-block position-fixed start-0">
@@ -33,7 +33,7 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                     <div className="col-auto">
                         <div className="searchbar ms-2">
                             <input
-                                className="form-control navbarSearchBar rounded-pill"
+                                className={`form-control navbarSearchBar rounded-pill ${darkMode ? 'searchbar-dark' : 'searchbar-light'}`}
                                 type="search"
                                 placeholder="Search Facebook"
                                 aria-label="Search"
@@ -43,7 +43,7 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                     </div>
                     <div className="col-auto d-none d-md-block position-fixed end-0">
                         <Link to='/login'>
-                            <button className={`btn ${darkMode ? 'logout-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
+                            <button className={`btn ${darkMode ? 'logout-logo-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout"><i className="bi bi-box-arrow-left"></i></button>
                         </Link>
                     </div>
                 </div>

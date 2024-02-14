@@ -26,7 +26,7 @@ export default function CommentGen({ user, addComment, setPosts, post , darkMode
         setCommentContent(e.target.value)
     }
     return (
-        <div className="card-footer mt-2">
+        <div className={`card-footer mt-2`}>
             <div className="comment">
                 <div className="d-flex">
                     {/* Profile Picture */}
@@ -39,15 +39,17 @@ export default function CommentGen({ user, addComment, setPosts, post , darkMode
                     <div className="col add-new-comment-box">
                         <div className="d-flex">
                             <textarea
-                                className={`form-control add-comment-custom ${darkMode ? 'text-light' : ''}`}
+                                className={`form-control add-comment-custom ${darkMode ? '' : ''}`}
                                 placeholder="Add a comment..."
                                 defaultValue={""}
                                 onChange={handleOnChangeContentComment}
                                 
                             />
                             <button
-                                className={`btn ${darkMode ? 'dark-mode-btn' : ''}`}
+                                className={`btn ${darkMode ? 'btn-upload-post-dark' : ''}`}
                                 onClick={handleAddCommentClick}
+                                title="sendButton" // Add a name to the button
+
                             >
                                 <i className="bi bi-send"></i>
                             </button>

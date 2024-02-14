@@ -47,7 +47,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
                     {isCurrentUserPostCreator && (
                         <div className="post-options-btn position-absolute top-0 end-0">
                             <button
-                                className={` btn remove-border ${darkMode ? 'dark-mode-icon' : ''}`}
+                                className={` btn remove-border three-dots`}
                                 type="button"
                                 id="postOptionsLink"
                                 data-bs-toggle="dropdown"
@@ -58,12 +58,12 @@ export default function PostBody({ user, post, postCreator, date, content, image
                             <ul className={`dropdown-menu shadow ${darkMode ? 'dark-mode-dropdown' : ''}`} aria-labelledby="postOptionsLink">
                                 <li>
                                     <button className="dropdown-item primary" onClick={handleEditClick}>
-                                        Edit
+                                    <i className="bi bi-pen pe-1"></i>Edit
                                     </button>
                                 </li>
                                 <li>
                                     <button className="dropdown-item" onClick={handleDeleteClick}>
-                                        Delete
+                                    <i className="bi bi-trash pe-1"></i>Delete
                                     </button>
                                 </li>
                             </ul>

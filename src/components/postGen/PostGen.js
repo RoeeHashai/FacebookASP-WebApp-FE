@@ -3,7 +3,7 @@ import './PostGen.css'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function PostGen({ user, addPost , darkMode}) {
+export default function PostGen({ user, addPost, darkMode }) {
     const [idCounter, setIdCounter] = useState(10)
 
     // state variables of post form
@@ -45,14 +45,14 @@ export default function PostGen({ user, addPost , darkMode}) {
             const idPost = idCounter
             increamentIdCount()
             const newPost = {
-                "id": idPost, 
-                "author": user.email, 
-                "date": formattedDate, 
+                "id": idPost,
+                "author": user.email,
+                "date": formattedDate,
                 "content": postContent,
                 "image": image && URL.createObjectURL(image), // Use createObjectURL to get a URL for the image
-                "likes": 0, 
-                "commentCount": 0, 
-                "comments":[]
+                "likes": 0,
+                "commentCount": 0,
+                "comments": []
             }
             addPost(newPost)
         }
@@ -79,9 +79,9 @@ export default function PostGen({ user, addPost , darkMode}) {
         return true;
     };
     return (
-        <>
+        <div className={`${darkMode ? 'darkmode' : ''}`}>
             {/* add new comment */}
-            <div className={`card m-2 ${darkMode ? 'dark-post-gen': ''}`}>
+            <div className={`card shadow m-2 `}>
                 <div className="card-body m-1">
                     <div className="d-flex add-new-comment-box">
                         {/* Profile Picture */}
@@ -95,7 +95,7 @@ export default function PostGen({ user, addPost , darkMode}) {
                         />
                         {/* Input field for the comment */}
                         <textarea
-                            className="form-control mb-2"
+                            className={`form-control mb-2`}
                             placeholder={`What's on your mind, ${user.name}?`}
                             defaultValue={""}
                             onChange={setPostText}
@@ -104,7 +104,7 @@ export default function PostGen({ user, addPost , darkMode}) {
 
                     <input
                         type="file"
-                        className={`form-control ${!imageValid && 'is-invalid'} ${darkMode ? 'dark-input' : ''}`}
+                        className={`form-control uploade-image-form ${!imageValid && 'is-invalid'}`}
                         onChange={setPostImage}
                         id="postImage"
                         required=""
@@ -116,11 +116,13 @@ export default function PostGen({ user, addPost , darkMode}) {
                 </div>
                 <div className="card-footer post-footer add-new-comment-box">
                     <div className="btn-group w-100 ms-1">
-                    <button type="button" className={`btn btn-light ${darkMode ? 'dark-button' : ''}`} onClick={handlePostClick}>
+                        <button type="button" className={`btn btn-light ${darkMode ? '' : ''}`} onClick={handlePostClick}>
                             <i className="bi bi-file-post pe-1" />
                             Post
                         </button>
                     </div>
                 </div>
-            </div></>)
+            </div>
+        </div>
+    )
 }

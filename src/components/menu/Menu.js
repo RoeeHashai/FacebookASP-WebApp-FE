@@ -17,11 +17,9 @@ export default function Menu({ user, darkMode }) {
         return null;
     }
 
-
-
     return (
-        <ul className={`list-group ${darkMode ? 'dark-mode' : ''}`}>
-            <li className="list-group-item d-flex align-items-center">
+        <ul className={`list-group  ${darkMode ? 'darkmode-menu' : ''}`}>
+            <li className=" margintopmenu list-group-item d-flex align-items-center">
                 {/* Profile Picture */}
                 <div className='contanier'>
                     <img
@@ -37,17 +35,39 @@ export default function Menu({ user, darkMode }) {
                 <span className="w-100 m-1 ms-3">Friends</span>
             </li>
             <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-newspaper ms-1" />
+                <span className="w-100 m-1 ms-3">Feeds</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-clock ms-1" />
+                <span className="w-100 m-1 ms-3">Memories</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-bookmark ms-1" />
+                <span className="w-100 m-1 ms-3">Saved</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-people-fill ms-1" />
+                <span className="w-100 m-1 ms-3">Gruops</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-play-btn ms-1" />
+                <span className="w-100 m-1 ms-3">Video</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
                 <i className="bi bi-shop ms-1" />
                 <span className="w-100 m-1 ms-3">Marketplace</span>
+            </li>
+            <li className="list-group-item d-flex list-to-hover align-items-center">
+                <i className="bi bi-calendar ms-1" />
+                <span className="w-100 m-1 ms-3">Events</span>
             </li>
             <li className="list-group-item d-flex list-to-hover align-items-center">
                 <i className="bi bi-messenger ms-1" />
                 <span className="w-100 m-1 ms-3">Messenger</span>
             </li>
-            <li className="list-group-item d-flex list-to-hover align-items-center">
-                <i className="bi bi-newspaper ms-1" />
-                <span className="w-100 m-1 ms-3">Feeds</span>
-            </li>
+
+
 
         </ul>)
 }

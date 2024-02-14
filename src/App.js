@@ -25,7 +25,7 @@ function App() {
           <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
           <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
           <Route path='/signup' element={<Signup users={users} onAddUser={addUser} />} />
-          <Route path='/feed' element={<Feed users={users} user={connectedUser} />} />
+          <Route path='/feed' element={<Feed users={users} user={connectedUser} addConnectedUser={addConnectedUser} />} />
         </Routes>
     </Router>
   );

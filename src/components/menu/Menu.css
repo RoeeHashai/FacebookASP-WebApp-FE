@@ -9,14 +9,27 @@
     cursor: pointer;
 }
 
-/* Add dark mode styles */
+/* Add dark mode styles
 .dark-mode .list-group-item {
     color: #fff; /* Example light text color for dark mode */
-    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+    /* transition: background-color 0.3s, color 0.3s; Add smooth transition */
     /* Add any other styles for dark mode */
+  /* } */
+
+  /* .dark-mode .list-group-item:hover {
+    background-color: #444; /* Example darker background color on hover in dark mode */
+    /* color: #ddd; Example lighter text color on hover in dark mode */
+  /* } */
+
+  .darkmode-menu .list-group-item{
+    color: white;
+  }
+  .darkmode-menu .list-to-hover:hover {
+    background-color: rgb(68, 62, 62);
+    border-radius: 5px;
+    cursor: pointer;
   }
 
-  .dark-mode .list-group-item:hover {
-    background-color: #444; /* Example darker background color on hover in dark mode */
-    color: #ddd; /* Example lighter text color on hover in dark mode */
+  .margintopmenu{
+    margin-top: 2.5px;
   }

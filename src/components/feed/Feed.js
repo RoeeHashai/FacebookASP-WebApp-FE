@@ -5,31 +5,14 @@ import Menu from '../menu/Menu';
 import PostGen from '../postGen/PostGen';
 import Post from '../post/Post';
 import { Link } from 'react-router-dom';
-import './Feed.css';
+import './Feed.css'; // Import the CSS file
 import postsData from '../../data/posts.json';
 
-export default function Feed({ users, user }) {
-    const navigate = useNavigate();
-
+export default function Feed({ users, user}) {
     const [posts, setPosts] = useState([...postsData]);
-    const [darkMode, setDarkMode] = useState(false); // Step 1
+    const [darkMode, setDarkMode] = useState(false);
 
-    // useEffect(() => {
-    //     // Step 2: Apply dark mode class
-    //     document.body.classList.toggle('dark-mode', darkMode);
-    //     document.querySelector('.navbar').classList.toggle('dark-mode-nav', darkMode);
-    //     document.querySelector('.navbarSearchBar').classList.toggle('dark-mode-searchbar', darkMode);
-
-    // }, [darkMode]);
-    useEffect(() => {
-        // Apply dark mode class to the body element
-        document.body.classList.toggle('dark-mode', darkMode);
-    }, [darkMode]);
-
-    
     const toggleDarkMode = () => {
-        console.log('toggle')
-        // Step 3: Toggle dark mode
         setDarkMode((prevMode) => !prevMode);
     };
 
@@ -42,16 +25,15 @@ export default function Feed({ users, user }) {
     };
 
     return (
-        <>
+        <div className={`${darkMode ? 'dark-bg' : ''}`}>
             <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3 d-none d-md-block">
                         <Menu user={user} darkMode={darkMode} />
                     </div>
-                    <div className="col">
+                    <div className="col-md-6 middle-column"> {/* Apply the new CSS class here */}
                         <PostGen user={user} addPost={addPost} darkMode={darkMode} />
-                        {/* card-post */}
                         {posts.map((post) => (
                             <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} darkMode={darkMode} />
                         ))}
@@ -59,6 +41,6 @@ export default function Feed({ users, user }) {
                     <div className="col-md-3 d-none d-md-block" />
                 </div>
             </div>
-        </>
+            </div>
     );
 }

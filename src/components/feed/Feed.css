@@ -1,13 +1,21 @@
 
 /* Add these styles to your CSS file */
-.dark-mode {
-    background-color: #151414;
-    color: #fff;
-    /* Add other dark mode styles here */
-  }
-  
-  .light-mode {
-    background-color: #ffffff;
-    color: #000000;
-  }
-  
+
+
+/* Feed.css */
+
+.container-fluid {
+height: 100% !important;
+}
+
+.middle-column {
+overflow-y: auto;
+max-height: calc(100vh - 56px);
+}
+/* Hide the scrollbar for webkit browsers (Chrome, Safari, etc.) */
+.middle-column::-webkit-scrollbar {
+  width: 0;
+}
+.dark-bg{
+  background-color: rgb(19, 19, 19);
+}
