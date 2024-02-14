@@ -5,5 +5,12 @@
         "email": "roee.hashai@gmail.com",
         "password": "1234",
         "image": "/profile-pictures/roee_hashai.jpeg"
+    },
+    {
+        "id": 2, 
+        "name": "Talya Rubinstien", 
+        "email": "talyarubin@gmail.com",
+        "password": "1234",
+        "image": "/profile-pictures/talya_rubinstien.jpg"
     }
 ]

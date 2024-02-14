@@ -38,7 +38,8 @@ export default function PostGen({ user, addPost }) {
         e.preventDefault()
         const isImageValidValue = isImageValid(image)
         setImageValid(isImageValidValue)
-        if (imageValid) {
+        if (isImageValidValue) {
+            if (!postContent && !image) return
             const currentDate = new Date();
             const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(currentDate);
             const idPost = idCounter
@@ -89,6 +90,8 @@ export default function PostGen({ user, addPost }) {
                             alt="User Profile"
                             className="rounded-circle small-profile-img me-2 upload-post"
                             onChange={setPostImage}
+                            style={{ width: '60px !important', height: '60px !important' }}
+
                         />
                         {/* Input field for the comment */}
                         <textarea
