@@ -99,11 +99,7 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
     navigate('/login');
   };
 
-
   const validateForm = () => {
-    if (email === '' && password === '' && confirmPassword === '' && picture == null) {
-      return false;
-    }
     // Check if the email is valid if not display error
     const isEmailValidValue = isEmailValid(email);
     setEmailValid(isEmailValidValue);
@@ -121,7 +117,9 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
 
     // Check if at least one field (other than the picture) is filled in
     const isAnyFieldFilled = username || email || password || confirmPassword;
-
+    if (username === ''|| email === '' || password === '' || confirmPassword === '' || picture == null) {
+      return false;
+    }
     return isAnyFieldFilled && emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
   };
 
