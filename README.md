@@ -10,6 +10,8 @@ After testing, we dedicated efforts to refactor and enhance the design and user 
 
 We hope you enjoy the Facebook WebApp!
 
+![2d41461f-cac4-4968-be36-c4b08fc12d3d](https://github.com/RoeeHashai/FacebookASP-WebApp-FE/assets/114341594/4cc69c0b-2b1a-47dd-b22f-f0145eaf8ee0)
+
 ## Features
 1. Sign Up & Login
     * Create an account and log in to get started.
