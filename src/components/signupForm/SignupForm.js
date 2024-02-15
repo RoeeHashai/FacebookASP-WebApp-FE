@@ -118,7 +118,7 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
     if (username === ''|| email === '' || password === '' || confirmPassword === '' || picture == null) {
       return false;
     }
-    return emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
+    return emailValid && passwordValid && confirmPasswordValid && pictureValid;
   };
 
   const isEmailValid = (email) => {
