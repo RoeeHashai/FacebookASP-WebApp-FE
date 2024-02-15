@@ -42,11 +42,11 @@ export default function LoginForm({ users, addConnectedUser }) {
                 navigate('/feed');
             } else {
                 // Set passwordValid to false and display a wrong password message
-                setFormData((prevData) => ({ ...prevData, passwordValid: false, passwordMessage: 'Wrong password' }));
+                setFormData((prevData) => ({ ...prevData, passwordValid: false, passwordMessage: 'Wrong Password' }));
             }
         } else {
             // Set emailValid to false, display an invalid email message, and reset passwordValid and passwordMessage
-            setFormData((prevData) => ({ ...prevData, emailValid: false, emailMessage: 'Invalid email', passwordValid: false, passwordMessage: '' }));
+            setFormData((prevData) => ({ ...prevData, emailValid: false, emailMessage: 'Invalid Email', passwordValid: false, passwordMessage: '' }));
         }
     };
 
