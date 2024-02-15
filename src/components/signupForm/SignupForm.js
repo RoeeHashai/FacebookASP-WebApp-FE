@@ -4,7 +4,6 @@ import './SignupForm.css'
 
 export default function SignupForm({ users, onAddUser, idNewUser }) {
   const navigate = useNavigate()
-
   // state variables of the sign up form
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -24,6 +23,7 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('')
   const [pictureMessage, setPictureMessage] = useState('')
 
+  
   // Function to increment idCounter, to give a unique id for each post
   const handleOnInputChange = (e) => {
     const { name, value } = e.target
@@ -102,24 +102,29 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
 
   const validateForm = () => {
     if (username === '') {
-      setEmailValid(false)
+      setEmailValid(false);
     }
+  
     // Check if the email is valid if not display error
-    const isEmailValidValue = isEmailValid(email)
-    setEmailValid(isEmailValidValue)
-
+    const isEmailValidValue = isEmailValid(email);
+    setEmailValid(isEmailValidValue);
+  
     // Check if new password is valid if not display error
-    const isPasswordValidValue = isPasswordValid(password)
-    setPasswordValid(isPasswordValidValue)
-
-    const isConfirmPasswordValidValue = isConfirmPasswordValid(confirmPassword)
-    setConfirmPasswordValid(isConfirmPasswordValidValue)
-
-    const isPictureValidValue = isPictureValid(picture)
-    setPictureValid(isPictureValidValue)
-    return  emailValid && passwordValid && isConfirmPasswordValidValue && isPictureValidValue
-  }
-
+    const isPasswordValidValue = isPasswordValid(password);
+    setPasswordValid(isPasswordValidValue);
+  
+    const isConfirmPasswordValidValue = isConfirmPasswordValid(confirmPassword);
+    setConfirmPasswordValid(isConfirmPasswordValidValue);
+  
+    // Check if picture is valid if provided
+    const isPictureValidValue = isPictureValid(picture);
+    setPictureValid(isPictureValidValue);
+  
+    // Check if at least one field (other than the picture) is filled in
+    const isAnyFieldFilled = username || email || password || confirmPassword;
+    
+    return isAnyFieldFilled && emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
+  };
   const isEmailValid = (email) => {
     // email pattern validation - using regex
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
