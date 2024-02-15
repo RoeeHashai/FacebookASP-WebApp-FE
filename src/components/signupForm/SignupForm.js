@@ -115,12 +115,10 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
     const isPictureValidValue = isPictureValid(picture);
     setPictureValid(isPictureValidValue);
 
-    // Check if at least one field (other than the picture) is filled in
-    const isAnyFieldFilled = username || email || password || confirmPassword;
     if (username === ''|| email === '' || password === '' || confirmPassword === '' || picture == null) {
       return false;
     }
-    return isAnyFieldFilled && emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
+    return emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
   };
 
   const isEmailValid = (email) => {
