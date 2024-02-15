@@ -99,26 +99,27 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
     navigate('/login');
   };
 
-
   const validateForm = () => {
-    if (username === '') {
-      setEmailValid(false)
-    }
     // Check if the email is valid if not display error
-    const isEmailValidValue = isEmailValid(email)
-    setEmailValid(isEmailValidValue)
+    const isEmailValidValue = isEmailValid(email);
+    setEmailValid(isEmailValidValue);
 
     // Check if new password is valid if not display error
-    const isPasswordValidValue = isPasswordValid(password)
-    setPasswordValid(isPasswordValidValue)
+    const isPasswordValidValue = isPasswordValid(password);
+    setPasswordValid(isPasswordValidValue);
 
-    const isConfirmPasswordValidValue = isConfirmPasswordValid(confirmPassword)
-    setConfirmPasswordValid(isConfirmPasswordValidValue)
+    const isConfirmPasswordValidValue = isConfirmPasswordValid(confirmPassword);
+    setConfirmPasswordValid(isConfirmPasswordValidValue);
 
-    const isPictureValidValue = isPictureValid(picture)
-    setPictureValid(isPictureValidValue)
-    return  emailValid && passwordValid && isConfirmPasswordValidValue && isPictureValidValue
-  }
+    // Check if picture is valid if provided
+    const isPictureValidValue = isPictureValid(picture);
+    setPictureValid(isPictureValidValue);
+
+    if (username === ''|| email === '' || password === '' || confirmPassword === '' || picture == null) {
+      return false;
+    }
+    return emailValid && passwordValid && isConfirmPasswordValidValue && (picture ? isPictureValidValue : true);
+  };
 
   const isEmailValid = (email) => {
     // email pattern validation - using regex
