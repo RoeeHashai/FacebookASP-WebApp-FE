@@ -1,13 +1,32 @@
+body {
+  overflow-y: hidden;
+  height: 100%;
+  margin: 0;
+}
+
 .container-fluid {
-  height: 100% !important;
+  height: 100vh;
+  display: flex;
 }
 
 .middle-column {
   overflow-y: auto;
-  max-height: calc(100vh - 56px);
+  flex: 1;
+  max-height: 93%;
+  position: relative; /* Add this for positioning */
+}
+
+.side-column {
+  overflow-y: auto;
+  max-height: 93%;
+  scrollbar-width: 0; /* For Firefox */
 }
 
 .middle-column::-webkit-scrollbar {
+  width: 0;
+}
+
+.side-column::-webkit-scrollbar {
   width: 0;
 }
 

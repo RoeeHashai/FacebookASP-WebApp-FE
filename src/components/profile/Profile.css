@@ -1,0 +1,28 @@
+.dark-bg {
+    background-color: rgb(19, 19, 19);
+}
+
+.profilecontainer {
+    display: block;
+
+}
+
+.profile-name {
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+}
+
+.middle-column {
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+
+}
+
+.dark-bg .profile-name {
+    color: #fff;
+}
+
+.dark-bg .bi-arrow-left {
+    color: #fff;
+}

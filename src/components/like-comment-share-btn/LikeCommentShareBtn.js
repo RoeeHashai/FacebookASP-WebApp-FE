@@ -1,9 +1,10 @@
 import React from 'react';
 import './LikeCommentShareBtn.css';
 
-export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, toggleUnlikeMode, unlikeMode, post, setLiked, setPosts, darkMode }) {
+export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, toggleUnlikeMode, unlikeMode, post, setLiked, setPosts, darkMode, openCommentModal }) {
   // Handle click for toggling comment mode
   const handleCommentClick = () => {
+    openCommentModal();
     toggleCommentMode();
   }
 
@@ -45,7 +46,7 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
           {/* Comment button */}
           <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleCommentClick}>
             <i className="bi bi-chat pe-1" />
-            {commentMode ? 'go-back' : 'comment'}
+            comment
           </button>
           {/* Share dropdown */}
           <div className="btn-group flex-grow-1">

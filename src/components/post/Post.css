@@ -26,3 +26,16 @@
   margin-right: 10px;
   border-radius: 0px;
 }
+
+.view-comments-btn {
+  background: transparent;
+  margin-left: 10px;
+  border: none;
+}
+
+.darkmode .view-comments-btn {
+  background: transparent;
+}
+.darkmode .view-comments-btn:hover {
+  background: transparent;
+}

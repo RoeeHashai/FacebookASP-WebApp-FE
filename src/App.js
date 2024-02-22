@@ -5,6 +5,9 @@ import Signup from './components/signup/Signup';
 import Feed from './components/feed/Feed';
 import usersData from './data/users.json';
 import { useState } from 'react';
+import Profile from './components/profile/Profile';
+import { DarkModeProvider } from './components/context/DarkModeContext';
+
 
 function App() {
   // State for storing users lists - init it with a json of user
@@ -20,21 +23,26 @@ function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        {/* Route for login, using the Login component */}
-        <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
+    <DarkModeProvider>
+      <Router>
+        <Routes>
+          {/* Route for login, using the Login component */}
+          <Route path='/' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
 
-        {/* Additional route for login, in case it's needed */}
-        <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
+          {/* Additional route for login, in case it's needed */}
+          <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
 
-        {/* Route for signup, using the Signup component */}
-        <Route path='/signup' element={<Signup users={users} onAddUser={addUser} idNewUser={users.length + 1} />} />
+          {/* Route for signup, using the Signup component */}
+          <Route path='/signup' element={<Signup users={users} onAddUser={addUser} idNewUser={users.length + 1} />} />
 
-        {/* Route for the feed, using the Feed component */}
-        <Route path='/feed' element={<Feed users={users} user={connectedUser} addConnectedUser={addConnectedUser} />} />
-      </Routes>
-    </Router>
+          {/* Route for the feed, using the Feed component */}
+          <Route path='/feed' element={<Feed users={users} user={connectedUser} />} />
+
+          <Route path="/profile/:userId" element={<Profile users={users} user={connectedUser}/>} />
+
+        </Routes>
+      </Router>
+    </DarkModeProvider>
   );
 }
 export default App;
