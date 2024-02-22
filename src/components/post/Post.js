@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Comment from '../comment/Comment';
-import CommentGen from '../commentGen/CommentGen';
 import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 import './Post.css';
+import CommentModal from '../commentModal/CommentModal';
 
 export const findUser = (email, users) => {
     return users.find((user) => user.email === email) || null;
@@ -51,11 +50,37 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
         );
     };
 
-    const handleDeleteComment = (commentId) => {
-        // Search in the comments list for the comment that needs to be deleted and remove the comment
+const handleDeleteComment = (commentId) => {
+    // Find the comment that needs to be deleted
+    const deletedComment = commentsLst.find((comment) => comment.id === commentId);
+
+    // Ensure the comment is found before proceeding
+    if (deletedComment) {
+        // Update the comment count in the associated post
+        const updatedPost = { ...post, commentCount: post.commentCount - 1 };
+
+        // Update the local state (commentsLst) by removing the deleted comment
         setCommentsLst((prevComments) =>
             prevComments.filter((comment) => comment.id !== commentId)
         );
+
+        // Update the post data in the server or wherever it's stored
+
+        // Update the post data in the local state (setPosts function)
+        setPosts((prevPosts) =>
+            prevPosts.map((p) => (p.id === post.id ? updatedPost : p))
+        );
+    }
+};
+    const [commentModalOpen, setCommentModalOpen] = useState(false);
+
+    const openCommentModal = () => {
+        setCommentModalOpen(true);
+    };
+
+    const closeCommentModal = () => {
+        setCommentMode(false);
+        setCommentModalOpen(false);
     };
 
     // In case of refreshing the page need to logout because (Connected) user isn't connected any more
@@ -70,7 +95,6 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
     if (!user) {
         return null;
     } // =================================== End Handle Refresh =======================================
-
     return (
         <div className={`${darkMode ? 'darkmode' : ''}`}>
             <div className={`card shadow post-card m-2 `}>
@@ -94,28 +118,28 @@ export default function Post({ users, user, post, setPosts, darkMode }) {
                     setLiked={setLiked}
                     setPosts={setPosts}
                     darkMode={darkMode}
+                    openCommentModal={openCommentModal}
                 />
-                {commentsLst.map((comment) => (
-                    <Comment
-                        key={comment.id}
-                        user={user}
-                        commentCreator={findUser(comment.author, users)}
-                        comment={comment}
-                        onDelete={handleDeleteComment}
-                        onEdit={handleEditComment}
-                        darkMode={darkMode}
-                    />
-                ))}
-                {commentMode && (
-                    <CommentGen
-                        user={user}
-                        post={post}
-                        setPosts={setPosts}
-                        addComment={addComment}
-                        darkMode={darkMode}
-                    />
-                )}
+                {/* Button to open the comment modal */}
+                <button className='view-comments-btn' onClick={openCommentModal}> <i className="bi bi-list me-1"></i>View Comments</button>
             </div>
+
+            {/* Render the comment modal if open */}
+            {commentModalOpen && (
+                <CommentModal
+                    comments={commentsLst}
+                    onClose={closeCommentModal}
+                    users={users}
+                    user={user}
+                    handleDeleteComment={handleDeleteComment}
+                    handleEditComment={handleEditComment}
+                    darkMode={darkMode}
+                    commentMode={commentMode}
+                    addNewComment={addComment}
+                    post={post}
+                    setPosts={setPosts}
+                />
+            )}
         </div>
     );
 }

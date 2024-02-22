@@ -41,9 +41,8 @@ export default function CommentGen({ user, addComment, setPosts, post, darkMode 
             commentContent: e.target.value
         });
     }
-
     return (
-        <div className={`card-footer mt-2`}>
+        <div className={`${darkMode ? 'darkmode' : ''} card-footer mt-2`}>
             <div className="comment">
                 <div className="d-flex">
                     {/* Profile Picture */}

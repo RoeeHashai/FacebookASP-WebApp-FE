@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './PostBody.css';
 import PostEditor from '../postEditor/PostEditor';
 
@@ -38,11 +39,13 @@ export default function PostBody({ user, post, postCreator, date, content, image
                 <div className={`card-header`}>
                     <div className="d-flex">
                         {/* Display post creator's profile picture and name */}
-                        <img
-                            src={postCreator.image}
-                            alt="User Profile"
-                            className="rounded-circle small-profile-img me-2 "
-                        />
+                        <Link to={`/profile/${postCreator.id}`} className="text-decoration-none">
+                            <img
+                                src={postCreator.image}
+                                alt="User Profile"
+                                className="rounded-circle small-profile-img me-2 "
+                            />
+                        </Link>
                         <div>
                             <h6 className="mb-0">{postCreator.name}</h6>
                             <p className="mb-0 small">Posted on {date}</p>
@@ -57,7 +60,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
-                                    <i className="bi bi-three-dots " />
+                                    <i className="bi bi-three-dots" />
                                 </button>
                                 {/* Dropdown menu for post options, will be blocked if the user isnt the creator of the post */}
                                 <ul className={`dropdown-menu shadow ${darkMode ? 'dark-mode-dropdown' : ''}`} aria-labelledby="postOptionsLink">
