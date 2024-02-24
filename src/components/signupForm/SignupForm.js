@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './SignupForm.css'
 
-export default function SignupForm({ users, onAddUser, idNewUser }) {
+export default function SignupForm({}) {
   const navigate = useNavigate()
 
   // state variables of the sign up form
@@ -68,7 +68,7 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
         setPicture(file);
         const isPictureValidValue = isPictureValid(file);
         setPictureValid(isPictureValidValue);
-      } else { // needthis?
+      } else {
         // Handle case when the picture input is cleared
         setPicture(null);
         setImagePreviewUrl(null);
@@ -118,10 +118,6 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
         },
         body: JSON.stringify(newUser)
       });
-
-      // Add the new user to the list of users
-      // onAddUser(newUser);
-
 
       if (response.ok) {
         const data = await response.json();
@@ -188,11 +184,6 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
       setEmailMessage('Email must be in a correct email format (e.g., XXX@XXX.XXX)')
       return false
     }
-    // const emailExist = users.find((user) => user.email === email)
-    // if (emailExist) {
-    //   setEmailMessage('This email address is already in use. Please use a different one or log in.');
-    //   return false
-    // }
     return true
   }
 

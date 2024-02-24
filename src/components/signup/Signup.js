@@ -2,7 +2,7 @@ import React from 'react'
 import './Signup.css'
 import Logo from '../logo/Logo'
 import SignupForm from '../signupForm/SignupForm'
-export default function Signup({ users, onAddUser, idNewUser }) {
+export default function Signup({}) {
     return (
         <div className=" container col-center d-flex justify-content-center align-items-center vh-100">
             <div className="container justify-content-center">
@@ -13,7 +13,7 @@ export default function Signup({ users, onAddUser, idNewUser }) {
                     </div>
                     <div className="col-lg-6">
                         {/* SignupForm component */}
-                        <SignupForm users={users} onAddUser={onAddUser} idNewUser={idNewUser}/>
+                        <SignupForm/>
                     </div>
                 </div>
             </div>
