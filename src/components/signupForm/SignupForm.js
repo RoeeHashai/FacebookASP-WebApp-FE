@@ -103,7 +103,6 @@ export default function SignupForm({}) {
 
     // Create a new user to add to the users list
     const newUser = {
-      // id: idNewUser,
       name: name,
       email,
       password,
