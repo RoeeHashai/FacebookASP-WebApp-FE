@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
-export default function LoginForm({ users, addConnectedUser }) {
+export default function LoginForm({ addConnectedUser }) {
     const navigate = useNavigate();
-
-    // Combined state for form data and validation
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -16,37 +14,87 @@ export default function LoginForm({ users, addConnectedUser }) {
         passwordMessage: '',
     });
 
-    // Function to navigate to the signup page
     const handleSignupClick = () => {
         navigate('/signup');
     };
 
-    // Function to handle login button click
-    const handleLoginClick = (e) => {
+    const fetchUser = async (email) => {
+        try {
+            const response = await fetch(`api/users/${email}`, {
+                method: 'GET',
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                return data;
+            }
+            else {
+                console.log('Error fetching user');
+            }
+        }
+        catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleLoginClick = async (e) => {
         e.preventDefault();
-        
+
         // Set formSubmitted to true to trigger validation messages
-        setFormData((prevData) => ({ ...prevData, formSubmitted: true }));
+        //setFormData((prevData) => ({ ...prevData, formSubmitted: true }));
+        const loginData = {
+            email: formData.email,
+            password: formData.password
+        };
 
-        // Validate email and get user
-        const user = validateEmail(formData.email);
-        if (user) {
-            // Set emailValid to true if email is valid
-            setFormData((prevData) => ({ ...prevData, emailValid: true }));
+        try {
+            const response = await fetch('/api/tokens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginData)
+            });
 
-            // Validate password for the user
-            if (validatePasswordForUser(user, formData.password)) {
-                // Set passwordValid to true, add connected user, and navigate to feed
-                setFormData((prevData) => ({ ...prevData, passwordValid: true }));
-                addConnectedUser(user);
+            if (response.ok) {
+
+                const data = await response.json();
+
+                // Set token in local storage
+                localStorage.setItem('token', data.token);
+
+                const connectedUser = await fetchUser(formData.email);
+                // Get user data and add connected user to the state
+                addConnectedUser(connectedUser);
+                
+                // Navigate to feed
                 navigate('/feed');
             } else {
-                // Set passwordValid to false and display a wrong password message
-                setFormData((prevData) => ({ ...prevData, passwordValid: false, passwordMessage: 'Wrong Password' }));
+                const errorData = await response.json();
+                console.log(errorData);
+                if (errorData.message === 'User not found.') {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        formSubmitted: true,
+                        emailValid: false,
+                        emailMessage: "Email doesn't exist. Please create an account.",
+                        passwordValid: true,
+                    }));
+                } else if (errorData.message === 'Invalid password.') {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        formSubmitted: true,
+                        passwordValid: false,
+                        passwordMessage: 'Wrong Password',
+                        emailValid: true,
+                    }));
+                }
             }
-        } else {
-            // Set emailValid to false, display an invalid email message, and reset passwordValid and passwordMessage
-            setFormData((prevData) => ({ ...prevData, emailValid: false, emailMessage: 'Invalid Email', passwordValid: false, passwordMessage: '' }));
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
@@ -59,17 +107,6 @@ export default function LoginForm({ users, addConnectedUser }) {
     const onChangeEmail = (e) => {
         setFormData((prevData) => ({ ...prevData, email: e.target.value }));
     };
-
-    // Function to validate email against registered users
-    const validateEmail = (email) => {
-        return users && users.find((user) => user.email === email);
-    };
-
-    // Function to validate password against a specific user's password
-    const validatePasswordForUser = (user, enteredPassword) => {
-        return user && user.password === enteredPassword;
-    };
-
     return (
         <div className="card shadow rounded p-3">
             {/* Login form */}
