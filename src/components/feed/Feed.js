@@ -8,7 +8,7 @@ import postsData from '../../data/posts.json';
 import './Feed.css';
 import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function Feed({ users, user, token }) {
+export default function Feed({ users, user, token, addConnectedUser }) {
     // State to manage the list of posts
     // get the posts from the server
     const [posts, setPosts] = useState([...postsData]);
@@ -34,7 +34,7 @@ export default function Feed({ users, user, token }) {
                 <div className="row">
                     <div className="col-md-3 d-none side-column d-md-block">
                         {/* Sidebar menu component */}
-                        <Menu user={user} darkMode={darkMode} />
+                        <Menu user={user} darkMode={darkMode} addConnectedUser={addConnectedUser} />
                     </div>
                     <div className="col-md-6 middle-column">
                         {/* Component to generate and display posts */}

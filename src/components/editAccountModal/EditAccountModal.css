@@ -1,0 +1,25 @@
+.darkmode-modalBody {
+  background-color: #060707;
+  color: white;
+}
+
+/* Adjust the modal header close button if necessary */
+.darkmode-modal .modal-header .closeButton {
+  color: white;
+}
+
+.darkmode-modal .modal-footer {
+  background-color: #060707;
+  color: white;
+}
+
+.darkmode-modal .form-control {
+  background-color: #060707;
+  color: white;
+  border: 1px solid #ced4da; /* You might want to adjust the border color for better visibility */
+
+}
+/* Optionally, adjust the placeholder text color for better visibility */
+.darkmode-modal .form-control::placeholder {
+  color:white;
+}
