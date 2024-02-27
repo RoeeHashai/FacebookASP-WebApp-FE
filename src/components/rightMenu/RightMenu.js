@@ -1,113 +1,98 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import ContactsList from '../contactsList/ContactsList';
+import FriendReqList from '../friendReqList/FriendReqList';
 
-export default function RightMenu({ user, darkMode, friends, setFriends }) {
-    // get the friens req from the server
-    const [friendsRequests, setFriendsRequests] = useState([{
-        "id": 11,
-        "name": "Roee Hashai1",
-        "email": "roee.hashai@gmail.com",
-        "password": "1111",
-        "image": "/profile-pictures/roee_hashai.jpg"
-    }, {
-        "id": 12,
-        "name": "Roee Hashai2",
-        "email": "roee.hashai@gmail.com",
-        "password": "1111",
-        "image": "/profile-pictures/roee_hashai.jpg"
-    }, {
-        "id": 13,
-        "name": "Roee Hashai3",
-        "email": "roee.hashai@gmail.com",
-        "password": "1111",
-        "image": "/profile-pictures/roee_hashai.jpg"
-    },]);
-
-    const navigate = useNavigate();
-
-    // In case of refreshing the page need to logout because (Connected) user isn't connected any more
+export default function RightMenu({ user, darkMode }) {
+    const [rightMenuData, setRightMenuData] = useState({
+        friends: [],
+        approvedFriends: [],
+        pendingFriends: [],
+    });
+    
     useEffect(() => {
-        // Check if user is falsy (null or undefined)
-        if (!user) {
-            // Navigate to the login page if not logged in
-            navigate('/login');
+        const fetchFriends = async () => {
+            try {
+                const response = await fetch(`/api/users/${user._id}/friends`, {
+                    method: 'GET',
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                if (response.ok) {
+                    const friendsListData = await response.json();
+
+                    // Directly filter the fetched data for pending and approved friends
+                    const approvedFriends = friendsListData.friends.filter(friend => friend.status === 'approved');
+                    const pendingFriends = friendsListData.friends.filter(friend => friend.status === 'pending');
+                    
+                    // Update the state with both filtered lists
+                    setRightMenuData({
+                        ...rightMenuData,
+                        approvedFriends: approvedFriends,
+                        pendingFriends: pendingFriends,
+                        friends: friendsListData.friends
+                    });
+
+
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
-    }, [user, navigate]);
-    // If user is not defined, return null to avoid rendering the component
+        fetchFriends();
+    }, [user]);
     if (!user) {
         return null;
-    } // =================================== End Handle Refresh =======================================
+    }
 
-    const acceptFriendRequest = (request) => {
+    const acceptFriendRequest = (newFriend) => {
         // Remove the accepted friend request from the pending requests list
-        const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
-        setFriendsRequests(updatedRequests);
+        // const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
+        // setFriendsRequests(updatedRequests);
 
         // Add the accepted friend to the friends list
-        setFriends((prevFriends) => [...prevFriends, request]);
-        console.log(friends);
+        //setFriends((prevFriends) => [...prevFriends, request]);
+        // console.log(friends);
+        setRightMenuData({
+            ...rightMenuData,
+            approvedFriends: [...rightMenuData.approvedFriends, newFriend],
+            pendingFriends: rightMenuData.pendingFriends.filter((user) => user.id !== newFriend.id)
+        });
     };
-    const rejectFriendRequest = (request) => {
+    const rejectFriendRequest = (friendDel) => {
         // Remove the rejected friend request from the pending requests list
-        const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
-        setFriendsRequests(updatedRequests);
+        // const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
+        // setFriendsRequests(updatedRequests);
+        setRightMenuData({
+            ...rightMenuData,
+            pendingFriends: rightMenuData.pendingFriends.filter((user) => user.id !== friendDel.id)
+        });
     };
     return (
         <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
             {/* Map through the users array and render a list item for each user */}
-            {friendsRequests.length === 0 ? (
-                <div></div>
-            ) : (
-                <>
-                    <h5 className={`${darkMode ? 'text-light' : 'text-muted'} mt-3 contactsList ms-2`}>Pending Requests</h5>
-                    {friendsRequests.map((currentUser) =>
-                        // Check if the currentUser is not the logged-in user - don't display the current user as a contact of himself
-                        currentUser.id !== user.id ? (
-                            <li key={currentUser.id} className="list-group-item d-flex align-items-center">
-                                <div className='contanier'>
-                                    {/* Display the profile picture of the contact user */}
-                                    <Link to={`/profile/${currentUser.id}`} className="text-decoration-none">
-                                        <img
-                                            src={currentUser.image}
-                                            alt={`Profile of ${currentUser.name}`}
-                                            className="rounded-circle shadow small-profile-img"
-                                        />
-                                    </Link>
-                                </div>
-                                {/* Display the name of the contact user */}
-                                <span className={`w-100 m-1 ms-3 ${darkMode ? 'text-light' : 'text-muted'} `}>{currentUser.name}</span>
-                                <button className="btn btn-outline-primary me-2 border-0" onClick={() => acceptFriendRequest(currentUser)}><i className="bi bi-check-circle"></i></button>
-                                <button className="btn btn-outline-danger border-0" onClick={() => rejectFriendRequest(currentUser)}><i className="bi bi-x-circle"></i></button>
-                            </li>
-                        ) : null
-                    )}
-                    <div className="mt-1 line-under-buttons"></div>
-                </>
-            )}
+            <>
+                {rightMenuData.pendingFriends.length > 0 &&
+                    <>
+                        <FriendReqList darkMode={darkMode}
+                            user={user}
+                            friendsRequests={rightMenuData.pendingFriends}
+                            acceptFriendRequest={acceptFriendRequest}
+                            rejectFriendRequest={rejectFriendRequest} />
+                        <div className="mt-1 line-under-buttons"></div>
+                    </>
+                }
 
+                {rightMenuData.approvedFriends.length > 0 ?
+                    (<ContactsList
+                        darkMode={darkMode}
+                        friends={rightMenuData.approvedFriends}
+                        user={user} />) :
+                    null
+                }
 
-            <h5 className={`${darkMode ? 'text-light' : 'text-muted'} mt-3 contactsList ms-2`}>Contacts</h5>
-            {/* Map through the users array and render a list item for each user */}
-            {friends.map((currentUser) =>
-                // Check if the currentUser is not the logged-in user -  dont display the current user as a contact of himself
-                currentUser.id !== user.id ? (
-                    <Link to={`/profile/${currentUser.id}`} className="text-decoration-none"> {/*maybe delet if makes the profile complex*/}
-
-                        <li key={currentUser.id} className="list-group-item d-flex list-to-hover align-items-center">
-                            <div className='contanier'>
-                                {/* Display the profile picture of the contact user */}
-                                <img
-                                    src={currentUser.image}
-                                    alt={`Profile of ${currentUser.name}`}
-                                    className="rounded-circle shadow small-profile-img"
-                                />
-                            </div>
-                            {/* Display the name of the contact user */}
-                            <span className="w-100 m-1 ms-3">{currentUser.name}</span>
-                        </li>
-                    </Link>
-                ) : null
-            )}
+            </>
         </ul>
     );
 

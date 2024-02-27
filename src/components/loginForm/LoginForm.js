@@ -27,9 +27,9 @@ export default function LoginForm({ addConnectedUser }) {
                 }
             });
             if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                return data;
+                const userData = await response.json();
+                console.log(userData);
+                return userData;
             }
             else {
                 console.log('Error fetching user');
@@ -60,13 +60,13 @@ export default function LoginForm({ addConnectedUser }) {
             });
 
             if (response.ok) {
-
                 const data = await response.json();
 
                 // Set token in local storage
                 localStorage.setItem('token', data.token);
 
                 const connectedUser = await fetchUser(formData.email);
+                // console.log(connectedUser);
                 // Get user data and add connected user to the state
                 addConnectedUser(connectedUser);
                 

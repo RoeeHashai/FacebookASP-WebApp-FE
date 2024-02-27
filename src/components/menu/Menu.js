@@ -23,7 +23,7 @@ export default function Menu({ user, darkMode }) {
         <>
             <ul className={`list-group  ${darkMode ? 'darkmode-menu' : ''}`}>
                 {/* User profile information */}
-                <Link to={`/profile/${user.id}`} className="text-decoration-none">
+                <Link to={`/profile/1`} className="text-decoration-none">
                     <li className="margintopmenu list-group-item d-flex align-items-center">
                         {/* Profile Picture */}
                         <div className='contanier'>
