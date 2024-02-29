@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './SignupForm.css'
 
-export default function SignupForm({}) {
+export default function SignupForm({ }) {
   const navigate = useNavigate()
 
   // state variables of the sign up form
@@ -24,23 +24,9 @@ export default function SignupForm({}) {
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('')
   const [pictureMessage, setPictureMessage] = useState('')
 
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [emailExist, setEmailExist] = useState(false);
+  const [base64Picture, setBase64Picture] = useState('');
 
-  useEffect(() => {
-    // Generate the blob URL when 'picture' state changes
-    if (picture) {
-      const newImagePreviewUrl = URL.createObjectURL(picture);
-      setImagePreviewUrl(newImagePreviewUrl);
-
-      // Cleanup: Revoke the blob URL when it's no longer needed
-      return () => {
-        URL.revokeObjectURL(newImagePreviewUrl);
-      };
-    }
-  }, [picture]);
-
-  // Function to increment idCounter, to give a unique id for each post
   const handleOnInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'username') {
@@ -65,13 +51,17 @@ export default function SignupForm({}) {
     else if (name === 'picture') {
       const file = e.target.files[0];
       if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setBase64Picture(reader.result);
+        };
+        reader.readAsDataURL(file);
         setPicture(file);
         const isPictureValidValue = isPictureValid(file);
         setPictureValid(isPictureValidValue);
       } else {
-        // Handle case when the picture input is cleared
+        setBase64Picture('');
         setPicture(null);
-        setImagePreviewUrl(null);
       }
     }
   }
@@ -106,7 +96,7 @@ export default function SignupForm({}) {
       name: name,
       email,
       password,
-      image: imagePreviewUrl,
+      image: base64Picture,
     };
 
     try {
@@ -129,7 +119,7 @@ export default function SignupForm({}) {
         setEmail('');
         setPassword('');
         setPicture(null);
-        setImagePreviewUrl(null);
+        setBase64Picture('');
 
         // Navigate to the login page after successfully adding a new user
         navigate('/login');
@@ -172,10 +162,10 @@ export default function SignupForm({}) {
   };
 
   const isEmailValid = (email) => {
-    if(emailExist){
+    if (emailExist) {
       return false;
     }
-  
+
     // email pattern validation - using regex
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const isLegalEmail = pattern.test(email)
@@ -302,12 +292,12 @@ export default function SignupForm({}) {
 
           </div>
           {/* Display the profile picture preview */}
-          {picture && pictureValid && (
+          {base64Picture && (
             <div className="mt-3">
               <h6>Profile Picture Preview:</h6>
               <img
                 className='sm previewProfile img-fluid'
-                src={imagePreviewUrl}
+                src={base64Picture}
                 alt="Profile Preview"
               />
             </div>
