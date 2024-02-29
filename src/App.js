@@ -41,7 +41,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
 
           {/* Route for the feed, using the Feed component */}
-          <Route path='/feed' element={<Feed users={users} user={connectedUser} token={token}/>} />
+          <Route path='/feed' element={<Feed users={users} user={connectedUser} addConnectedUser={addConnectedUser} token={token}/>} />
 
           <Route path="/profile/:targetUserId" element={<Profile users={users} user={connectedUser}/>} />
 

@@ -8,6 +8,10 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
     toggleCommentMode();
   }
 
+  const showNotSupportedAlert = () => {
+    alert("This action is not supported at the moment.");
+  };
+
   // Handle click for toggling like/unlike and updating post likes
   const handleLikeClick = () => {
     if (unlikeMode) {
@@ -56,9 +60,9 @@ export default function LikeCommentShareBtn({ toggleCommentMode, commentMode, to
             </button>
             {/* Share options dropdown menu */}
             <ul className="dropdown-menu shadow">
-              <li><button className="dropdown-item"><i className="bi bi-messenger me-2"></i>Send in Messenger</button></li>
-              <li><button className="dropdown-item"><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</button></li>
-              <li><button className="dropdown-item"><i className="bi bi-instagram me-2"></i>Share on Instagram</button></li>
+              <li><button className="dropdown-item" onClick={showNotSupportedAlert}><i className="bi bi-messenger me-2"></i>Send in Messenger</button></li>
+              <li><button className="dropdown-item" onClick={showNotSupportedAlert}><i className="bi bi-whatsapp me-2"></i>Send in WhatsApp</button></li>
+              <li><button className="dropdown-item" onClick={showNotSupportedAlert}><i className="bi bi-instagram me-2"></i>Share on Instagram</button></li>
               {/* Add more share options if needed */}
             </ul>
           </div>

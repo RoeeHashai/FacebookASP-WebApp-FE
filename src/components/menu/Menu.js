@@ -1,11 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Menu.css';
 import { useNavigate, Link } from 'react-router-dom';
+import EditAccountModal from '../editAccountModal/EditAccountModal';
+import DeleteAccountModal from '../deleteAccountModal/DeleteAccountModal';
 
 
-export default function Menu({ user, darkMode }) {
+export default function Menu({ user, darkMode, addConnectedUser }) {
     const navigate = useNavigate();
+    const [isEditAccountModalOpen, setIsEditAccountModalOpen] = useState(false);
+    const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
+    const showNotSupportedAlert = () => {
+        alert("This action is not supported at the moment.");
+    };
 
+    // const toggleEditModal = () => {
+    //     setIsEditAccountModalOpen(!isEditAccountModalOpen);
+    //     console.log(isEditAccountModalOpen);
+    // };
     // In case of refreshing the page need to logout because (Connected) user isn't connected any more
     useEffect(() => {
         // Check if user is falsy (null or undefined)
@@ -23,7 +34,7 @@ export default function Menu({ user, darkMode }) {
         <>
             <ul className={`list-group  ${darkMode ? 'darkmode-menu' : ''}`}>
                 {/* User profile information */}
-                <Link to={`/profile/1`} className="text-decoration-none">
+                <Link to={`/profile/${user._id}`} className="text-decoration-none">
                     <li className="margintopmenu list-group-item d-flex align-items-center">
                         {/* Profile Picture */}
                         <div className='contanier'>
@@ -38,46 +49,70 @@ export default function Menu({ user, darkMode }) {
                 </Link>
 
                 {/* Menu items with icons */}
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-people-fill ms-1" />
                     <span className="w-100 m-1 ms-3">Friends</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-newspaper ms-1" />
                     <span className="w-100 m-1 ms-3">Feeds</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-clock ms-1" />
                     <span className="w-100 m-1 ms-3">Memories</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-bookmark ms-1" />
                     <span className="w-100 m-1 ms-3">Saved</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-people-fill ms-1" />
                     <span className="w-100 m-1 ms-3">Groups</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-play-btn ms-1" />
                     <span className="w-100 m-1 ms-3">Video</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-shop ms-1" />
                     <span className="w-100 m-1 ms-3">Marketplace</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-calendar ms-1" />
                     <span className="w-100 m-1 ms-3">Events</span>
                 </li>
-                <li className="list-group-item d-flex list-to-hover align-items-center">
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-messenger ms-1" />
                     <span className="w-100 m-1 ms-3">Messenger</span>
                 </li>
-
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={() => setIsEditAccountModalOpen(true)}>
+                    <i className="bi bi-pencil-square ms-1" />
+                    <span className="w-100 m-1 ms-3">Edit Account</span>
+                </li>
+                <li className="list-group-item d-flex list-to-hover align-items-center" onClick={() => setIsDeleteAccountModalOpen(true)}>
+                    <i className="bi bi-exclamation-triangle-fill ms-1" />
+                    <span className="w-100 m-1 ms-3">Delete Account</span>
+                </li>
             </ul>
-            <div className='mt-1 btn btn-outline-danger w-100'>
-                <i className="bi bi-x-circle me-2" />Delete Account</div>
+            <EditAccountModal
+                isOpen={isEditAccountModalOpen}
+                onClose={() => setIsEditAccountModalOpen(false)}
+                user={user}
+                onSave={(updatedUser) => {
+                    // Implement your save logic here
+                    setIsEditAccountModalOpen(false);
+                    addConnectedUser(updatedUser);
+                }}
+                darkMode={darkMode}
+            />
+            <DeleteAccountModal
+                isOpen={isDeleteAccountModalOpen}
+                onClose={() => setIsDeleteAccountModalOpen(false)}
+                user={user}
+                darkMode={darkMode}
+            />
+
+
         </>
     );
 }

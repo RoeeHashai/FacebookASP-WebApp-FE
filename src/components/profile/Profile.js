@@ -20,17 +20,9 @@ export default function Profile({ users, user }) {
     const [friendRequestSent, setFriendRequestSent] = useState(false);
     const { targetUserId } = useParams();
     const [isMyProfile, setIsMyProfile] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); // Added loading state
+
     console.log('targetUserId: ', targetUserId);
-    // State to manage the list of posts
-    // State to track friend request status
-
-    // Get the user and posts from server, check if friend to show posts
-
-    // Find the user based on the userId parameter
-
-    // Check if the profileUser is a friend of the logged-in user
-
-    // Handle the add friend button click
     const handleAddFriend = async () => {
         // Implement logic to send a friend request or perform necessary actions
         try {
@@ -72,6 +64,8 @@ export default function Profile({ users, user }) {
 
     useEffect(() => {
         const fetchUserData = async () => {
+            setIsLoading(true); // Start loading
+
             const userDetailsData = await fetch(`/api/users/${targetUserId}`, {
                 method: 'GET',
                 headers: {
@@ -95,9 +89,6 @@ export default function Profile({ users, user }) {
             console.log('isFriend: ', isFriend);
             if (isFriend || myProfile) {
                 setIsFriend(true);
-                // Fetch post data if the user is a friend
-
-                // Fetch friends list if there are friends
                 const friendsListData = await fetch(`/api/users/${targetUserId}/friends`, {
                     method: 'GET',
                     headers: {
@@ -111,83 +102,93 @@ export default function Profile({ users, user }) {
             else {
                 setIsFriend(false);
             }
-
+            setIsLoading(false); // End loading
         }
         fetchUserData();
     }, [user, targetUserId]);
 
 
+
     return (
         <div className={`${darkMode ? 'dark-bg' : ''}`}>
-            {/* Navbar component for the feed */}
             <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
 
-            <div className="container-fluid profilecontainer">
-                <div className="row">
-                    {/* Side column with profile image and name */}
-                    <div className="col-md-3 d-none side-column d-md-block text-center">
-                        <div>
-                            <img
-                                src={profileUser.image}
-                                alt={profileUser.name}
-                                className="img-fluid shadow mt-5 rounded-circle mb-3"
-                                style={{ width: '150px', height: '150px' }}
-                            />
-                        </div>
-                        <div>
-                            <p className='profile-name' style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>{profileUser.name}</p>
-                        </div>
-                        {(isFriend && !isMyProfile) && (
-                            <button className="btn shadow btn-outline-danger w-100" onClick={handleRemoveFriend}>
-                                <i className="bi bi-x-circle me-2"></i>Unfriend</button>
-                        )}
-                    </div>
-
-                    {/* Middle column with back button and content */}
-                    <div className="col-md-6 middle-column">
-                        {/* Back button */}
-                        <Link to='/feed'>
-                            <button className='btn mt-3 border-0'>
-                                <i className="bi bi-arrow-left"></i>
-                            </button>
-                        </Link>
-
-                        {/* Render posts or add friend button based on friendship status */}
-                        {isFriend ? (
-                            <div>
-                                {posts.map((post) => (
-                                    <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} darkMode={darkMode} />
-                                ))}
-
-                            </div>
-                        ) : (
-                            <div>
-                                {/* Add friend button */}
-                                <button className="btn btn-primary shadow w-100" onClick={handleAddFriend}>
-                                    {friendRequestSent ? (
-                                        <><i className="bi bi-check-circle-fill me-2"></i>Friend Request Sent</>
-                                    ) : (
-                                        <>
-                                            <i className="bi bi-person-plus-fill me-2"></i>
-                                            Add Friend
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Right-side column (placeholder for existing content) */}
-                    <div className="col-md-3 d-none side-column d-md-block">
-                        <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
-                            {/* only if firend in can see the firneds list need to fetch this get req*/}
-                            {isFriend &&
-                                <ContactsList friends={friends} darkMode={darkMode} user={user} />
-                            }
-                        </ul>
+            {isLoading ? (
+                // Loading state content
+                <div className="text-center my-5">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
-            </div>
+            ) : (
+                // Main content to render after loading is complete
+                <div className="container-fluid profilecontainer">
+                    <div className="row">
+                        {/* Side column with profile image and name */}
+                        <div className="col-md-3 d-none side-column d-md-block text-center">
+                            <div>
+                                <img
+                                    src={profileUser.image}
+                                    alt={profileUser.name}
+                                    className="img-fluid shadow mt-5 rounded-circle mb-3"
+                                    style={{ width: '150px', height: '150px' }}
+                                />
+                            </div>
+                            <div>
+                                <p className='profile-name' style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>{profileUser.name}</p>
+                            </div>
+                            {(isFriend && !isMyProfile) && (
+                                <button className="btn shadow btn-outline-danger w-100" onClick={handleRemoveFriend}>
+                                    <i className="bi bi-x-circle me-2"></i>Unfriend</button>
+                            )}
+                        </div>
+
+                        {/* Middle column with back button and content */}
+                        <div className="col-md-6 middle-column">
+                            {/* Back button */}
+                            <Link to='/feed'>
+                                <button className='btn mt-3 border-0'>
+                                    <i className="bi bi-arrow-left"></i>
+                                </button>
+                            </Link>
+
+                            {/* Render posts or add friend button based on friendship status */}
+                            {isFriend ? (
+                                <div>
+                                    {posts.map((post) => (
+                                        <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} darkMode={darkMode} />
+                                    ))}
+
+                                </div>
+                            ) : (
+                                <div>
+                                    {/* Add friend button */}
+                                    <button className="btn btn-primary shadow w-100" onClick={handleAddFriend}>
+                                        {friendRequestSent ? (
+                                            <><i className="bi bi-check-circle-fill me-2"></i>Friend Request Sent</>
+                                        ) : (
+                                            <>
+                                                <i className="bi bi-person-plus-fill me-2"></i>
+                                                Add Friend
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right-side column (placeholder for existing content) */}
+                        <div className="col-md-3 d-none side-column d-md-block">
+                            <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
+                                {/* only if firend in can see the firneds list need to fetch this get req*/}
+                                {isFriend &&
+                                    <ContactsList friends={friends} darkMode={darkMode} user={user} />
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
