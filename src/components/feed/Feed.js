@@ -8,7 +8,7 @@ import postsData from '../../data/posts.json';
 import './Feed.css';
 import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function Feed({ users, user }) {
+export default function Feed({ users, user, token }) {
     // State to manage the list of posts
     // get the posts from the server
     const [posts, setPosts] = useState([...postsData]);
@@ -24,8 +24,6 @@ export default function Feed({ users, user }) {
     // };
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
     // get the friens req from the server
-    const [friends, setFriends] = useState([...users]);
-
 
     return (
         <div className={`${darkMode ? 'dark-bg' : ''}`}>
@@ -41,7 +39,6 @@ export default function Feed({ users, user }) {
                     <div className="col-md-6 middle-column">
                         {/* Component to generate and display posts */}
                         <PostGen user={user} addPost={addPost} darkMode={darkMode} />
-
                         {/* Mapping through posts and rendering individual post components */}
                         {posts.map((post) => (
                             <Post key={post.id} users={users} user={user} post={post} setPosts={setPosts} darkMode={darkMode} />
@@ -49,7 +46,7 @@ export default function Feed({ users, user }) {
                     </div>
                     <div className="col-md-3 d-none side-column d-md-block">
                         {/* Right menu component */}
-                        <RightMenu user={user} darkMode={darkMode} friends={friends} setFriends={setFriends} />
+                        <RightMenu user={user} darkMode={darkMode} token={token} />
                     </div>
                 </div>
             </div>
