@@ -107,15 +107,13 @@ export default function Profile({ users, user }) {
         fetchUserData();
     }, [user, targetUserId]);
 
-
-
     return (
         <div className={`${darkMode ? 'dark-bg' : ''}`}>
             <NavbarFeed toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
 
             {isLoading ? (
                 // Loading state content
-                <div className="text-center my-5">
+                <div className="spinner-container d-flex justify-content-center align-items-center">
                     <div className="spinner-border text-primary" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>

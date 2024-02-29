@@ -3,21 +3,27 @@ import { Link } from 'react-router-dom';
 import './PostBody.css';
 import PostEditor from '../postEditor/PostEditor';
 
-export default function PostBody({ user, post, postCreator, date, content, image, onEdit, onDelete, darkMode }) {
+export default function PostBody({ user, post, onEdit, onDelete, darkMode }) {
     // Check if the current user is the creator of the post
-    const isCurrentUserPostCreator = user.email === postCreator.email;
-
+    const currentDate = new Date(post.date);
+    const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(currentDate);
+    post = {
+        ...post,
+        date: formattedDate,
+    };
+    const postCreator = post.author;
+    const isUserPostCreator = user._id === postCreator._id;
     // State for managing editing mode
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleSave = (editedPost) => {
+    const handleSaveOnEditMode = (editedPost) => {
         // Call the onEdit prop with the edited post
         onEdit(editedPost);
         // Exit editing mode
         setIsEditing(false);
     };
 
-    const handleCancel = () => {
+    const handleCancelOnEditMode = () => {
         // Exit editing mode
         setIsEditing(false);
     };
@@ -29,7 +35,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
 
     const handleDeleteClick = () => {
         // Pass both the post and postId to the parent component for deletion
-        onDelete({ post, postId: post.id });
+        onDelete({ post, pid: post._id });
     };
 
     return (
@@ -39,7 +45,7 @@ export default function PostBody({ user, post, postCreator, date, content, image
                 <div className={`card-header`}>
                     <div className="d-flex">
                         {/* Display post creator's profile picture and name */}
-                        <Link to={`/profile/${postCreator.id}`} className="text-decoration-none">
+                        <Link to={`/profile/${postCreator._id}`} className="text-decoration-none">
                             <img
                                 src={postCreator.image}
                                 alt="User Profile"
@@ -48,10 +54,10 @@ export default function PostBody({ user, post, postCreator, date, content, image
                         </Link>
                         <div>
                             <h6 className="mb-0">{postCreator.name}</h6>
-                            <p className="mb-0 small">Posted on {date}</p>
+                            <p className="mb-0 small">Posted on {post.date}</p>
                         </div>
                         {/* Display post options (edit and delete) for the post creator */}
-                        {isCurrentUserPostCreator && (
+                        {isUserPostCreator && (
                             <div className="post-options-btn position-absolute top-0 end-0">
                                 <button
                                     className={` btn remove-border three-dots`}
@@ -87,14 +93,14 @@ export default function PostBody({ user, post, postCreator, date, content, image
                     {/* Conditionally render PostEditor or post content based on editing mode */}
                     {isEditing ? (
                         // Render the PostEditor when in editing mode
-                        <PostEditor post={post} onCancel={handleCancel} onSave={handleSave} />
+                        <PostEditor post={post} onCancel={handleCancelOnEditMode} onSave={handleSaveOnEditMode} />
                     ) : (
                         // Render post content when not in editing mode
                         <>
-                            <p className='card-text'>{content} </p>
+                            <p className='card-text'>{post.content} </p>
                             {/* Display post image if available */}
-                            {image && (
-                                <img src={image} className='post-img img-fluid' alt='' />
+                            {post.image && (
+                                <img src={post.image} className='post-img img-fluid' alt='' />
                             )}
                         </>
                     )}
