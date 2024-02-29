@@ -33,7 +33,7 @@ function App() {
           <Route path='/login' element={<Login users={users} addConnectedUser={addConnectedUser} />} />
 
           {/* Route for signup, using the Signup component */}
-          <Route path='/signup' element={<Signup users={users} onAddUser={addUser} idNewUser={users.length + 1} />} />
+          <Route path='/signup' element={<Signup />} />
 
           {/* Route for the feed, using the Feed component */}
           <Route path='/feed' element={<Feed users={users} user={connectedUser} />} />
