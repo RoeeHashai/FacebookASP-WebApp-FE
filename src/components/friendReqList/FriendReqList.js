@@ -61,7 +61,7 @@ export default function FriendReqList({ darkMode, user, friendsRequests, acceptF
                             </Link>
                         </div>
                         {/* Display the name of the contact user */}
-                        <span className={`w-100 m-1 ms-3 ${darkMode ? 'text-light' : 'text-muted'} `}>{currentUser.name}</span>
+                        <span className={`w-100 m-1 ms-3 ${darkMode ? 'text-light' : ''} `}>{currentUser.name}</span>
                         <button className="btn btn-outline-primary me-2 border-0" onClick={() => handleAcceptFriendRequest(currentUser)}><i className="bi bi-check-circle"></i></button>
                         <button className="btn btn-outline-danger border-0" onClick={() => handleRejectFriendRequest(currentUser)}><i className="bi bi-x-circle"></i></button>
                     </li>
