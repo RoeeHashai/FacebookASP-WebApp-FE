@@ -1,45 +1,40 @@
 import React, { useState } from 'react';
 import './CommentGen.css';
 
-export default function CommentGen({ user, addComment, setPosts, post, darkMode }) {
+export default function CommentGen({ user, addComment, post, darkMode }) {
     // Combined state for comment information
-    const [commentInfo, setCommentInfo] = useState({
-        idCounter: 10,
-        commentContent: ''
-    });
+    const [commentContent, setCommentContent] = useState('');
 
-    // Destructuring the state values
-    const { idCounter, commentContent } = commentInfo;
 
-    // Function to increment the comment count of the post
-    const incCommentCount = () => {
-        const updatedPost = { ...post, commentCount: post.commentCount + 1 };
-        setPosts((prevPosts) => prevPosts.map((p) => (p.id === post.id ? updatedPost : p)));
-    }
+    // // Function to increment the comment count of the post
+    // const incCommentCount = () => {
+    //     const updatedPost = { ...post, commentCount: post.commentCount + 1 };
+    //     // setPosts((prevPosts) => prevPosts.map((p) => (p.id === post.id ? updatedPost : p)));
+    // }
 
     // Handler for adding a new comment
     const handleAddCommentClick = () => {
         if (!commentContent) return; // Return if comment content is empty
-        const idComment = idCounter;
-        setCommentInfo({
-            idCounter: idCounter + 1,
-            commentContent: ''
-        });
+        // const idComment = idCounter;
+        // setCommentInfo({
+        //     idCounter: idCounter + 1,
+        //     commentContent: ''
+        // });
         const newComment = {
-            "id": idComment,
-            "author": user.email,
-            "content": commentContent,
+            content: commentContent,
         };
-        incCommentCount(); // Increment the comment count
+        setCommentContent(''); // Clear the comment content
+        // incCommentCount(); // Increment the comment count
         addComment(newComment); // Call the parent component function to add the comment
     }
 
     // Handler for updating the content of the comment as the user types
-    const handleOnChangeContentComment = (e) => {
-        setCommentInfo({
-            ...commentInfo,
-            commentContent: e.target.value
-        });
+    const handleOnChange = (e) => {
+        // setCommentInfo({
+        //     ...commentInfo,
+        //     commentContent: e.target.value
+        // });
+        setCommentContent(e.target.value);
     }
     return (
         <div className={`${darkMode ? 'darkmode' : ''} card-footer mt-2`}>
@@ -58,7 +53,7 @@ export default function CommentGen({ user, addComment, setPosts, post, darkMode 
                                 className={`form-control add-comment-custom ${darkMode ? 'dark-mode' : ''}`}
                                 placeholder="Add a comment..."
                                 value={commentContent}
-                                onChange={handleOnChangeContentComment}
+                                onChange={handleOnChange}
                             />
                             <button
                                 className={`btn ${darkMode ? 'btn-upload-post-dark' : ''}`}
