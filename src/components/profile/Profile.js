@@ -10,7 +10,8 @@ import { useParams, Link } from 'react-router-dom';
 import ContactsList from '../contactsList/ContactsList';
 import { useNavigate } from 'react-router-dom';
 
-export default function Profile({ users, user }) {
+export default function Profile({ }) {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const navigate = useNavigate();
     // Accessing dark mode context
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
@@ -18,6 +19,7 @@ export default function Profile({ users, user }) {
     const [friends, setFriends] = useState([]);
     const [profileUser, setProfileUser] = useState({});
     const [isFriend, setIsFriend] = useState(false);
+    const [isPending, setIsPending] = useState(false);
     const [friendRequestSent, setFriendRequestSent] = useState(false);
     const { targetUserId } = useParams();
     const [isMyProfile, setIsMyProfile] = useState(false);
@@ -97,6 +99,8 @@ export default function Profile({ users, user }) {
             });
             const friendsCheck = await friendsCheckData.json();
             const isFriend = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 'approved');
+            const isPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 's-pending');
+            setIsPending(isPending);
             const myProfile = user._id === targetUserId;
             setIsMyProfile(myProfile);
             console.log('isFriend: ', isFriend);
@@ -155,7 +159,7 @@ export default function Profile({ users, user }) {
                             <div>
                                 <p className='profile-name' style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>{profileUser.name}</p>
                             </div>
-                            {(isFriend && !isMyProfile) && (
+                            {((isFriend && !isMyProfile) || isPending) && (
                                 <button className="btn shadow btn-outline-danger w-100" onClick={handleRemoveFriend}>
                                     <i className="bi bi-x-circle me-2"></i>Unfriend</button>
                             )}
@@ -183,7 +187,7 @@ export default function Profile({ users, user }) {
                                 <div>
                                     {/* Add friend button */}
                                     <button className="btn btn-primary shadow w-100" onClick={handleAddFriend}>
-                                        {friendRequestSent ? (
+                                        {(friendRequestSent || isPending) ? (
                                             <><i className="bi bi-check-circle-fill me-2"></i>Friend Request Sent</>
                                         ) : (
                                             <>

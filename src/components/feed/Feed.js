@@ -8,11 +8,15 @@ import postsData from '../../data/posts.json';
 import './Feed.css';
 import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function Feed({ users, user, addConnectedUser }) {
+export default function Feed({ }) {
     // State to manage the list of posts
     // get the posts from the server
     const [postList, setPostList] = useState([]);
     const [isLoading, setIsLoading] = useState(true); // Added loading state
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const addConnectedUser = (user) => {
+        setUser(user);
+    };
     // Function to add a new post to the feed
     const addPost = (post) => {
         setPostList((prevPost) => [post, ...prevPost]);
@@ -29,32 +33,67 @@ export default function Feed({ users, user, addConnectedUser }) {
             prevPosts.map((post) => (post._id === editedPost._id ? editedPost : post))
         );
     };
-
-
     useEffect(() => {
-        const fetchPosts = async () => {
+        const fetchUserAndPosts = async () => {
             setIsLoading(true);
             try {
-                const response = await fetch('/api/posts', {
+                // // Fetch user data
+                // const userResponse = await fetch(`/api/users/${localStorage.getItem('_id')}`, {
+                //     method: 'GET',
+                //     headers: {
+                //         authorization: `Bearer ${localStorage.getItem('token')}`,
+                //     },
+                // });
+                // if (userResponse.ok) {
+                //     const userData = await userResponse.json();
+                //     console.log('userData:', userData);
+                //     setUser(userData);
+                // }
+
+                // Fetch posts data
+                const postsResponse = await fetch('/api/posts', {
                     method: 'GET',
                     headers: {
                         authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 });
-                if (response.ok) {
-                    const postsData = await response.json();
+                if (postsResponse.ok) {
+                    const postsData = await postsResponse.json();
                     setPostList(postsData);
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error('Error:', error);
-            }
-            finally {
+            } finally {
                 setIsLoading(false);
             }
-        }
-        fetchPosts();
+        };
+        fetchUserAndPosts();
     }, []);
+
+    // useEffect(() => {
+    //     const fetchPosts = async () => {
+    //         setIsLoading(true);
+    //         try {
+    //             const response = await fetch('/api/posts', {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     authorization: `Bearer ${localStorage.getItem('token')}`,
+    //                 },
+    //             });
+    //             if (response.ok) {
+    //                 const postsData = await response.json();
+    //                 setPostList(postsData);
+    //             }
+    //         }
+    //         catch (error) {
+    //             console.error('Error:', error);
+    //         }
+    //         finally {
+    //             setIsLoading(false);
+    //         }
+    //     }
+    //     fetchPosts();
+    // }, []);
 
     // // State to control dark mode
     // const [darkMode, setDarkMode] = useState(false);
@@ -74,11 +113,16 @@ export default function Feed({ users, user, addConnectedUser }) {
                 <div className="row">
                     <div className="col-md-3 d-none side-column d-md-block">
                         {/* Sidebar menu component */}
-                        <Menu user={user} darkMode={darkMode} addConnectedUser={addConnectedUser} />
+                        {isLoading ? null : (
+                            <div>
+                                <Menu user={user} darkMode={darkMode} addConnectedUser={addConnectedUser} />
+                            </div>
+                        )
+                        }
+
                     </div>
                     <div className="col-md-6 middle-column">
                         {/* Component to generate and display posts */}
-                        <PostGen user={user} darkMode={darkMode} addPost={addPost} />
                         {/* Mapping through posts and rendering individual post components */}
                         {isLoading ? (
                             <div className="spinner-container">
@@ -87,15 +131,25 @@ export default function Feed({ users, user, addConnectedUser }) {
                                 </div>
                             </div>
                         ) : (
-                            postList.map((post) => (
-                                <Post users={users} user={user} post={post} onDelete={deletePost}
-                                    onEdit={editPost} darkMode={darkMode} />
-                            ))
+                            <>
+                                {/* Render PostGen only when not loading */}
+                                <PostGen user={user} darkMode={darkMode} addPost={addPost} />
+                                {/* Mapping through posts and rendering individual post components */}
+                                {postList.map((post) => (
+                                    <Post  user={user} post={post} onDelete={deletePost}
+                                        onEdit={editPost} darkMode={darkMode} />
+                                ))}
+                            </>
                         )}
                     </div>
                     <div className="col-md-3 d-none side-column d-md-block">
-                        {/* Right menu component */}
-                        <RightMenu user={user} darkMode={darkMode} />
+                        {isLoading ? null : (
+                            <div>
+                                {/* Right menu component */}
+                                <RightMenu user={user} darkMode={darkMode} />
+                            </div>
+                        )
+                        }
                     </div>
                 </div>
             </div>

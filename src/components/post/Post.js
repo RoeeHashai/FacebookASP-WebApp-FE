@@ -9,7 +9,7 @@ export const findUser = (email, users) => {
     return users.find((user) => user.email === email) || null;
 };
 
-export default function Post({ users, user, post, setPostList, darkMode, deletePost, onDelete, onEdit }) {
+export default function Post({  user, post, setPostList, darkMode, deletePost, onDelete, onEdit }) {
     const navigate = useNavigate();
     // const [likes, setLikes] = useState(post.likes);
     const [commentMode, setCommentMode] = useState(false);
