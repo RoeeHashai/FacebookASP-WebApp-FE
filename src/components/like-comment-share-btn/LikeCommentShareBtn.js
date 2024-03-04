@@ -1,17 +1,15 @@
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
+import { DarkModeContext } from '../context/DarkModeContext';
 import './LikeCommentShareBtn.css';
 
-export default function LikeCommentShareBtn({ commentsCount, user, toggleCommentMode, post, darkMode, openCommentModal, handleEditPost }) {
-  // const [liked, setLiked] = useState(post.likes.includes(user._id));
+export default function LikeCommentShareBtn({ commentsCount, user, toggleCommentMode, post, openCommentModal, handleEditPost }) {
+  const { darkMode } = useContext(DarkModeContext);
   const [unlikeMode, setUnlikeMode] = useState(post.likes.includes(user._id));
-  console.log("unlike mode:", unlikeMode);
-
-  console.log('the post is', post);
 
   const toggleLike = () => {
     setUnlikeMode(!unlikeMode);
   };
-  // Handle click for toggling comment mode
+
   const handleCommentClick = () => {
     openCommentModal();
     toggleCommentMode();
@@ -22,16 +20,15 @@ export default function LikeCommentShareBtn({ commentsCount, user, toggleComment
   };
 
   const handleLike = async () => {
-    try {
+    try { // Add a new like to the post
       const response = await fetch(`/api/users/${user._id}/posts/${post._id}/likes`, {
         method: 'POST',
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      if (response.ok) {
+      if (response.ok) { // If the response is okay, add the user id to the likes list in the local state and update the post
         const updatedPost = { ...post, likes: [...post.likes, user._id] };
-        console.log(updatedPost);
         handleEditPost(updatedPost);
         toggleLike();
       }
@@ -43,17 +40,16 @@ export default function LikeCommentShareBtn({ commentsCount, user, toggleComment
   };
 
   const handleUnlike = async () => {
-    try {
+    try { // Remove a like from the post
       const response = await fetch(`/api/users/${user._id}/posts/${post._id}/likes`, {
         method: 'DELETE',
         headers: {
           authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      if (response.ok) {
+      if (response.ok) { // If the response is okay, remove the user id from the likes list in the local state and update the post
         const updatedLikes = post.likes.filter(id => id !== user._id);
         const updatedPost = { ...post, likes: updatedLikes };
-        console.log(updatedPost);
         handleEditPost(updatedPost);
         toggleLike();
       }
@@ -62,36 +58,6 @@ export default function LikeCommentShareBtn({ commentsCount, user, toggleComment
       console.error('Error:', error);
     }
   };
-
-
-  //   // Filter out the user's ID from the likes array
-  //   const updatedLikes = post.likes.filter(id => id !== user._id);
-
-  //   // Create an updated post object with the new likes array
-  //   const updatedPost = { ...post, likes: updatedLikes };
-  //   console.log(updatedPost);
-  //   handleEditPost(updatedPost);
-  //   toggleLike();
-  // };
-
-  // // Handle click for toggling like/unlike and updating post likes
-  // const handleLikeClick = () => {
-  //   if (unlikeMode) {
-  //     // Unlike mode: Remove the like from the post
-
-  //     //setPosts((prevPosts) => prevPosts.map((p) => (p._id === post._id ? updatedPost : p)));
-
-  //     // setLiked(false); // Set liked to false
-  //   } else { // in like mode
-  //     const updatedPost = { ...post, likes: [...post.likes, user._id] };
-  //     console.log(updatedPost)
-  //     handleEditPost(updatedPost)
-  //     // setPosts((prevPosts) => prevPosts.map((p) => (p._id === post._id ? updatedPost : p)));
-  //     // setLiked(true);
-  //   }
-  //   // Toggle the unlike mode for the next click
-  //   toggleUnlikeMode();
-  // };
 
   return (
     <div className={`${darkMode ? 'darkmode' : ''}`}>
@@ -120,18 +86,6 @@ export default function LikeCommentShareBtn({ commentsCount, user, toggleComment
             </button>
 
           )}
-
-          {/* ):(
-            <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleLike}>
-              <i className="bi bi-hand-thumbs-up pe-1" />
-              like
-            </button>
-          
-          )}
-          <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleLikeClick}>
-            {unlikeMode ? (<i className="bi bi-hand-thumbs-down pe-1" />) : (<i className="bi bi-hand-thumbs-up pe-1" />)}
-            {unlikeMode ? 'unlike' : 'like'}
-          </button> */}
           {/* Comment button */}
           <button type="button" className={`btn flex-grow-1 ${darkMode ? 'btn-dark-custom' : 'btn-light-custom'}`} onClick={handleCommentClick}>
             <i className="bi bi-chat pe-1" />

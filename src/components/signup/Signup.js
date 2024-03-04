@@ -8,11 +8,9 @@ export default function Signup({}) {
             <div className="container justify-content-center">
                 <div className="row align-items-center">
                     <div className="col-lg-6">
-                        {/* logo component */}
                         <Logo />
                     </div>
                     <div className="col-lg-6">
-                        {/* SignupForm component */}
                         <SignupForm/>
                     </div>
                 </div>

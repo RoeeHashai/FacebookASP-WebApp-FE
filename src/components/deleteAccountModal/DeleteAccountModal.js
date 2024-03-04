@@ -1,10 +1,13 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-const DeleteAccountModal = ({ isOpen, onClose, darkMode, user }) => {
+const DeleteAccountModal = ({ isOpen, onClose, user }) => {
+    const { darkMode } = useContext(DarkModeContext);
     const navigate = useNavigate();
     const handleDeleteAccount = async () => {
+        // Fetch the user by id and delete the user
         try {
             const response = await fetch(`/api/users/${user._id}`, {
                 method: 'DELETE',
@@ -13,8 +16,7 @@ const DeleteAccountModal = ({ isOpen, onClose, darkMode, user }) => {
                     authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
-            if (response.ok) {
-                console.log('User deleted successfully');
+            if (response.ok) { // If the response is okay, delete the user from the database and remove the token from local storage
                 localStorage.removeItem('token');
                 navigate('/');
             }

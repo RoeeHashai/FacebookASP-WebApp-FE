@@ -109,10 +109,7 @@ export default function SignupForm({ }) {
       });
 
       if (response.ok) {
-        const data = await response.json();
-
-        console.log('Client User created successfully');
-        console.log(data.message);
+        const data = await response.json();;
 
         // Clear the form state
         setName('');
@@ -122,7 +119,7 @@ export default function SignupForm({ }) {
         setBase64Picture('');
 
         // Navigate to the login page after successfully adding a new user
-        navigate('/login');
+        navigate('/');
       } else {
         // Handle error (display error message or log it)
         if (response.status === 400) {
@@ -130,7 +127,6 @@ export default function SignupForm({ }) {
           setEmailValid(false);
           setEmailExist(true);
           const data = await response.json();
-          console.log(data.error);
         }
       }
     } catch (error) {
@@ -213,7 +209,7 @@ export default function SignupForm({ }) {
 
   return (
     <div className="card shadow rounded p-3">
-      <Link to='/login'>
+      <Link to='/'>
         <button className='btn'>
           <i className="bi bi-arrow-left mb-2"></i>
         </button>
@@ -291,7 +287,6 @@ export default function SignupForm({ }) {
             {!pictureValid && <div className='invalid-feedback'>{pictureMessage}</div>}
 
           </div>
-          {/* Display the profile picture preview */}
           {base64Picture && (
             <div className="mt-3">
               <h6>Profile Picture Preview:</h6>

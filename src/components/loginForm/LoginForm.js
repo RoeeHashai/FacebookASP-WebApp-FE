@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
-export default function LoginForm({ addConnectedUser }) {
+export default function LoginForm({ }) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -19,7 +19,7 @@ export default function LoginForm({ addConnectedUser }) {
     };
 
     const fetchUser = async (email) => {
-        try {
+        try { // after the user logs in, we fetch the user data from the server
             const response = await fetch(`api/users/${email}`, {
                 method: 'GET',
                 headers: {
@@ -28,11 +28,7 @@ export default function LoginForm({ addConnectedUser }) {
             });
             if (response.ok) {
                 const userData = await response.json();
-                console.log(userData);
                 return userData;
-            }
-            else {
-                console.log('Error fetching user');
             }
         }
         catch (error) {
@@ -42,15 +38,14 @@ export default function LoginForm({ addConnectedUser }) {
 
     const handleLoginClick = async (e) => {
         e.preventDefault();
-
-        // Set formSubmitted to true to trigger validation messages
-        //setFormData((prevData) => ({ ...prevData, formSubmitted: true }));
+        // Create login data object to be send to the server
         const loginData = {
             email: formData.email,
             password: formData.password
         };
 
         try {
+            // Send login data to the server and get back the token
             const response = await fetch('/api/tokens', {
                 method: 'POST',
                 headers: {
@@ -59,24 +54,16 @@ export default function LoginForm({ addConnectedUser }) {
                 body: JSON.stringify(loginData)
             });
 
-            if (response.ok) {
+            if (response.ok) { // if the response is okay, set the token and user data in the local storage and navigate to the feed
                 const data = await response.json();
-
-                // Set token in local storage
                 localStorage.setItem('token', data.token);
 
                 const connectedUser = await fetchUser(formData.email);
                 localStorage.setItem('user', JSON.stringify(connectedUser));
-                // console.log(connectedUser);
-                // Get user data and add connected user to the state
-                addConnectedUser(connectedUser);
-                
-                // Navigate to feed
                 navigate('/feed');
             } else {
                 const errorData = await response.json();
-                console.log(errorData);
-                if (errorData.message === 'User not found.') {
+                if (errorData.message === 'User not found.') { // if the user is not found, set the email validation message
                     setFormData((prevData) => ({
                         ...prevData,
                         formSubmitted: true,
@@ -84,7 +71,7 @@ export default function LoginForm({ addConnectedUser }) {
                         emailMessage: "Email doesn't exist. Please create an account.",
                         passwordValid: true,
                     }));
-                } else if (errorData.message === 'Invalid password.') {
+                } else if (errorData.message === 'Invalid password.') { // if the password is invalid, set the password validation message so user can try again
                     setFormData((prevData) => ({
                         ...prevData,
                         formSubmitted: true,
@@ -99,21 +86,17 @@ export default function LoginForm({ addConnectedUser }) {
         }
     };
 
-    // Function to handle password input change
     const onChangePassword = (e) => {
         setFormData((prevData) => ({ ...prevData, password: e.target.value }));
     };
 
-    // Function to handle email input change
     const onChangeEmail = (e) => {
         setFormData((prevData) => ({ ...prevData, email: e.target.value }));
     };
     return (
         <div className="card shadow rounded p-3">
-            {/* Login form */}
             <form>
                 <div className="mb-2">
-                    {/* Email input */}
                     <input
                         type="email"
                         className={`form-control custom-input ${formData.formSubmitted && !formData.emailValid && 'is-invalid'}`}
@@ -125,7 +108,6 @@ export default function LoginForm({ addConnectedUser }) {
                     {!formData.emailValid && <div className='invalid-feedback'>{formData.emailMessage}</div>}
                 </div>
                 <div className="mb-3">
-                    {/* Password input */}
                     <input
                         type="password"
                         className={`form-control custom-input ${formData.formSubmitted && !formData.passwordValid && 'is-invalid'}`}
@@ -136,18 +118,15 @@ export default function LoginForm({ addConnectedUser }) {
                     {/* Display password validation message if password is not valid */}
                     {!formData.passwordValid && <div className='invalid-feedback'>{formData.passwordMessage}</div>}
                 </div>
-                {/* Login button */}
                 <button type="submit" onClick={handleLoginClick} className="btn btn-primary btn-lg w-100">
                     Log In
                 </button>
             </form>
             <hr className="my-2.5" />
-            {/* Signup button */}
             <button
                 onClick={handleSignupClick}
                 type="button"
-                className="btn btn-success btn-lg mt-1 newaccount-btn"
-            >
+                className="btn btn-success btn-lg mt-1 newaccount-btn">
                 Create New Account
             </button>
         </div>

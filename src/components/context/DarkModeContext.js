@@ -1,5 +1,4 @@
-// DarkModeContext.js
-
+// Context for the dark mode state and its toggle function in order to be used in the entire app.
 import { createContext, useState } from 'react';
 
 const DarkModeContext = createContext();
