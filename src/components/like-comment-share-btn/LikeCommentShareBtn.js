@@ -2,10 +2,9 @@ import { React, useState, useContext } from 'react';
 import { DarkModeContext } from '../context/DarkModeContext';
 import './LikeCommentShareBtn.css';
 
-export default function LikeCommentShareBtn({ commentsCount, user, toggleCommentMode, post, openCommentModal, handleEditPost }) {
+export default function LikeCommentShareBtn({ user, toggleCommentMode, post, openCommentModal, handleEditPost, commentsCount }) {
   const { darkMode } = useContext(DarkModeContext);
   const [unlikeMode, setUnlikeMode] = useState(post.likes.includes(user._id));
-
   const toggleLike = () => {
     setUnlikeMode(!unlikeMode);
   };
@@ -29,6 +28,7 @@ export default function LikeCommentShareBtn({ commentsCount, user, toggleComment
       });
       if (response.ok) { // If the response is okay, add the user id to the likes list in the local state and update the post
         const updatedPost = { ...post, likes: [...post.likes, user._id] };
+
         handleEditPost(updatedPost);
         toggleLike();
       }

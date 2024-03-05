@@ -8,7 +8,8 @@ import ContactsList from '../contactsList/ContactsList';
 import { useNavigate } from 'react-router-dom';
 
 export default function Profile({ }) {
-    const [user, _] = useState(JSON.parse(localStorage.getItem('user')));
+    const { targetUserId } = useParams();
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const { darkMode } = useContext(DarkModeContext);
     const [friends, setFriends] = useState([]);
@@ -16,7 +17,6 @@ export default function Profile({ }) {
     const [isFriend, setIsFriend] = useState(false);
     const [isPending, setIsPending] = useState(false);
     const [friendRequestSent, setFriendRequestSent] = useState(false);
-    const { targetUserId } = useParams();
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [postList, setPostList] = useState([]);
@@ -64,70 +64,104 @@ export default function Profile({ }) {
         }
     };
 
+    // Fetch user data
     useEffect(() => {
         const fetchUserData = async () => {
             setIsLoading(true);
-
-            // Fetch the target user details and set the state to display the profile of target user
-            const userDetailsData = await fetch(`/api/users/${targetUserId}`, {
-                method: 'GET',
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            const userDetails = await userDetailsData.json();
-            setProfileUser(userDetails);
-
-            // Fetch the friends list of connected user to determine if the target user is a friend
-            const friendsCheckData = await fetch(`/api/users/${user._id}/friends`, {
-                method: 'GET',
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-
-            const friendsCheck = await friendsCheckData.json();
-            // Check if the connected user is a friend or if the connected user is pending a friend request
-            const isFriend = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 'approved');
-            const isPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 's-pending');
-            setIsPending(isPending);
-
-            // determine if the page is the connected user's profile
-            const myProfile = user._id === targetUserId;
-            setIsMyProfile(myProfile);
-
-            if (isFriend || myProfile) {
-                setIsFriend(true); // Set the state to display the friends list
-                const friendsListData = await fetch(`/api/users/${targetUserId}/friends`, {
+            try {
+                const userResponse = await fetch(`/api/users/${JSON.parse(localStorage.getItem('user_id'))}`, {
                     method: 'GET',
                     headers: {
                         authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 });
-                const friendsList = await friendsListData.json();
-                // Filter the friends list to display only approved friends not to show the pending friends on the contacts list
-                const approvedFriends = friendsList.friends.filter(friend => friend.status === 'approved');
-                setFriends(approvedFriends);
-
-                // Fetch the posts of the target user
-                const postsData = await fetch(`/api/users/${targetUserId}/posts`, {
-                    method: 'GET',
-                    headers: {
-                        authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                const posts = await postsData.json();
-                setPostList(posts);
-            }
-            else {
-                setIsFriend(false);
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    setUser(userData);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
             }
             setIsLoading(false);
-        }
+        };
+
         fetchUserData();
+    }, []);
+
+    // Fetch related data once user is available
+    useEffect(() => {
+        if (!user) return; // Ensure user is fetched before proceeding
+
+        const fetchRelatedData = async () => {
+            setIsLoading(true);
+
+            try {
+                // Fetch the target user details and set the state to display the profile of target user
+                const userDetailsData = await fetch(`/api/users/${targetUserId}`, {
+                    method: 'GET',
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                const userDetails = await userDetailsData.json();
+                setProfileUser(userDetails);
+
+                // Fetch the friends list of connected user to determine if the target user is a friend
+                const friendsCheckData = await fetch(`/api/users/${user._id}/friends`, {
+                    method: 'GET',
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+
+                const friendsCheck = await friendsCheckData.json();
+                // Check if the connected user is a friend or if the connected user is pending a friend request
+                const isFriend = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 'approved');
+                const isPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 's-pending');
+                setIsPending(isPending);
+
+                // determine if the page is the connected user's profile
+                const myProfile = user._id === targetUserId;
+                setIsMyProfile(myProfile);
+
+                if (isFriend || myProfile) {
+                    setIsFriend(true); // Set the state to display the friends list
+                    const friendsListData = await fetch(`/api/users/${targetUserId}/friends`, {
+                        method: 'GET',
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    });
+                    const friendsList = await friendsListData.json();
+                    // Filter the friends list to display only approved friends not to show the pending friends on the contacts list
+                    const approvedFriends = friendsList.friends.filter(friend => friend.status === 'approved');
+                    setFriends(approvedFriends);
+
+                    // Fetch the posts of the target user
+                    const postsData = await fetch(`/api/users/${targetUserId}/posts`, {
+                        method: 'GET',
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    });
+                    const posts = await postsData.json();
+                    setPostList(posts);
+                }
+                else {
+                    setIsFriend(false);
+                }
+
+            } catch (error) {
+                console.error('Error fetching related data:', error);
+            }
+
+            setIsLoading(false);
+        };
+
+        fetchRelatedData();
     }, [user, targetUserId]);
 
-    return (
+    return user ? (
         <div className={`${darkMode ? 'dark-bg' : ''}`}>
             <NavbarFeed />
 
@@ -169,8 +203,12 @@ export default function Profile({ }) {
                             {isFriend ? (
                                 <div>
                                     {postList.map((post) => (
-                                        <Post user={user} post={post} onDelete={deletePost}
-                                            onEdit={editPost} darkMode={darkMode} />
+                                        <Post key={post._id}
+                                            user={user}
+                                            post={post}
+                                            onDelete={deletePost}
+                                            onEdit={editPost}
+                                            darkMode={darkMode} />
                                     ))}
 
                                 </div>
@@ -203,5 +241,5 @@ export default function Profile({ }) {
                 </div>
             )}
         </div>
-    );
+    ) : null;
 }

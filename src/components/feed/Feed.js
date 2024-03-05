@@ -10,7 +10,7 @@ import './Feed.css';
 export default function Feed({ }) {
     const [postList, setPostList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user'))); // Get the user data from local storage
+    const [user, setUser] = useState(null); // Get the user data from local storage
     const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
 
     const addConnectedUser = (user) => {
@@ -36,6 +36,16 @@ export default function Feed({ }) {
         const fetchUserAndPosts = async () => {
             setIsLoading(true); // Set loading to true while user and posts are being fetched
             try {
+                const userResponse = await fetch(`api/users/${JSON.parse(localStorage.getItem('user_id'))}`, {
+                    method: 'GET',
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                if (userResponse.ok) { // If the response is okay, set the user data
+                    const userData = await userResponse.json();
+                    setUser(userData);
+                }
                 const postsResponse = await fetch('/api/posts', {
                     method: 'GET',
                     headers: {
@@ -55,20 +65,17 @@ export default function Feed({ }) {
         fetchUserAndPosts();
     }, []);
 
-    return (
+    return user ? (
         <div className={`${darkMode ? 'dark-bg' : ''}`}>
             <NavbarFeed />
             <div className="container-fluid feedcontainer">
                 <div className="row">
                     <div className="col-md-3 d-none side-column d-md-block">
-                        {isLoading ? null : (
-                            <div>
-                                <Menu
-                                    user={user}
-                                    addConnectedUser={addConnectedUser} />
-                            </div>
-                        )
-                        }
+                        {!isLoading && (
+                            <Menu
+                                user={user}
+                                addConnectedUser={addConnectedUser} />
+                        )}
                     </div>
                     <div className="col-md-6 middle-column">
                         {isLoading ? (
@@ -79,13 +86,12 @@ export default function Feed({ }) {
                             </div>
                         ) : (
                             <>
-                                {/* Render PostGen and post list only when not loading */}
                                 <PostGen
                                     user={user}
                                     addPost={addPost} />
-                                {/* Mapping through posts and rendering individual post components */}
                                 {postList.map((post) => (
                                     <Post
+                                        key={post._id}
                                         user={user}
                                         post={post}
                                         onDelete={deletePost}
@@ -96,17 +102,16 @@ export default function Feed({ }) {
                         )}
                     </div>
                     <div className="col-md-3 d-none side-column d-md-block">
-                        {isLoading ? null : (
-                            <div>
-                                <RightMenu
-                                    user={user}
-                                />
-                            </div>
-                        )
-                        }
+                        {!isLoading && (
+                            <RightMenu user={user} />
+                        )}
                     </div>
                 </div>
             </div>
         </div>
+    ) : (
+        // This will be rendered while `user` is null or loading
+        null
     );
+    
 }

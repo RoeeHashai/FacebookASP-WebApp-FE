@@ -6,7 +6,7 @@ import { DarkModeContext } from '../context/DarkModeContext';
 
 import './CommentModal.css';
 
-const CommentModal = ({ onClose, user, commentMode, setCommentsCount, post }) => {
+const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [commentsList, setCommentsList] = useState([]);
     const { darkMode } = useContext(DarkModeContext);
@@ -48,7 +48,7 @@ const CommentModal = ({ onClose, user, commentMode, setCommentsCount, post }) =>
             });
             if (response.ok) { // If the response is okay, add the new comment to the comments list and increment the comments count
                 const newComment = await response.json();
-                setCommentsList((prevComments) => [newComment, ...prevComments]);
+                setCommentsList((prevComments) => [...prevComments, newComment]);
                 setCommentsCount((prevCount) => prevCount + 1);
             }
         }

@@ -59,7 +59,7 @@ export default function LoginForm({ }) {
                 localStorage.setItem('token', data.token);
 
                 const connectedUser = await fetchUser(formData.email);
-                localStorage.setItem('user', JSON.stringify(connectedUser));
+                localStorage.setItem('user_id', JSON.stringify(connectedUser._id));
                 navigate('/feed');
             } else {
                 const errorData = await response.json();

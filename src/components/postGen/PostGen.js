@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import './PostGen.css';
 import { DarkModeContext } from '../context/DarkModeContext';
 
 export default function PostGen({ user, addPost }) {
     const { darkMode } = useContext(DarkModeContext);
+    const fileInputRef = useRef(null);
 
     const [formData, setFormData] = useState({
         content: '',
@@ -75,11 +76,13 @@ export default function PostGen({ user, addPost }) {
                     ...newPostData,
                     date: formattedDate,
                 };
+                console.log('new post: ', newPost);
                 addPost(newPost);
                 setFormData({
                     content: '',
                     image: ''
                 });
+                fileInputRef.current.value = '';
             }
         }
         catch (error) {
@@ -114,6 +117,8 @@ export default function PostGen({ user, addPost }) {
                         onChange={setPostImage}
                         id="postImage"
                         name='picture'
+                        ref={fileInputRef}
+
                     />
                     {!imageValid.imageValid && <div className='invalid-feedback'>{imageValid.imageMessage}</div>}
                     {/* Display the post picture preview if uploaded a post to the image */}

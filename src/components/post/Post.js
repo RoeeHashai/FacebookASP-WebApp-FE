@@ -1,17 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PostBody from '../postBody/PostBody';
 import LikeCommentShareBtn from '../like-comment-share-btn/LikeCommentShareBtn';
 import CommentModal from '../commentModal/CommentModal';
 import './Post.css';
 import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function Post({ user, post, setPostList, onDelete, onEdit }) {
+export default function Post({ user, post, onDelete, onEdit }) {
     const { darkMode } = useContext(DarkModeContext);
     const [commentMode, setCommentMode] = useState(false);
     const [commentModalOpen, setCommentModalOpen] = useState(false);
 
     // Set the comments count to the length of the comments list info that comes from the server
-    const [commentsCount, setCommentsCount] = useState(post.commentsLength);
+    const [commentsCount, setCommentsCount] = useState(post.commentsLength || 0);
 
     const toggleCommentMode = () => {
         setCommentMode(!commentMode);
@@ -39,11 +39,11 @@ export default function Post({ user, post, setPostList, onDelete, onEdit }) {
                     toggleCommentMode={toggleCommentMode}
                     commentMode={commentMode}
                     post={post}
-                    setPosts={setPostList}
                     openCommentModal={openCommentModal}
                     user={user}
                     handleEditPost={onEdit}
-                    commentsCount={commentsCount} />
+                    commentsCount={commentsCount}
+                    />
 
                 {/* Button to open the comment modal */}
                 <button className='view-comments-btn'
@@ -58,7 +58,9 @@ export default function Post({ user, post, setPostList, onDelete, onEdit }) {
                     user={user}
                     commentMode={commentMode}
                     post={post}
-                    setCommentsCount={setCommentsCount} />
+                    setCommentsCount={setCommentsCount}
+
+                     />
             )}
         </div>
     );
