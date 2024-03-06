@@ -17,6 +17,7 @@ const DeleteAccountModal = ({ isOpen, onClose, user }) => {
                 },
             });
             if (response.ok) { // If the response is okay, delete the user from the database and remove the token from local storage
+                localStorage.removeItem('user_id');
                 localStorage.removeItem('token');
                 navigate('/');
             }
