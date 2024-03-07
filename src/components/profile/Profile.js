@@ -168,7 +168,6 @@ export default function Profile({ }) {
             {isLoading ? (
                 <div className="spinner-container">
                     <div className="spinner-border text-primary" role="status">
-                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : (
@@ -233,7 +232,11 @@ export default function Profile({ }) {
                             <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
                                 {/* only if firend in can see the firneds list need to fetch this get req*/}
                                 {isFriend &&
-                                    <ContactsList friends={friends} user={user} />
+                                    <ContactsList friends={friends} 
+                                    user={user} 
+                                    {...(!isMyProfile && { nametoDisplay: profileUser.name })}
+
+                                    />
                                 }
                             </ul>
                         </div>

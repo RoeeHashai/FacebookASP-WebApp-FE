@@ -11,7 +11,8 @@ export default function Feed({ }) {
     const [postList, setPostList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(null); // Get the user data from local storage
-    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+    const { darkMode } = useContext(DarkModeContext);
+    const [friendsList, setFriendsList] = useState([]);
 
     const addConnectedUser = (user) => {
         setUser(user);
@@ -45,6 +46,16 @@ export default function Feed({ }) {
                 if (userResponse.ok) { // If the response is okay, set the user data
                     const userData = await userResponse.json();
                     setUser(userData);
+                }
+                const friendsResponse = await fetch(`/api/users/${JSON.parse(localStorage.getItem('user_id'))}/friends`, {
+                    method: 'GET',
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                if (friendsResponse.ok) { // If the response is okay, set the friends list
+                    const friendsData = await friendsResponse.json();
+                    setFriendsList(friendsData.friends);
                 }
                 const postsResponse = await fetch('/api/posts', {
                     method: 'GET',
@@ -103,7 +114,7 @@ export default function Feed({ }) {
                     </div>
                     <div className="col-md-3 d-none side-column d-md-block">
                         {!isLoading && (
-                            <RightMenu user={user} />
+                            <RightMenu user={user} friends={friendsList} />
                         )}
                     </div>
                 </div>

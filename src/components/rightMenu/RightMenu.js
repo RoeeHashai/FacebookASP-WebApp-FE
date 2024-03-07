@@ -3,7 +3,7 @@ import ContactsList from '../contactsList/ContactsList';
 import FriendReqList from '../friendReqList/FriendReqList';
 import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function RightMenu({ user }) {
+export default function RightMenu({ user, friends }) {
     const { darkMode } = useContext(DarkModeContext);
     const [rightMenuData, setRightMenuData] = useState({
         friends: [],
@@ -12,35 +12,19 @@ export default function RightMenu({ user }) {
     });
 
     useEffect(() => {
-        const fetchFriends = async () => {
-            try {
-                const response = await fetch(`/api/users/${user._id}/friends`, {
-                    method: 'GET',
-                    headers: {
-                        authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                if (response.ok) {
-                    const friendsListData = await response.json();
-
+        const setFriends = async () => {
                     // filter the fetched data for pending and approved friends
-                    const approvedFriends = friendsListData.friends.filter(friend => friend.status === 'approved');
-                    const pendingFriends = friendsListData.friends.filter(friend => friend.status === 'pending');
+                    const approvedFriends = friends.filter(friend => friend.status === 'approved');
+                    const pendingFriends = friends.filter(friend => friend.status === 'pending');
 
                     setRightMenuData({
                         ...rightMenuData,
                         approvedFriends: approvedFriends,
                         pendingFriends: pendingFriends,
-                        friends: friendsListData.friends
+                        friends: friends
                     });
-
-
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
         }
-        fetchFriends();
+        setFriends();
     }, [user]);
 
     const acceptFriendRequest = (newFriend) => {
