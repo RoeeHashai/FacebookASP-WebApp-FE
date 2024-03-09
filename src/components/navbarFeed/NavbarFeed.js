@@ -1,13 +1,15 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import './NavbarFeed.css';
 import { useNavigate } from 'react-router-dom';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function NavbarFeed({ toggleDarkMode, darkMode }) {
+
+export default function NavbarFeed({ }) {
+    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
     const navigate = useNavigate();
     const handleLogout = () => {
-        // Redirect to the login page
-        darkMode && toggleDarkMode();
-        navigate('/login');
+        darkMode && toggleDarkMode(); // Reset dark mode to light mode before logging out
+        navigate('/');
     };
     return (
         <nav className={`navbar sticky-top shadow ${darkMode ? 'dark-navbar' : ''}`}>

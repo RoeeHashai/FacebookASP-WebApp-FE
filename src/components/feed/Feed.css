@@ -6,20 +6,19 @@ body {
 
 .container-fluid {
   height: 100vh;
-  /* display: flex; */
 }
 
 .middle-column {
   overflow-y: auto;
   flex: 1;
   max-height: 93%;
-  position: relative; /* Add this for positioning */
+  position: relative
 }
 
 .side-column {
   overflow-y: auto;
   max-height: 93%;
-  scrollbar-width: 0; /* For Firefox */
+  scrollbar-width: 0;
 }
 
 .middle-column::-webkit-scrollbar {
@@ -43,10 +42,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px; /* Adjust this height as necessary */
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
-

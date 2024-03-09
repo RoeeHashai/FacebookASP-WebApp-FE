@@ -1,26 +1,29 @@
-import React from 'react';
+import { React, useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import './EditAccountModal.css';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-const EditAccountModal = ({ isOpen, onClose, user, onSave, darkMode }) => {
+const EditAccountModal = ({ isOpen, onClose, user, onSave }) => {
+  const { darkMode } = useContext(DarkModeContext);
+
+  // State to store the name and the image preview
   const [name, setName] = useState(user.name);
-  const [imagePreview, setImagePreview] = useState(null); 
-
-  // Effect to reset state when the user prop changes (e.g., when the modal opens)
-  useEffect(() => {
-    setName(user.name);
-    setImagePreview(null);
-  }, [user]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [fileError, setFileError] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && ['image/jpeg', 'image/png'].includes(file.type)) {
+      setFileError(false); // Reset error state if file type is valid
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+    } else {
+      setFileError(true); // Set error state if file type is invalid
+      setImagePreview(null);
     }
   };
 
@@ -29,10 +32,10 @@ const EditAccountModal = ({ isOpen, onClose, user, onSave, darkMode }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (notChanged()) {
+    if (notChanged() || fileError) {
       return;
     }
-    // Initialize the formData object with the name
+    // To allow the user to update their name and/or image - break the form to name and add image if it exists
     const formData = {
       name: name,
     };
@@ -50,7 +53,6 @@ const EditAccountModal = ({ isOpen, onClose, user, onSave, darkMode }) => {
         body: JSON.stringify(formData),
       });
       if (respone.ok) {
-        console.log('User updated successfully');
         const updatedUser = { ...user, ...formData };
         onSave(updatedUser);
         onClose();
@@ -74,7 +76,12 @@ const EditAccountModal = ({ isOpen, onClose, user, onSave, darkMode }) => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formUserImage">
             <Form.Label>Profile Image</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
+            <Form.Control type="file"
+              onChange={handleFileChange}
+              isInvalid={fileError}
+              style={{ borderColor: fileError ? 'red' : '' }}
+            />
+            {fileError && <Form.Control.Feedback type="invalid">Please select a JPEG or PNG image.</Form.Control.Feedback>}
             {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '50%', marginTop: '10px' }} />}
           </Form.Group>
         </Modal.Body>

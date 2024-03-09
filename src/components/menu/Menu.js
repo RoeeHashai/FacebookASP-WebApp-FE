@@ -1,42 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Menu.css';
 import { useNavigate, Link } from 'react-router-dom';
 import EditAccountModal from '../editAccountModal/EditAccountModal';
 import DeleteAccountModal from '../deleteAccountModal/DeleteAccountModal';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-
-export default function Menu({ user, darkMode, addConnectedUser }) {
-    const navigate = useNavigate();
+export default function Menu({ user, addConnectedUser }) {
+    const { darkMode } = useContext(DarkModeContext);
     const [isEditAccountModalOpen, setIsEditAccountModalOpen] = useState(false);
     const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
     const showNotSupportedAlert = () => {
         alert("This action is not supported at the moment.");
     };
 
-    // const toggleEditModal = () => {
-    //     setIsEditAccountModalOpen(!isEditAccountModalOpen);
-    //     console.log(isEditAccountModalOpen);
-    // };
-    // In case of refreshing the page need to logout because (Connected) user isn't connected any more
-    useEffect(() => {
-        // Check if user is falsy (null or undefined)
-        if (!user) {
-            // Navigate to the login page if not logged in
-            navigate('/login');
-        }
-    }, [user, navigate]);
-    // If user is not defined, return null to avoid rendering the component
-    if (!user) {
-        return null;
-    } // =================================== End Handle Refresh =======================================
-
     return (
         <>
             <ul className={`list-group  ${darkMode ? 'darkmode-menu' : ''}`}>
-                {/* User profile information */}
+                {/* on click on the user profile image navigate to the users profile page */}
                 <Link to={`/profile/${user._id}`} className="text-decoration-none">
                     <li className="margintopmenu list-group-item d-flex align-items-center">
-                        {/* Profile Picture */}
                         <div className='contanier'>
                             <img
                                 src={user.image}
@@ -48,7 +30,6 @@ export default function Menu({ user, darkMode, addConnectedUser }) {
                     </li>
                 </Link>
 
-                {/* Menu items with icons */}
                 <li className="list-group-item d-flex list-to-hover align-items-center" onClick={showNotSupportedAlert}>
                     <i className="bi bi-people-fill ms-1" />
                     <span className="w-100 m-1 ms-3">Friends</span>
@@ -99,17 +80,14 @@ export default function Menu({ user, darkMode, addConnectedUser }) {
                 onClose={() => setIsEditAccountModalOpen(false)}
                 user={user}
                 onSave={(updatedUser) => {
-                    // Implement your save logic here
                     setIsEditAccountModalOpen(false);
                     addConnectedUser(updatedUser);
                 }}
-                darkMode={darkMode}
             />
             <DeleteAccountModal
                 isOpen={isDeleteAccountModalOpen}
                 onClose={() => setIsDeleteAccountModalOpen(false)}
                 user={user}
-                darkMode={darkMode}
             />
 
 

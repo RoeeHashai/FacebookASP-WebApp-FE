@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
 import ContactsList from '../contactsList/ContactsList';
 import FriendReqList from '../friendReqList/FriendReqList';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function RightMenu({ user, darkMode }) {
+export default function RightMenu({ user }) {
+    const { darkMode } = useContext(DarkModeContext);
     const [rightMenuData, setRightMenuData] = useState({
         friends: [],
         approvedFriends: [],
         pendingFriends: [],
     });
-    
+
     useEffect(() => {
         const fetchFriends = async () => {
             try {
@@ -22,11 +23,10 @@ export default function RightMenu({ user, darkMode }) {
                 if (response.ok) {
                     const friendsListData = await response.json();
 
-                    // Directly filter the fetched data for pending and approved friends
+                    // filter the fetched data for pending and approved friends
                     const approvedFriends = friendsListData.friends.filter(friend => friend.status === 'approved');
                     const pendingFriends = friendsListData.friends.filter(friend => friend.status === 'pending');
-                    
-                    // Update the state with both filtered lists
+
                     setRightMenuData({
                         ...rightMenuData,
                         approvedFriends: approvedFriends,
@@ -42,36 +42,24 @@ export default function RightMenu({ user, darkMode }) {
         }
         fetchFriends();
     }, [user]);
-    if (!user) {
-        return null;
-    }
 
     const acceptFriendRequest = (newFriend) => {
-        // Remove the accepted friend request from the pending requests list
-        // const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
-        // setFriendsRequests(updatedRequests);
-
-        // Add the accepted friend to the friends list
-        //setFriends((prevFriends) => [...prevFriends, request]);
-        // console.log(friends);
         setRightMenuData({
             ...rightMenuData,
             approvedFriends: [...rightMenuData.approvedFriends, newFriend],
             pendingFriends: rightMenuData.pendingFriends.filter((user) => user.id !== newFriend.id)
         });
     };
+
     const rejectFriendRequest = (friendDel) => {
-        // Remove the rejected friend request from the pending requests list
-        // const updatedRequests = friendsRequests.filter((user) => user.id !== request.id);
-        // setFriendsRequests(updatedRequests);
         setRightMenuData({
             ...rightMenuData,
             pendingFriends: rightMenuData.pendingFriends.filter((user) => user.id !== friendDel.id)
         });
     };
+
     return (
         <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
-            {/* Map through the users array and render a list item for each user */}
             <>
                 {rightMenuData.pendingFriends.length > 0 &&
                     <>
@@ -91,7 +79,6 @@ export default function RightMenu({ user, darkMode }) {
                         user={user} />) :
                     null
                 }
-
             </>
         </ul>
     );
