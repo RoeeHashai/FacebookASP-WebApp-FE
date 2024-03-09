@@ -111,7 +111,6 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                         // Display loading spinner while comments are being fetched
                         <div className="d-flex justify-content-center">
                             <div className="spinner-border text-primary" role="status">
-                                <span className="sr-only">Loading...</span>
                             </div>
                         </div>
                     ) : commentsList.length === 0 ? (

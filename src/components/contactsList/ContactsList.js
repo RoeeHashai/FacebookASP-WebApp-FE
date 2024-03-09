@@ -2,12 +2,14 @@ import { React , useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { DarkModeContext } from '../context/DarkModeContext'
 
-export default function ContactsList({ friends, user }) {
+export default function ContactsList({ friends, user, nametoDisplay }) {
     const { darkMode } = useContext(DarkModeContext);
+    const title = nametoDisplay ? `${nametoDisplay.split(' ')[0]}'s Contacts` : 'Contacts';
+
     return (
         <>
             {friends.length !== 0 ? (
-                <h5 className={`${darkMode ? 'text-light' : 'text-muted'} mt-3 contactsList ms-2`}>Contacts</h5>
+                <h5 className={`${darkMode ? 'text-light' : 'text-muted'} mt-3 contactsList ms-2`}>{title}</h5>
             ) : null}
                 
             {/* Map through the users array and render a list item for each user */}
