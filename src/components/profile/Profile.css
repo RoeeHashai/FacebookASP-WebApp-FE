@@ -38,3 +38,24 @@
 .dark-bg .spinner-container {
     background-color: rgb(19, 19, 19);
 }
+
+
+.responsive-text {
+    text-align: center;
+    font-size: 1.25rem; /* Adjust size as needed */
+    font-weight: 500; /* Makes text a bit bolder */
+    padding: 10px;
+    margin: 0;
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* Light mode styles */
+.responsive-text {
+    color: #000; /* Dark text for light background */
+}
+
+/* Dark mode styles */
+.dark-bg .responsive-text {
+    color: #fff; /* Light text for dark background */
+}
+

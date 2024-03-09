@@ -15,7 +15,8 @@ export default function Profile({ }) {
     const [friends, setFriends] = useState([]);
     const [profileUser, setProfileUser] = useState({});
     const [isFriend, setIsFriend] = useState(false);
-    const [isPending, setIsPending] = useState(false);
+    const [isSelfPending, setIsSelfPending] = useState(false);
+    const [isTargetPending, setIsTargetPending] = useState(false);
     const [friendRequestSent, setFriendRequestSent] = useState(false);
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -117,8 +118,10 @@ export default function Profile({ }) {
                 const friendsCheck = await friendsCheckData.json();
                 // Check if the connected user is a friend or if the connected user is pending a friend request
                 const isFriend = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 'approved');
-                const isPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 's-pending');
-                setIsPending(isPending);
+                const isTargetPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 'pending');
+                const isSPending = friendsCheck.friends.some(friend => friend._id === targetUserId && friend.status === 's-pending');
+                setIsSelfPending(isSPending);
+                setIsTargetPending(isTargetPending);
 
                 // determine if the page is the connected user's profile
                 const myProfile = user._id === targetUserId;
@@ -185,7 +188,7 @@ export default function Profile({ }) {
                             <div>
                                 <p className='profile-name' style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>{profileUser.name}</p>
                             </div>
-                            {((isFriend && !isMyProfile) || isPending) && (
+                            {((isFriend && !isMyProfile) || isSelfPending) && (
                                 <button className="btn shadow btn-outline-danger w-100" onClick={handleRemoveFriend}>
                                     <i className="bi bi-x-circle me-2"></i>Unfriend</button>
                             )}
@@ -214,16 +217,21 @@ export default function Profile({ }) {
                             ) : (
                                 <div>
                                     {/* Add friend button */}
-                                    <button className="btn btn-primary shadow w-100" onClick={handleAddFriend}>
-                                        {(friendRequestSent || isPending) ? (
-                                            <><i className="bi bi-check-circle-fill me-2"></i>Friend Request Sent</>
-                                        ) : (
-                                            <>
-                                                <i className="bi bi-person-plus-fill me-2"></i>
-                                                Add Friend
-                                            </>
-                                        )}
-                                    </button>
+                                    {(friendRequestSent || isSelfPending) && (
+                                        <button className="btn btn-primary shadow w-100" disabled>
+                                            <i className="bi bi-check-circle-fill me-2"></i>Friend Request Sent
+                                        </button>
+                                    )}
+                                    {isTargetPending && (
+                                        <p class="responsive-text">
+                                            Awaiting Your Reply
+                                        </p>
+                                    )}
+                                    {(!friendRequestSent && !isSelfPending && !isTargetPending) && (
+                                        <button className="btn btn-primary shadow w-100" onClick={handleAddFriend}>
+                                            <i className="bi bi-person-plus-fill me-2"></i>Add Friend
+                                        </button>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -232,10 +240,9 @@ export default function Profile({ }) {
                             <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
                                 {/* only if firend in can see the firneds list need to fetch this get req*/}
                                 {isFriend &&
-                                    <ContactsList friends={friends} 
-                                    user={user} 
-                                    {...(!isMyProfile && { nametoDisplay: profileUser.name })}
-
+                                    <ContactsList friends={friends}
+                                        user={user}
+                                        {...(!isMyProfile && { nametoDisplay: profileUser.name })}
                                     />
                                 }
                             </ul>

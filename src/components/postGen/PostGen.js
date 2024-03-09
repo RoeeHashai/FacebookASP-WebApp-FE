@@ -76,7 +76,6 @@ export default function PostGen({ user, addPost }) {
                     ...newPostData,
                     date: formattedDate,
                 };
-                console.log('new post: ', newPost);
                 addPost(newPost);
                 setFormData({
                     content: '',
