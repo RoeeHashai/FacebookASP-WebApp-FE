@@ -66,6 +66,7 @@ export default function LoginForm({ addConnectedUser }) {
                 localStorage.setItem('token', data.token);
 
                 const connectedUser = await fetchUser(formData.email);
+                localStorage.setItem('user', JSON.stringify(connectedUser));
                 // console.log(connectedUser);
                 // Get user data and add connected user to the state
                 addConnectedUser(connectedUser);

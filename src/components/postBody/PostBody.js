@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './PostBody.css';
 import PostEditor from '../postEditor/PostEditor';
 
-export default function PostBody({ user, post, onEdit, onDelete, darkMode }) {
+export default function PostBody({ user, post, onEdit, onDelete, darkMode}) {
     // Check if the current user is the creator of the post
     const currentDate = new Date(post.date);
     const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).format(currentDate);
@@ -33,9 +33,23 @@ export default function PostBody({ user, post, onEdit, onDelete, darkMode }) {
         setIsEditing(true);
     };
 
-    const handleDeleteClick = () => {
-        // Pass both the post and postId to the parent component for deletion
-        onDelete({ post, pid: post._id });
+    const handleDeleteClick = async () => {
+        try {
+            const response = await fetch(`/api/users/${user._id}/posts/${post._id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            if (response.ok) {
+                console.log('Post deleted');
+                // Pass both the post and postId to the parent component for deletion
+                onDelete({ post, pid: post._id });
+            }
+        }
+        catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -93,7 +107,7 @@ export default function PostBody({ user, post, onEdit, onDelete, darkMode }) {
                     {/* Conditionally render PostEditor or post content based on editing mode */}
                     {isEditing ? (
                         // Render the PostEditor when in editing mode
-                        <PostEditor post={post} onCancel={handleCancelOnEditMode} onSave={handleSaveOnEditMode} />
+                        <PostEditor user={user} post={post} onCancel={handleCancelOnEditMode} onSave={handleSaveOnEditMode} />
                     ) : (
                         // Render post content when not in editing mode
                         <>

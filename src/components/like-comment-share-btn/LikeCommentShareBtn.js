@@ -1,12 +1,12 @@
 import { React, useState } from 'react';
 import './LikeCommentShareBtn.css';
 
-export default function LikeCommentShareBtn({ user, toggleCommentMode, post, darkMode, openCommentModal, handleEditPost }) {
+export default function LikeCommentShareBtn({ commentsCount, user, toggleCommentMode, post, darkMode, openCommentModal, handleEditPost }) {
   // const [liked, setLiked] = useState(post.likes.includes(user._id));
   const [unlikeMode, setUnlikeMode] = useState(post.likes.includes(user._id));
   console.log("unlike mode:", unlikeMode);
 
-  console.log('the post is' , post);
+  console.log('the post is', post);
 
   const toggleLike = () => {
     setUnlikeMode(!unlikeMode);
@@ -21,23 +21,58 @@ export default function LikeCommentShareBtn({ user, toggleCommentMode, post, dar
     alert("This action is not supported at the moment.");
   };
 
-  const handleLike = () => {
-    const updatedPost = { ...post, likes: [...post.likes, user._id] };
-    console.log(updatedPost);
-    handleEditPost(updatedPost);
-    toggleLike();
+  const handleLike = async () => {
+    try {
+      const response = await fetch(`/api/users/${user._id}/posts/${post._id}/likes`, {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        const updatedPost = { ...post, likes: [...post.likes, user._id] };
+        console.log(updatedPost);
+        handleEditPost(updatedPost);
+        toggleLike();
+      }
+
+    }
+    catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  const handleUnlike = () => {
-    // Filter out the user's ID from the likes array
-    const updatedLikes = post.likes.filter(id => id !== user._id);
-
-    // Create an updated post object with the new likes array
-    const updatedPost = { ...post, likes: updatedLikes };
-    console.log(updatedPost);
-    handleEditPost(updatedPost);
-    toggleLike();
+  const handleUnlike = async () => {
+    try {
+      const response = await fetch(`/api/users/${user._id}/posts/${post._id}/likes`, {
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (response.ok) {
+        const updatedLikes = post.likes.filter(id => id !== user._id);
+        const updatedPost = { ...post, likes: updatedLikes };
+        console.log(updatedPost);
+        handleEditPost(updatedPost);
+        toggleLike();
+      }
+    }
+    catch (error) {
+      console.error('Error:', error);
+    }
   };
+
+
+  //   // Filter out the user's ID from the likes array
+  //   const updatedLikes = post.likes.filter(id => id !== user._id);
+
+  //   // Create an updated post object with the new likes array
+  //   const updatedPost = { ...post, likes: updatedLikes };
+  //   console.log(updatedPost);
+  //   handleEditPost(updatedPost);
+  //   toggleLike();
+  // };
 
   // // Handle click for toggling like/unlike and updating post likes
   // const handleLikeClick = () => {
@@ -66,7 +101,7 @@ export default function LikeCommentShareBtn({ user, toggleCommentMode, post, dar
           <i className="bi bi-hand-thumbs-up" /> {post.likes.length} Likes
         </span>
         <span>
-          <i className="bi bi-chat" /> {post.comments.length} Comments
+          <i className="bi bi-chat" /> {commentsCount} Comments
         </span>
       </div>
       <div className="card-footer ">

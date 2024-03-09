@@ -3,7 +3,11 @@ import './Comment.css';
 import CommentEdit from '../commentEdit/CommentEdit';
 
 export default function Comment({ user, commentCreator, comment, onEdit, onDelete, darkMode }) {
-    const isCurrentUserCommentCreator = user.email === commentCreator.email;
+    console.log('user:', user);
+    console.log('commentCreator:', commentCreator);
+    console.log('user._id:', user._id);
+    console.log('commentCreator._id:', commentCreator._id);
+    const isCurrentUserCommentCreator = user._id === commentCreator._id;
     // State to manage whether the comment is in editing mode
     const [isEditing, setIsEditing] = useState(false);
 
@@ -16,12 +20,12 @@ export default function Comment({ user, commentCreator, comment, onEdit, onDelet
     };
 
     const handleDeleteClick = () => {
-        onDelete(comment.id);
+        onDelete(comment._id);
     };
 
     return (
         <div className={`${darkMode ? 'darkmode' : ''}`}>
-            <div className="comment" id={comment.id}>
+            <div className="comment" id={comment._id}>
                 <div className="d-flex">
                     {/* User profile image */}
                     <img
