@@ -46,7 +46,7 @@ sudo apt-get install npm
 ## Installation
 1. Clone this repository:
 ```sh
-git clone https://github.com/RoeeHashai/FacebookASP-WebApp-FE.git
+git clone -b main-BE-Stage3 https://github.com/RoeeHashai/FacebookASP-WebApp-FE.git
 cd FacebookASP-WebApp-FE
 ```
 
