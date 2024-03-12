@@ -6,7 +6,6 @@ import { DarkModeContext } from '../context/DarkModeContext';
 export default function RightMenu({ user, friends }) {
     const { darkMode } = useContext(DarkModeContext);
     const [rightMenuData, setRightMenuData] = useState({
-        // friends: [],
         approvedFriends: [],
         pendingFriends: [],
     });
