@@ -8,12 +8,16 @@ export default function PostEditor({ user, post, onCancel, onSave }) {
         imageValid: true,
         imageMessage: '',
     });
+    const [isContentValid, setIsContentValid] = useState(true);
+    const [contentErrorMessage, setContentErrorMessage] = useState('');
 
     const handleDeleteImageClick = () => {
         setFormData((prevState) => ({ ...prevState, eImage: '' }));
     }
     const handleContentChange = (event) => {
         setFormData((prevState) => ({ ...prevState, eContent: event.target.value }));
+        setContentErrorMessage('');
+        setIsContentValid(true);
     };
 
     const handleImageChange = (e) => {
@@ -49,6 +53,11 @@ export default function PostEditor({ user, post, onCancel, onSave }) {
             if (response.ok) { // If the response is okay, save the post in the local state and close the editor
                 onSave({ ...post, content: formData.eContent, image: formData.eImage });
             }
+            if (response.status === 400) {
+                console.log('Bad Request');
+                setIsContentValid(false);
+                setContentErrorMessage('You are trying to uplaod a blacklisted URL.\nPlease remove the URL and try again.')
+            }
         } catch (error) {
             console.error('Error:', error);
         }
@@ -58,6 +67,7 @@ export default function PostEditor({ user, post, onCancel, onSave }) {
     return (
         <div className="post-editor-container">
             <textarea className="form-control bg-custom" value={formData.eContent} onChange={handleContentChange} />
+            {!isContentValid && <div className='error-message'>{contentErrorMessage}</div>}
 
             <input
                 type="file"

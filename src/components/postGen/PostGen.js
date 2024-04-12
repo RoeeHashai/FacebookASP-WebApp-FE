@@ -16,11 +16,16 @@ export default function PostGen({ user, addPost }) {
         imageMessage: '',
     });
 
+    const [isContentValid, setIsContentValid] = useState(true);
+    const [contentErrorMessage, setContentErrorMessage] = useState('');
+
     const setPostContent = (e) => {
         setFormData((prevState) => ({
             ...prevState,
             content: e.target.value,
         }));
+        setContentErrorMessage('');
+        setIsContentValid(true);
     }
 
     const setPostImage = (e) => {
@@ -83,6 +88,11 @@ export default function PostGen({ user, addPost }) {
                 });
                 fileInputRef.current.value = '';
             }
+            else if (response.status === 400) {
+                console.log('Bad Request');
+                setIsContentValid(false);
+                setContentErrorMessage('You are trying to uplaod a blacklisted URL.\nPlease remove the URL and try again.')
+            }
         }
         catch (error) {
             console.error('Error:', error);
@@ -108,6 +118,7 @@ export default function PostGen({ user, addPost }) {
                             onChange={setPostContent}
                         />
                     </div>
+                    {!isContentValid && <div className='error-message-gen'>{contentErrorMessage}</div>}
 
                     <input
                         type="file"
