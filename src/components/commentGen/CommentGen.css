@@ -22,3 +22,7 @@
 .btn-upload-post-dark {
     background-color: transparent !important;
 }
+
+.error-comment-message-gen{
+    color: red;
+}

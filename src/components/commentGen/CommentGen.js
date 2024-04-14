@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { DarkModeContext } from '../context/DarkModeContext';
 import './CommentGen.css';
 
-export default function CommentGen({ user, addComment }) {
+export default function CommentGen({ user, addComment, isCommentValid, commentMsg, setCommentMsg }) {
     const [commentContent, setCommentContent] = useState('');
     const { darkMode } = useContext(DarkModeContext);
 
@@ -14,7 +14,9 @@ export default function CommentGen({ user, addComment }) {
     };
 
     // Updates state with the current value of the text area
-    const handleOnChange = (e) => setCommentContent(e.target.value);
+    const handleOnChange = (e) => {setCommentContent(e.target.value);
+        setCommentMsg('');
+    }
 
     return (
         <div className={`${darkMode ? 'darkmode' : ''} card-footer mt-2`}>
@@ -41,6 +43,7 @@ export default function CommentGen({ user, addComment }) {
                                 <i className="bi bi-send"></i>
                             </button>
                         </div>
+                            {!isCommentValid && <div className='error-comment-message-gen'>{commentMsg}</div>}
                     </div>
                 </div>
             </div>
