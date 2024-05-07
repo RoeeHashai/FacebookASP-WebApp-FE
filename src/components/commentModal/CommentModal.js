@@ -10,6 +10,9 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
     const [isLoading, setIsLoading] = useState(true);
     const [commentsList, setCommentsList] = useState([]);
     const { darkMode } = useContext(DarkModeContext);
+    const [isCommentValid, setIsCommentValid] = useState(true);
+    const [commentMessage, setCommentMessage] = useState('');
+
     useEffect(() => {
         const fetchComments = async () => {
             // Set loading to true while comments are being fetched
@@ -26,6 +29,7 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                     const commentsData = await response.json();
                     setCommentsList(commentsData.comments);
                 }
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -50,6 +54,13 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                 const newComment = await response.json();
                 setCommentsList((prevComments) => [...prevComments, newComment]);
                 setCommentsCount((prevCount) => prevCount + 1);
+                setCommentMessage('');
+                setIsCommentValid(true);
+            }
+            else if (response.status === 400) {
+                console.log('Bad Request');
+                setIsCommentValid(false);
+                setCommentMessage('Blacklisted URL. Remove the URL and try again.')
             }
         }
         catch (error) {
@@ -74,13 +85,18 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                     )
                 );
             }
+            else if (response.status === 400) {
+                console.log('Bad Request');
+                setIsCommentValid(false);
+                setCommentMessage('Blacklisted URL. Remove the URL and try again.')
+            }
         }
         catch (error) {
             console.error('Error:', error);
         }
     };
 
-    const handleDeleteComment = async (commentId) => { 
+    const handleDeleteComment = async (commentId) => {
         try {
             const response = await fetch(`/api/users/${user._id}/posts/${post._id}/comments/${commentId}`, {
                 method: 'DELETE',
@@ -124,6 +140,10 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                                 comment={comment}
                                 onDelete={handleDeleteComment}
                                 onEdit={handleEditComment}
+                                isCommentValid={isCommentValid}
+                                commentMsg={commentMessage}
+                                setCommentMsg={setCommentMessage}
+
                             />
                         ))
                     )}
@@ -134,6 +154,9 @@ const CommentModal = ({ onClose, user, commentMode, post, setCommentsCount }) =>
                                 user={user}
                                 post={post}
                                 addComment={handleAddComment}
+                                isCommentValid={isCommentValid}
+                                commentMsg={commentMessage}
+                                setCommentMsg={setCommentMessage}
                             />
                         )}
                     </div>

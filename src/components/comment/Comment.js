@@ -3,17 +3,19 @@ import CommentEdit from '../commentEdit/CommentEdit';
 import { DarkModeContext } from '../context/DarkModeContext';
 import './Comment.css';
 
-export default function Comment({ user, commentCreator, comment, onEdit, onDelete }) {
+export default function Comment({ user, commentCreator, comment, onEdit, onDelete, isCommentValid, commentMsg, setCommentMsg, setEditMode  }) {
     
     const isCurrentUserCommentCreator = user._id === commentCreator._id;
     const [isEditing, setIsEditing] = useState(false);
     const { darkMode, _ } = useContext(DarkModeContext);
-    
+
     const handleEditClick = () => {
         setIsEditing(true);
+        setEditMode(true);
     };
     const handleCancelEdit = () => {
         setIsEditing(false);
+        setEditMode(false);
     };
     const handleDeleteClick = () => {
         onDelete(comment._id);
@@ -43,6 +45,9 @@ export default function Comment({ user, commentCreator, comment, onEdit, onDelet
                                         setIsEditing(false);
                                     }}
                                     onCancel={handleCancelEdit}
+                                    isCommentValid={isCommentValid}
+                                    commentMsg={commentMsg}
+                                    setCommentMsg={setCommentMsg}
                                 />
                             ) : (
                                 // Display the comment content
