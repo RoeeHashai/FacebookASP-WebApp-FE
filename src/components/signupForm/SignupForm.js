@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './SignupForm.css'
 
-export default function SignupForm({ users, onAddUser, idNewUser }) {
+export default function SignupForm({ }) {
   const navigate = useNavigate()
 
   // state variables of the sign up form
-  const [username, setUsername] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -24,16 +24,19 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState('')
   const [pictureMessage, setPictureMessage] = useState('')
 
-  // Function to increment idCounter, to give a unique id for each post
+  const [emailExist, setEmailExist] = useState(false);
+  const [base64Picture, setBase64Picture] = useState('');
+
   const handleOnInputChange = (e) => {
     const { name, value } = e.target
     if (name === 'username') {
-      setUsername(value)
+      setName(value)
     }
     else if (name === 'email') {
       const isEmailValidValue = isEmailValid(value)
       setEmail(value)
       setEmailValid(isEmailValidValue)
+      setEmailExist(false);
     }
     else if (name === 'password') {
       const isPasswordValidValue = isPasswordValid(value)
@@ -46,9 +49,20 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
       setConfirmPasswordValid(isConfirmPasswordValidValue)
     }
     else if (name === 'picture') {
-      const isPictureValidValue = isPictureValid(e.target.files[0])
-      setPicture(e.target.files[0])
-      setPictureValid(isPictureValidValue)
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setBase64Picture(reader.result);
+        };
+        reader.readAsDataURL(file);
+        setPicture(file);
+        const isPictureValidValue = isPictureValid(file);
+        setPictureValid(isPictureValidValue);
+      } else {
+        setBase64Picture('');
+        setPicture(null);
+      }
     }
   }
 
@@ -64,12 +78,12 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
       setConfirmPasswordMessage('')
     }
     else if (name === 'picture') {
-      setPasswordMessage('')
+      setPictureMessage('')
     }
 
   }
 
-  const handleSignupClick = (e) => {
+  const handleSignupClick = async (e) => {
     e.preventDefault();
 
     // Check if Signup was done valid or not, don't proceed to the login page if not valid
@@ -79,24 +93,46 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
 
     // Create a new user to add to the users list
     const newUser = {
-      id: idNewUser,
-      name: username,
+      name: name,
       email,
       password,
-      image: picture && URL.createObjectURL(picture),
+      image: base64Picture,
     };
 
-    // Add the new user to the list of users
-    onAddUser(newUser);
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser)
+      });
 
-    // Clear the state after adding the user if needed
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setPicture(null);
+      if (response.ok) {
+        const data = await response.json();;
 
-    // Navigate to the login page after successfully adding a new user
-    navigate('/login');
+        // Clear the form state
+        setName('');
+        setEmail('');
+        setPassword('');
+        setPicture(null);
+        setBase64Picture('');
+
+        // Navigate to the login page after successfully adding a new user
+        navigate('/');
+      } else {
+        // Handle error (display error message or log it)
+        if (response.status === 400) {
+          setEmailMessage('This email address is already in use. Please use a different one or log in.');
+          setEmailValid(false);
+          setEmailExist(true);
+          const data = await response.json();
+        }
+      }
+    } catch (error) {
+      // Handle other errors (display error message or log it)
+      console.error('Error creating user:', error.message);
+    }
   };
 
   const validateForm = () => {
@@ -115,23 +151,22 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
     const isPictureValidValue = isPictureValid(picture);
     setPictureValid(isPictureValidValue);
 
-    if (username === ''|| email === '' || password === '' || confirmPassword === '' || picture == null) {
+    if (name === '' || email === '' || password === '' || confirmPassword === '' || picture == null) {
       return false;
     }
     return emailValid && passwordValid && confirmPasswordValid && pictureValid;
   };
 
   const isEmailValid = (email) => {
+    if (emailExist) {
+      return false;
+    }
+
     // email pattern validation - using regex
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const isLegalEmail = pattern.test(email)
     if (!isLegalEmail) {
       setEmailMessage('Email must be in a correct email format (e.g., XXX@XXX.XXX)')
-      return false
-    }
-    const emailExist = users.find((user) => user.email === email)
-    if (emailExist) {
-      setEmailMessage('This email address is already in use. Please use a different one or log in.');
       return false
     }
     return true
@@ -169,13 +204,12 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
       return false;
     }
 
-    // If all checks pass, the picture is valid
     return true;
   };
 
   return (
     <div className="card shadow rounded p-3">
-      <Link to='/login'>
+      <Link to='/'>
         <button className='btn'>
           <i className="bi bi-arrow-left mb-2"></i>
         </button>
@@ -253,13 +287,12 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
             {!pictureValid && <div className='invalid-feedback'>{pictureMessage}</div>}
 
           </div>
-          {/* Display the profile picture preview */}
-          {picture && pictureValid && (
+          {base64Picture && (
             <div className="mt-3">
               <h6>Profile Picture Preview:</h6>
               <img
                 className='sm previewProfile img-fluid'
-                src={URL.createObjectURL(picture)}
+                src={base64Picture}
                 alt="Profile Preview"
               />
             </div>
@@ -268,7 +301,7 @@ export default function SignupForm({ users, onAddUser, idNewUser }) {
         <div className="col-12">
           <button
             onClick={handleSignupClick}
-            type="submit"
+            type="button"
             className="btn btn-success w-100 newaccount-btn"
           >
             Sign Up

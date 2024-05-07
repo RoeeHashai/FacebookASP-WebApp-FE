@@ -1,49 +1,58 @@
 # FacebookASP-WebApp-FE
 
-Welcome to the Facebook React WebApp!
+Welcome to the updated Facebook React WebApp, now with full backend support!
 
-This project serves as a React-based frontend for a Facebook-like application, providing a user-friendly interface for seamless interaction with the social media platform.
+This project has evolved into a comprehensive React-based application for a Facebook-like experience, providing a user-friendly interface that integrates seamlessly with our newly developed backend. This allows for real-time interactions and updates, offering a dynamic social media platform.
 
-Our journey started with implementing basic webpage designs using static HTML and CSS. Subsequently, we transitioned into the React environment, utilizing the framework's capabilities to craft a dynamic user experience. By breaking down the interface into components and skillfully managing states, we achieved a smooth rendering of objects on the screen.
-
-After testing, we dedicated efforts to refactor and enhance the design and user experience, ensuring a more polished and enjoyable interaction. 
-
-We hope you enjoy the Facebook WebApp!
+We've come a long way from our initial focus on frontend designs. Now, with the inclusion of backend services, we support a wide range of functionalities that enhance the user experience significantly.
 
 ## Features
-1. Sign Up & Login
-    * Create an account and log in to get started.
+### Complete User Account Management
+- **Sign Up & Login**: Easily create an account or log in to access your dashboard.
+- **Account Editing**: Update your profile details whenever needed.
+- **Account Deletion**: Opt to delete your account if you choose to leave the platform.
 
-2. Newsfeed
-    * Explore posts from friends.
-    * View, edit, delete, and share your own updates.
+### Enhanced Interaction Capabilities
+- **Post Creation & Management**: Upload, view, edit, and delete your posts.
+- **Comments & Likes**: Engage with friends' posts through comments and likes.
+- **Friend Connections**: Support for adding and removing friends, fostering connections within the community.
+  
+### Dynamic Newsfeed
+- **Personalized Content**: The feed now displays 20 posts from friends, 5 from non-friends, and 3 of your own, offering a diverse glimpse into the friends network.
 
-## Prerequisites
+## Simplified Access for First-Time Users
+To accommodate users who wish to explore the app without going through the registration process, we offer a preloaded guest user account.
+
+#### Guest Access
+- **Skip Registration**: Explore the app with a preloaded guest user account.
+  - Email: `guest@gmail.com`
+  - Password: `12345678a`
+
+## Installation and Setup
+To connect to the application, ensure your local server is running and navigate to `localhost:8080` in your web browser. This will grant you immediate access to the FacebookASP WebApp's functionalities.
+
+If you're interested in only the React frontend application, you can download it directly from our Git repository.
+
+## Prerequisites for the FE-ReactApp
 Before you start, make sure you have Node.js and npm installed on your machine.
 
-run this commands to get nodeJS and npm
- ```sh
+Run these commands to get Node.js and npm:
+```sh
 sudo apt-get update
 sudo apt-get install nodejs
 sudo apt-get install npm
-  ```
+```
 
 ## Installation
 1. Clone this repository:
- ```sh
-git clone https://github.com/RoeeHashai/FacebookASP-WebApp-FE.git
+```sh
+git clone -b main-BE-Stage3 https://github.com/RoeeHashai/FacebookASP-WebApp-FE.git
 cd FacebookASP-WebApp-FE
-  ```
+```
 
 2. Install dependencies:
 ```sh
 npm install
-```
-
-## Running the Application
-To start the Facebook React WebApp, run:
-```sh
-npm start
 ```
 
 ## Running the Tests
@@ -51,8 +60,6 @@ To start the Facebook WebApp Test, run:
 ```sh
 npm test
 ```
-Enter `a` to run all tests
+Enter `a` to run all tests.
 
 Enjoy!
-
-

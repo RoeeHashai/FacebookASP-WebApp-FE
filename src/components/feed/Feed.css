@@ -1,16 +1,49 @@
+body {
+  overflow-y: hidden;
+  height: 100%;
+  margin: 0;
+}
+
 .container-fluid {
-  height: 100% !important;
+  height: 100vh;
 }
 
 .middle-column {
   overflow-y: auto;
-  max-height: calc(100vh - 56px);
+  flex: 1;
+  max-height: 93%;
+  position: relative
+}
+
+.side-column {
+  overflow-y: auto;
+  max-height: 93%;
+  scrollbar-width: 0;
 }
 
 .middle-column::-webkit-scrollbar {
   width: 0;
 }
 
+.side-column::-webkit-scrollbar {
+  width: 0;
+}
+
 .dark-bg {
   background-color: rgb(19, 19, 19);
+}
+
+.main-container {
+  position: relative;
+}
+
+.spinner-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

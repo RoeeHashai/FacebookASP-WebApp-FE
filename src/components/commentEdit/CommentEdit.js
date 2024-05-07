@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export default function CommentEdit({ comment, onEdit, onCancel }) {
-    // State to manage the edited content of the comment
     const [editedContent, setEditedContent] = useState(comment.content);
 
     const handleSaveEdit = () => {

@@ -1,43 +1,69 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import ContactsList from '../contactsList/ContactsList';
+import FriendReqList from '../friendReqList/FriendReqList';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function RightMenu({ user, darkMode, users }) {
-    const navigate = useNavigate();
+export default function RightMenu({ user, friends }) {
+    const { darkMode } = useContext(DarkModeContext);
+    const [rightMenuData, setRightMenuData] = useState({
+        approvedFriends: [],
+        pendingFriends: [],
+    });
 
-    // In case of refreshing the page need to logout because (Connected) user isn't connected any more
     useEffect(() => {
-        // Check if user is falsy (null or undefined)
-        if (!user) {
-            // Navigate to the login page if not logged in
-            navigate('/login');
+        const setFriends = async () => {
+                    // filter the fetched data for pending and approved friends
+                    const approvedFriends = friends.filter(friend => friend.status === 'approved');
+                    const pendingFriends = friends.filter(friend => friend.status === 'pending');
+
+                    setRightMenuData({
+                        approvedFriends: approvedFriends,
+                        pendingFriends: pendingFriends,
+                    });
         }
-    }, [user, navigate]);
-    // If user is not defined, return null to avoid rendering the component
-    if (!user) {
-        return null;
-    } // =================================== End Handle Refresh =======================================
+        setFriends();
+    }, [user]);
+
+    const acceptFriendRequest = (newFriend) => {
+        setRightMenuData(currentState => ({
+            ...currentState,
+            approvedFriends: [...currentState.approvedFriends, newFriend],
+            // Ensure the friend is removed from the pending list based on a consistent and correct identifier
+            pendingFriends: currentState.pendingFriends.filter(friend => friend._id !== newFriend._id),
+        }));
+    };
+    
+    const rejectFriendRequest = (friendDel) => {
+        setRightMenuData(currentState => ({
+            ...currentState,
+            // Similar filter logic for removal from the pending list
+            pendingFriends: currentState.pendingFriends.filter(friend => friend._id !== friendDel._id),
+        }));
+    };
+    
 
     return (
         <ul className={`list-group ${darkMode ? 'darkmode-menu' : ''}`}>
-            <h5 className={`${darkMode ? 'text-light' : 'text-muted'} mt-3 contactsList ms-2`}>Contacts</h5>
-            {/* Map through the users array and render a list item for each user */}
-            {users.map((currentUser) =>
-                // Check if the currentUser is not the logged-in user -  dont display the current user as a contact of himself
-                currentUser.id !== user.id ? (
-                    <li key={currentUser.id} className="list-group-item d-flex list-to-hover align-items-center">
-                        <div className='contanier'>
-                            {/* Display the profile picture of the contact user */}
-                            <img
-                                src={currentUser.image}
-                                alt={`Profile of ${currentUser.name}`}
-                                className="rounded-circle shadow small-profile-img"
-                            />
-                        </div>
-                        {/* Display the name of the contact user */}
-                        <span className="w-100 m-1 ms-3">{currentUser.name}</span>
-                    </li>
-                ) : null
-            )}
+            <>
+                {rightMenuData.pendingFriends.length > 0 &&
+                    <>
+                        <FriendReqList darkMode={darkMode}
+                            user={user}
+                            friendsRequests={rightMenuData.pendingFriends}
+                            acceptFriendRequest={acceptFriendRequest}
+                            rejectFriendRequest={rejectFriendRequest} />
+                        <div className="mt-1 line-under-buttons"></div>
+                    </>
+                }
+
+                {rightMenuData.approvedFriends.length > 0 ?
+                    (<ContactsList
+                        darkMode={darkMode}
+                        friends={rightMenuData.approvedFriends}
+                        user={user} />) :
+                    null
+                }
+            </>
         </ul>
     );
 

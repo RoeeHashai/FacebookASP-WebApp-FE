@@ -1,0 +1,24 @@
+.darkmode-modalBody {
+  background-color: #060707;
+  color: white;
+}
+
+.darkmode-modal .modal-header .closeButton {
+  color: white;
+}
+
+.darkmode-modal .modal-footer {
+  background-color: #060707;
+  color: white;
+}
+
+.darkmode-modal .form-control {
+  background-color: #060707;
+  color: white;
+  border: 1px solid #ced4da; 
+
+}
+
+.darkmode-modal .form-control::placeholder {
+  color:white;
+}

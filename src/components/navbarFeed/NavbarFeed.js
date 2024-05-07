@@ -1,8 +1,16 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import './NavbarFeed.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function NavbarFeed({ toggleDarkMode, darkMode }) {
+
+export default function NavbarFeed({ }) {
+    const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        darkMode && toggleDarkMode(); // Reset dark mode to light mode before logging out
+        navigate('/');
+    };
     return (
         <nav className={`navbar sticky-top shadow ${darkMode ? 'dark-navbar' : ''}`}>
             <div className="container text-center">
@@ -15,19 +23,19 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                                 type="checkbox"
                                 id="toggleSwitch"
                                 onChange={toggleDarkMode}
+                                checked={darkMode}
+
                             />
                             <label className="form-check-label" htmlFor="toggleSwitch" />
                         </div>
                     </div>
                     {/* Facebook logo */}
                     <div className="col-auto">
-                        <Link to='/feed'>
-                            <img
-                                src={process.env.PUBLIC_URL + '/facebook-logo.png'}
-                                alt="Facebook logo"
-                                className="d-inline-block small-profile-img"
-                            />
-                        </Link>
+                        <img
+                            src={process.env.PUBLIC_URL + '/facebook-logo.png'}
+                            alt="Facebook logo"
+                            className="d-inline-block small-profile-img"
+                        />
                     </div>
                     {/* Search bar */}
                     <div className="col-auto">
@@ -42,11 +50,9 @@ export default function NavbarFeed({ toggleDarkMode, darkMode }) {
                     </div>
                     {/* Logout button */}
                     <div className="col-auto d-none d-md-block position-fixed end-0">
-                        <Link to='/login'>
-                            <button className={`btn ${darkMode ? 'logout-logo-dark' : ''}`} data-toggle="tooltip" data-placement="bottom" title="Logout">
-                                <i className="bi bi-box-arrow-left"></i>
-                            </button>
-                        </Link>
+                        <button className={`btn ${darkMode ? 'logout-logo-dark' : ''}`} onClick={handleLogout} data-toggle="tooltip" data-placement="bottom" title="Logout">
+                            <i className="bi bi-box-arrow-left"></i>
+                        </button>
                     </div>
                 </div>
             </div>

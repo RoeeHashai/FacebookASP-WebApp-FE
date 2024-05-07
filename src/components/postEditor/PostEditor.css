@@ -2,3 +2,11 @@
     background-color: #f0f2f5;
     height: 60px;
 }
+
+.error-message {
+    color: red;
+    padding-left: 10px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    white-space: pre-wrap;
+}
