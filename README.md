@@ -10,6 +10,9 @@ After testing, we dedicated efforts to refactor and enhance the design and user 
 
 We hope you enjoy the Facebook WebApp!
 
+## Deployment and Access
+Access the live version of the [FacebookASP](https://third-tome-420621.de.r.appspot.com/) application running in the cloud. This deployment illustrates the current state of the application, providing real-time interaction and functionality as developed in the latest version.
+
 ## Features
 1. Sign Up & Login
     * Create an account and log in to get started.
